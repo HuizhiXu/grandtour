@@ -28,7 +28,10 @@ godot --headless --editor --import --path .
 godot --headless --path . --script res://test/exploration_suite.gd
 godot --headless --path . --script res://test/postcard_suite.gd
 godot --headless --path . --script res://test/walkable_ground_suite.gd
+godot --headless --path . --script res://test/archie_animation_suite.gd
 ```
+
+`archie_animation_suite.gd` 检查四方向完整跑动循环、转向步态连续、待机眨眼与暂停，同时确认画面弹跳不会移动碰撞体。
 
 `postcard_suite.gd` 覆盖八方向移动、改道与暂停、完整任务、取消投递、存档恢复和对话框布局。设置 `GRANDTOUR_CAPTURE_DIR` 并使用真实图形渲染运行该测试，可保存场景、方向动画与任务截图；截图模式不能使用 `--headless`。
 

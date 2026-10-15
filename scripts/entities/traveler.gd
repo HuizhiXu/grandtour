@@ -5,6 +5,7 @@ signal route_completed
 signal route_blocked
 
 const SPRITE_ATLAS: Texture2D = preload("res://assets/game/runtime/archie-atlas.png")
+const IDLE_ATLAS: Texture2D = preload("res://assets/game/runtime/archie-idle-atlas.png")
 const FRAME_SIZE := Vector2(160.0, 160.0)
 const SPRITE_SCALE := 0.58
 const FOOT_BASELINE := 154.0
@@ -19,6 +20,7 @@ var _path := PackedVector2Array()
 var _path_index := 0
 var _facing_row := 0
 var _stalled_frames := 0
+var _visual_time := 0.0
 
 
 func _ready() -> void:
@@ -137,20 +139,36 @@ func _finish_route() -> void:
 	route_completed.emit()
 
 
+func _process(delta: float) -> void:
+	_visual_time += delta
+	# Bounce only the artwork; the physical footprint stays on navigable ground.
+	var hop := 0.0
+	if is_walking() and _stalled_frames == 0:
+		var phase := (float(_frames.frame) + _frames.frame_progress) / 6.0
+		hop = absf(sin(phase * TAU * 2.0)) * 2.0
+	else:
+		hop = sin(_visual_time * 2.8) * 0.45
+	_frames.position.y = -FOOT_BASELINE * SPRITE_SCALE - hop
+
+
 func _play_walk(direction: Vector2) -> void:
 	_facing_row = _direction_row(direction)
-	# Archie has genuine left/right artwork; keep his bandana and tail orientation.
 	_frames.flip_h = false
 	var animation: StringName = WALK_ANIMATIONS[_facing_row]
 	if _frames.animation != animation:
+		var was_walking := String(_frames.animation).begins_with("walk_")
+		var previous_frame := _frames.frame
+		var previous_progress := _frames.frame_progress
 		_frames.play(animation)
+		# A bend in the route must not restart the same paw on every step.
+		if was_walking:
+			_frames.set_frame_and_progress(previous_frame, previous_progress)
 
 
 func _play_idle() -> void:
 	var animation: StringName = IDLE_ANIMATIONS[_facing_row]
 	if _frames.animation != animation:
 		_frames.play(animation)
-	_frames.pause()
 
 
 func _direction_row(direction: Vector2) -> int:
@@ -167,19 +185,20 @@ func _make_sprite_frames() -> SpriteFrames:
 		var idle_name: StringName = IDLE_ANIMATIONS[row]
 		var walk_name: StringName = WALK_ANIMATIONS[row]
 		result.add_animation(idle_name)
-		result.set_animation_speed(idle_name, 1.0)
-		result.set_animation_loop(idle_name, false)
-		result.add_frame(idle_name, _atlas_frame(0, row))
-		result.add_animation(walk_name)
-		result.set_animation_speed(walk_name, 9.0)
-		result.set_animation_loop(walk_name, true)
+		result.set_animation_speed(idle_name, 2.5)
+		result.set_animation_loop(idle_name, true)
 		for column in range(4):
+			result.add_frame(idle_name, _atlas_frame(column, row, IDLE_ATLAS), 0.35 if column == 2 else 1.8)
+		result.add_animation(walk_name)
+		result.set_animation_speed(walk_name, 12.0)
+		result.set_animation_loop(walk_name, true)
+		for column in range(6):
 			result.add_frame(walk_name, _atlas_frame(column, row), 1.0)
 	return result
 
 
-func _atlas_frame(column: int, row: int) -> AtlasTexture:
+func _atlas_frame(column: int, row: int, atlas: Texture2D = SPRITE_ATLAS) -> AtlasTexture:
 	var frame := AtlasTexture.new()
-	frame.atlas = SPRITE_ATLAS
+	frame.atlas = atlas
 	frame.region = Rect2(Vector2(column, row) * FRAME_SIZE, FRAME_SIZE)
 	return frame

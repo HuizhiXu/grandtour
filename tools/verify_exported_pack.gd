@@ -13,6 +13,7 @@ func _verify() -> void:
 		"assets/game/runtime/saigon-exterior.jpg",
 		"assets/game/runtime/post-office-interior.jpg",
 		"assets/game/runtime/archie-atlas.png",
+		"assets/game/runtime/archie-idle-atlas.png",
 		"assets/game/runtime/photographer-npc.png",
 		"assets/game/runtime/intro-sign.png",
 		"assets/game/runtime/old-mailbox.png",
