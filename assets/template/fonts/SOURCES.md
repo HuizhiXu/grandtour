@@ -14,3 +14,12 @@ copy. Rare characters outside that repertoire remain unsupported.
 Use `python3 tools/install_cjk_font.py --check` to verify the pinned runtime
 font and its license. Loader fonts are separate lightweight subsets of the same
 approved family. Runtime imports disable system fallback; web exports bundle the font.
+
+`NotoSans-Vietnamese.subset.woff2` adds Vietnamese extended vowels (including
+`ế` and `ụ` in `Ngô Viết Thụ`) and combining accents after the existing Chinese
+fallback. The regular/medium/bold resources select matching weights. This is
+bundled with `NotoSans-OFL.txt`, without relying on installed system fonts.
+Source: Google Fonts' official `ofl/notosans/NotoSans[wdth,wght].ttf` (Noto Sans
+2.015). Source/output hashes and coverage are recorded in
+`NotoSans-Vietnamese.subset.json`; rebuild with
+`python3 tools/prepare_vietnamese_font.py --source /path/to/NotoSans.ttf`.

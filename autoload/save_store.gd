@@ -21,6 +21,7 @@ func _default_data() -> Dictionary:
 		"player_name": "PLAYER",
 		"leaderboard": [],
 		"postcard_quest": {},
+		"palace_visit": {},
 	}
 
 
@@ -49,6 +50,9 @@ func _load() -> void:
 	var postcard: Variant = candidate.get("postcard_quest", {})
 	if postcard is Dictionary:
 		_data.postcard_quest = postcard.duplicate(true)
+	var palace: Variant = candidate.get("palace_visit", {})
+	if palace is Dictionary:
+		_data.palace_visit = palace.duplicate(true)
 	var clean_rows: Array = []
 	var rows: Variant = candidate.get("leaderboard", [])
 	if rows is Array:
@@ -107,6 +111,15 @@ func get_postcard_progress() -> Dictionary:
 
 func set_postcard_progress(progress: Dictionary) -> bool:
 	_data.postcard_quest = progress.duplicate(true)
+	return save()
+
+
+func get_palace_progress() -> Dictionary:
+	return (_data.get("palace_visit", {}) as Dictionary).duplicate(true)
+
+
+func set_palace_progress(progress: Dictionary) -> bool:
+	_data.palace_visit = progress.duplicate(true)
 	return save()
 
 

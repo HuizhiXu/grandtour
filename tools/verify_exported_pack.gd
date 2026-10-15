@@ -12,6 +12,8 @@ func _verify() -> void:
 	for path: String in [
 		"assets/game/runtime/saigon-exterior.jpg",
 		"assets/game/runtime/post-office-interior.jpg",
+		"assets/game/runtime/independence-palace.jpg",
+		"assets/game/runtime/independence-palace-hall.jpg",
 		"assets/game/runtime/archie-atlas.png",
 		"assets/game/runtime/archie-idle-atlas.png",
 		"assets/game/runtime/photographer-npc.png",
@@ -24,10 +26,12 @@ func _verify() -> void:
 		"fonts/ui_regular.tres",
 		"fonts/ui_medium.tres",
 		"fonts/ui_bold.tres",
+		"fonts/NotoSans-Vietnamese.subset.woff2",
 		"fonts/display/generic_heading.tres",
 	]:
 		_check(ResourceLoader.exists("res://assets/template/" + font_path), "shared font: " + font_path)
 	_check(not ResourceLoader.exists("res://assets/game/scenes/saigon-exterior.png"), "large source background excluded")
+	_check(not ResourceLoader.exists("res://assets/game/scenes/independence-palace.png"), "palace source background excluded")
 	_check(not ResourceLoader.exists("res://assets/game/characters/traveler-sheet.png"), "source character atlas excluded")
 	_check(not ResourceLoader.exists("res://test/exploration_suite.gd"), "test script excluded")
 	_check(not ResourceLoader.exists("res://tools/capture_native.gd"), "native capture tool excluded")
@@ -36,6 +40,8 @@ func _verify() -> void:
 	_check(not DirAccess.dir_exists_absolute("res://assets/template/audio"), "no default audio assets")
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	_check(font != null, "exported UI font")
+	for character: String in "Ngô Viết Thụ":
+		_check(font != null and font.has_char(character.unicode_at(0)), "exported architect name glyph: " + character)
 	for locale: String in ["en", "zh-CN"]:
 		var locale_path := "res://localization/%s.json" % locale
 		_check(FileAccess.file_exists(locale_path), "exported locale: " + locale)
@@ -60,6 +66,11 @@ func _verify() -> void:
 		for target_id: String in ["post_office_info", "old_mailbox", "photographer", "post_office_door"]:
 			_check(targets.has(target_id), "pack target: " + target_id)
 		_check(main.has_method("_request_walk"), "pack retains click-to-move routing")
+		_check(targets.has("palace_travel"), "pack includes next stop route")
+		main.call("_setup_scene", "palace_garden", Vector2(640, 640))
+		_check((main.get("_targets") as Dictionary).has("palace_door"), "pack builds palace garden")
+		main.call("_setup_scene", "palace_hall", Vector2(640, 620))
+		_check((main.get("_targets") as Dictionary).has("palace_souvenir"), "pack builds palace hall")
 		_check(not main.has_method("_maybe_capture"), "capture routing removed from runtime")
 		_check(not main.has_method("_open_tuning"), "release tuning entry point excluded")
 		_check(not ResourceLoader.exists("res://scripts/ui/tuning_panel.gd"), "release tuning panel excluded")

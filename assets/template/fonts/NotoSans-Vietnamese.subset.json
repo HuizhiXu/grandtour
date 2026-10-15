@@ -1,0 +1,17 @@
+{
+  "family": "Noto Sans",
+  "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosans/NotoSans%5Bwdth,wght%5D.ttf",
+  "sourceSha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d",
+  "sourceVersion": "Version 2.015",
+  "license": "OFL-1.1",
+  "licenseFile": "NotoSans-OFL.txt",
+  "runtimePath": "assets/template/fonts/NotoSans-Vietnamese.subset.woff2",
+  "sha256": "3ec98bb40ea2aa5a3a8e957378a983cbcc06881505a4aa78325430de4242cfbf",
+  "size": 198092,
+  "unicodeRanges": [
+    "U+0020-024F",
+    "U+0300-036F",
+    "U+1E00-1EFF"
+  ],
+  "purpose": "Bundled Vietnamese fallback after existing Figtree and Noto Sans SC; no system font dependency"
+}

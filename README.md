@@ -9,6 +9,7 @@
 - 点击空地行走，再次点击可改道；点击人物、物件或门廊会先走近再互动。
 - 邮局外广场与内部大厅可以往返，角色只能在明确标出的地面范围内行走；建筑、围栏和立柱后的点击会调整到附近可达地面。
 - **寄出西贡的第一张明信片**：向摄影师领取 → 阅读建筑介绍牌 → 到大厅右侧书写台选择三种寄语之一 → 回到旧邮筒确认投递。
+- **第二站 · 独立宫**：点击邮局广场右下方「下一站 · 独立宫」前往庭院。阅读建筑介绍 → 庭院观景 → 进入大厅阅读展览说明 → 到右侧参观纪念台收下旅行纪念。草坪与喷泉不可穿越，沿两侧步道绕行；大厅、庭院与邮局可往返。第一站与第二站的进度分别自动保存。
 - 左上角显示任务进度；明信片与进度自动保存在当前设备。回到街区入口会保留任务进度。
 - `Esc` 关闭对话或暂停；悬停显示可互动物件名称，地面菱形标记显示目的地。
 
@@ -29,9 +30,12 @@ godot --headless --path . --script res://test/exploration_suite.gd
 godot --headless --path . --script res://test/postcard_suite.gd
 godot --headless --path . --script res://test/walkable_ground_suite.gd
 godot --headless --path . --script res://test/archie_animation_suite.gd
+godot --headless --path . --script res://test/palace_suite.gd
 ```
 
 `archie_animation_suite.gd` 检查四方向完整跑动循环、转向步态连续、待机眨眼与暂停，同时确认画面弹跳不会移动碰撞体。
+
+`palace_suite.gd` 覆盖第二站的实际行走、庭院绕行、室内外与邮局往返、纪念领取条件和独立存档恢复。设置 `GRANDTOUR_CAPTURE_DIR` 并使用真实渲染器可保存第二站截图。新美术的提示词、制作方式与地标参考见 `docs/palace-art.md`；大厅为参观空间的绘本化诠释。
 
 `postcard_suite.gd` 覆盖八方向移动、改道与暂停、完整任务、取消投递、存档恢复和对话框布局。设置 `GRANDTOUR_CAPTURE_DIR` 并使用真实图形渲染运行该测试，可保存场景、方向动画与任务截图；截图模式不能使用 `--headless`。
 

@@ -39,6 +39,7 @@ jobs:
           "$GODOT_BIN" --headless --path . --script res://test/postcard_suite.gd
           "$GODOT_BIN" --headless --path . --script res://test/walkable_ground_suite.gd
           "$GODOT_BIN" --headless --path . --script res://test/archie_animation_suite.gd
+          "$GODOT_BIN" --headless --path . --script res://test/palace_suite.gd
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist/web

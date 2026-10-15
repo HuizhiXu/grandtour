@@ -6,6 +6,9 @@ const TargetType := preload("res://scripts/entities/exploration_target.gd")
 const UIType := preload("res://scripts/ui/exploration_ui.gd")
 const OpenSourceLicenseHelper := preload("res://scripts/manus/open_source_licenses.gd")
 const Postcard := preload("res://scripts/game/postcard_quest.gd")
+const Palace := preload("res://scripts/game/palace_visit.gd")
+const PALACE_BG: Texture2D = preload("res://assets/game/runtime/independence-palace.jpg")
+const PALACE_HALL_BG: Texture2D = preload("res://assets/game/runtime/independence-palace-hall.jpg")
 const OUTDOOR_BG: Texture2D = preload("res://assets/game/runtime/saigon-exterior.jpg")
 const INDOOR_BG: Texture2D = preload("res://assets/game/runtime/post-office-interior.jpg")
 const SIGN_TEXTURE: Texture2D = preload("res://assets/game/runtime/intro-sign.png")
@@ -38,6 +41,7 @@ var _postcard := Postcard.new()
 var _postcard_context := ""
 var _destination_marker: Line2D
 var _hovered_target: ExplorationTarget
+var _palace := Palace.new()
 
 
 func _ready() -> void:
@@ -45,6 +49,7 @@ func _ready() -> void:
 	var save_store := get_node_or_null("/root/SaveStore")
 	if save_store != null:
 		_postcard.restore(save_store.call("get_postcard_progress"))
+		_palace.restore(save_store.call("get_palace_progress"))
 	var locale_service := get_node_or_null("/root/I18n")
 	if locale_service != null:
 		locale_service.call("set_locale", "zh-CN")
@@ -149,7 +154,7 @@ func _build_ui() -> void:
 	_ui.return_to_start_requested.connect(_return_to_start)
 	_ui.licenses_requested.connect(_open_licenses)
 	_ui.dialogue_choice.connect(_on_dialogue_choice)
-	_ui.postcard_requested.connect(_show_postcard)
+	_ui.postcard_requested.connect(_show_current_journey)
 	_ui.postcard_choice.connect(_on_postcard_choice)
 	_ui.modal_closed.connect(func() -> void: _postcard_context = "")
 
@@ -187,7 +192,7 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 
 	var background := Sprite2D.new()
 	background.name = "SceneIllustration"
-	background.texture = OUTDOOR_BG if scene_name == "outdoor" else INDOOR_BG
+	background.texture = {"outdoor": OUTDOOR_BG, "indoor": INDOOR_BG, "palace_garden": PALACE_BG, "palace_hall": PALACE_HALL_BG}[scene_name]
 	background.position = WORLD_SIZE * 0.5
 	background.scale = Vector2(0.8, 0.8)
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -211,12 +216,17 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 		walls = _outdoor_walls()
 		floor_outline = _outdoor_floor()
 		_ui.set_location("胡志明市 · 西贡中央邮局")
-	else:
+	elif scene_name == "indoor":
 		walk_rect = Rect2(Vector2(72.0, 158.0), Vector2(1136.0, 535.0))
 		obstacles = _indoor_obstacles()
 		walls = _indoor_walls()
 		floor_outline = _indoor_floor()
 		_ui.set_location("西贡中央邮局 · 内部大厅")
+	else:
+		walk_rect = Rect2(60, 260, 1160, 448)
+		floor_outline = _palace_floor(scene_name)
+		walls = _palace_walls(scene_name)
+		_ui.set_location("第二站 · 独立宫 · " + ("庭院" if scene_name == "palace_garden" else "参观大厅"))
 	_pathfinder = Pathfinder.new()
 	_pathfinder.configure(walk_rect, obstacles, walls, floor_outline)
 	_add_floor_boundary(floor_outline)
@@ -235,12 +245,47 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	if scene_name == "outdoor":
 		_build_outdoor_targets()
 		_ui.set_npc_position(Vector2(938.0, 528.0), true)
-	else:
+	elif scene_name == "indoor":
 		_add_target("outdoor_exit", "exit", "返回广场", Vector2(640.0, 674.0), Vector2(640.0, 575.0), Vector2(164.0, 98.0))
 		_add_target("postcard_desk", "postcard", "明信片书写台", Vector2(828.0, 366.0), Vector2(770.0, 460.0), Vector2(116.0, 90.0))
 		_ui.set_npc_position(Vector2.ZERO, false)
+	else:
+		_build_palace_targets(scene_name)
+		_ui.set_npc_position(Vector2.ZERO, false)
 	_ui.clear_destination()
 	_ui.set_paused(false)
+	_update_postcard_hud()
+
+
+func _palace_floor(scene_name: String) -> PackedVector2Array:
+	if scene_name == "palace_hall":
+		return PackedVector2Array([Vector2(410, 286), Vector2(866, 286), Vector2(1020, 370), Vector2(1130, 540), Vector2(1080, 700), Vector2(190, 700), Vector2(150, 540), Vector2(300, 370)])
+	# Paving follows the facade, side planting beds and foreground tree line.
+	return PackedVector2Array([Vector2(140, 326), Vector2(560, 326), Vector2(560, 310), Vector2(720, 310), Vector2(720, 326), Vector2(1140, 326), Vector2(1090, 410), Vector2(1190, 520), Vector2(1060, 608), Vector2(1010, 700), Vector2(265, 700), Vector2(230, 612), Vector2(85, 566), Vector2(110, 494), Vector2(225, 416)])
+
+
+func _palace_walls(scene_name: String) -> Array[PackedVector2Array]:
+	if scene_name == "palace_hall":
+		return []
+	# The ellipse is a real collision polygon shared with navigation, not a
+	# rectangular proxy that blocks the narrow rear walkway.
+	var lawn := PackedVector2Array()
+	for index in range(32):
+		var angle := TAU * float(index) / 32.0
+		lawn.append(Vector2(645, 478) + Vector2(cos(angle) * 337.0, sin(angle) * 83.0))
+	return [lawn]
+
+
+func _build_palace_targets(scene_name: String) -> void:
+	if scene_name == "palace_garden":
+		_add_target("palace_architecture", "palace_architecture", "建筑介绍", Vector2(1115, 550), Vector2(1040, 580), Vector2(80, 74))
+		_add_target("palace_view", "palace_view", "庭院观景", Vector2(177, 590), Vector2(275, 600), Vector2(74, 74))
+		_add_target("palace_door", "palace_enter", "进入独立宫", Vector2(640, 320), Vector2(640, 352), Vector2(130, 82))
+		_add_target("post_office_return", "post_office_return", "返回中央邮局", Vector2(640, 674), Vector2(640, 640), Vector2(160, 62))
+	else:
+		_add_target("palace_exhibit", "palace_exhibit", "接待厅展览说明", Vector2(640, 253), Vector2(640, 322), Vector2(150, 70))
+		_add_target("palace_souvenir", "palace_souvenir", "参观纪念台", Vector2(1110, 355), Vector2(990, 430), Vector2(120, 100))
+		_add_target("palace_exit", "palace_exit", "返回庭院", Vector2(640, 680), Vector2(640, 630), Vector2(170, 70))
 
 
 func _outdoor_floor() -> PackedVector2Array:
@@ -343,6 +388,7 @@ func _build_outdoor_targets() -> void:
 	_add_target("old_mailbox", "mailbox", "旧邮筒", Vector2(334.0, 524.0), Vector2(400.0, 542.0), Vector2(86.0, 114.0), MAILBOX_TEXTURE)
 	_add_target("photographer", "npc", "旅行摄影师", Vector2(938.0, 528.0), Vector2(862.0, 540.0), Vector2(92.0, 126.0), PHOTOGRAPHER_TEXTURE)
 	_add_target("post_office_door", "enter", "进入邮局", Vector2(608.0, 330.0), Vector2(608.0, 416.0), Vector2(100.0, 96.0))
+	_add_target("palace_travel", "palace_travel", "下一站 · 独立宫 →", Vector2(966, 664), Vector2(938, 620), Vector2(175, 64))
 
 
 func _add_target(id: String, kind: String, title: String, world_position: Vector2, stand: Vector2, hitbox: Vector2, texture: Texture2D = null) -> ExplorationTarget:
@@ -411,6 +457,26 @@ func _on_traveler_blocked() -> void:
 
 func _activate_target(target: ExplorationTarget) -> void:
 	match target.target_kind:
+		"palace_travel":
+			_ui.close_modal()
+			_transition_to("palace_garden")
+		"post_office_return":
+			_transition_to("outdoor")
+		"palace_enter":
+			_transition_to("palace_hall")
+		"palace_exit":
+			_transition_to("palace_garden")
+		"palace_architecture":
+			_record_palace_stop("architecture")
+			_ui.show_information("独立宫 · 建筑与光影", Palace.INFO)
+		"palace_view":
+			_record_palace_stop("garden")
+			_ui.show_information("在庭院停一会儿", Palace.VIEW)
+		"palace_exhibit":
+			_record_palace_stop("exhibit")
+			_ui.show_information("独立宫 · 历史的一页", Palace.EXHIBIT)
+		"palace_souvenir":
+			_show_palace_visit()
 		"info":
 			if _postcard.read_sign():
 				_save_postcard()
@@ -448,7 +514,45 @@ func _near_target(id: String) -> bool:
 
 
 func _update_postcard_hud() -> void:
-	_ui.set_quest_progress(_postcard.stage(), Postcard.HINTS[_postcard.stage()])
+	if _scene_id.begins_with("palace_"):
+		_ui.set_visit_progress(_palace.stage(), Palace.HINTS[_palace.stage()])
+	else:
+		var hint: String = Postcard.HINTS[_postcard.stage()]
+		if _postcard.sent:
+			hint = "第一张明信片已寄出。点击广场右下方「下一站 · 独立宫」继续旅程。"
+		_ui.set_quest_progress(_postcard.stage(), hint)
+
+
+func _show_current_journey() -> void:
+	if _scene_id.begins_with("palace_"):
+		_show_palace_visit()
+	else:
+		_show_postcard()
+
+
+func _record_palace_stop(stop: String) -> void:
+	if not _palace.record(stop):
+		return
+	_update_postcard_hud()
+	var save_store := get_node_or_null("/root/SaveStore")
+	if save_store != null and not save_store.call("set_palace_progress", _palace.serialize()):
+		_ui.show_feedback("暂时无法保存；本次参观仍可继续。")
+
+
+func _show_palace_visit() -> void:
+	if _paused or _transitioning:
+		return
+	_traveler.cancel_path()
+	_pending_target = null
+	_clear_destination()
+	_postcard_context = "palace_status"
+	if _palace.stage() == 4:
+		_ui.show_postcard("独立宫 · 旅行纪念", "第二站参观完成 ✓\n\n庭院里的水声、立面的光影，还有大厅里留存的历史，成为今天旅途的新一页。\n\nArchie 的西贡漫步 · 中央邮局 → 独立宫")
+	elif _palace.stage() == 3 and _near_target("palace_souvenir"):
+		_postcard_context = "palace_collect"
+		_ui.show_postcard("为这一站留下纪念", "建筑、庭院与历史，已经串成今天的参观路线。收下一枚独立宫旅行纪念，记住这段慢慢走过的时光。", ["收下旅行纪念"])
+	else:
+		_ui.show_postcard(Palace.TITLE, Palace.HINTS[_palace.stage()])
 
 
 func _save_postcard() -> void:
@@ -495,6 +599,11 @@ func _on_postcard_choice(index: int) -> void:
 		return
 	var changed := false
 	match _postcard_context:
+		"palace_collect":
+			if index == 0 and _scene_id == "palace_hall" and _near_target("palace_souvenir"):
+				_record_palace_stop("souvenir")
+				_show_palace_visit()
+			return
 		"offer":
 			if index == 0 and _near_target("photographer"):
 				changed = _postcard.accept()
@@ -513,12 +622,17 @@ func _transition_to(next_scene: String) -> void:
 	if _transitioning:
 		return
 	_transitioning = true
+	_traveler.cancel_path()
 	_pending_target = null
 	_clear_destination()
 	var fade_out := create_tween()
 	fade_out.tween_property(_fade, "color:a", 0.96, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	await fade_out.finished
-	var spawn := Vector2(640.0, 575.0) if next_scene == "indoor" else Vector2(608.0, 432.0)
+	var spawn: Vector2 = {"indoor": Vector2(640, 575), "outdoor": Vector2(608, 432), "palace_garden": Vector2(640, 640), "palace_hall": Vector2(640, 620)}[next_scene]
+	if next_scene == "palace_garden" and _scene_id == "palace_hall":
+		spawn = Vector2(640, 352)
+	if next_scene == "outdoor" and _scene_id == "palace_garden":
+		spawn = Vector2(938, 620)
 	_setup_scene(next_scene, spawn)
 	await get_tree().process_frame
 	var fade_in := create_tween()

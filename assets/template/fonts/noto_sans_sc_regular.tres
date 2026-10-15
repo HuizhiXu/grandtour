@@ -1,8 +1,14 @@
-[gd_resource type="FontVariation" load_steps=2 format=3]
+[gd_resource type="FontVariation" load_steps=4 format=3]
 
 [ext_resource type="FontFile" path="res://assets/template/fonts/NotoSansSC-VF.subset.woff2" id="1_base"]
+[ext_resource type="FontFile" path="res://assets/template/fonts/NotoSans-Vietnamese.subset.woff2" id="2_vietnamese"]
+
+[sub_resource type="FontVariation" id="FontVariation_vietnamese"]
+base_font = ExtResource("2_vietnamese")
+variation_opentype = {2003265652: 400}
 
 [resource]
 resource_name = "Noto Sans SC wght 400 (Chinese body/runtime face)"
 base_font = ExtResource("1_base")
+fallbacks = Array[Font]([SubResource("FontVariation_vietnamese")])
 variation_opentype = {2003265652: 400}

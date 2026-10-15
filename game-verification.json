@@ -3,6 +3,12 @@
   "checks": [
     {
       "kind": "script",
+      "path": "res://test/palace_suite.gd",
+      "expect": "[palace-tests] PASS:",
+      "profile": "source"
+    },
+    {
+      "kind": "script",
       "path": "res://test/walkable_ground_suite.gd",
       "expect": "[ground-tests] PASS:",
       "profile": "source"

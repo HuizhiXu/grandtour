@@ -37,6 +37,8 @@ var _modal_open := false
 var _quest_label: Label
 var _quest_progress: Label
 var _quest_panel: PanelContainer
+var _quest_title: Label
+var _quest_button: Button
 
 
 func _ready() -> void:
@@ -109,6 +111,15 @@ func show_dialogue(first_line: String) -> void:
 func set_quest_progress(stage: int, hint: String) -> void:
 	_quest_progress.text = "旅途小事  ·  %d / 4" % stage if stage < 4 else "旅途小事  ·  已完成 ✓"
 	_quest_label.text = hint
+	_quest_title.text = "寄出西贡的第一张明信片"
+	_quest_button.text = "查看明信片"
+
+
+func set_visit_progress(stage: int, hint: String) -> void:
+	_quest_progress.text = "第二站  ·  %d / 4" % stage if stage < 4 else "第二站  ·  已完成 ✓"
+	_quest_title.text = "参观独立宫"
+	_quest_label.text = hint
+	_quest_button.text = "查看参观纪念"
 
 
 func show_postcard(title: String, body: String, choices: Array[String] = []) -> void:
@@ -166,16 +177,16 @@ func _build_hud() -> void:
 	_quest_panel.add_child(quest_content)
 	_quest_progress = ScreenFactory.medium_label("旅途小事  ·  0 / 4", 12, GOLD)
 	quest_content.add_child(_quest_progress)
-	var quest_title := ScreenFactory.medium_label("寄出西贡的第一张明信片", 15, INK)
-	quest_content.add_child(quest_title)
+	_quest_title = ScreenFactory.medium_label("寄出西贡的第一张明信片", 15, INK)
+	quest_content.add_child(_quest_title)
 	_quest_label = ScreenFactory.label("", 13, MUTED)
 	_quest_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_quest_label.custom_minimum_size.x = 333.0
 	quest_content.add_child(_quest_label)
-	var postcard_button := _make_button("查看明信片", false)
-	postcard_button.custom_minimum_size = Vector2(0, 32)
-	postcard_button.pressed.connect(func() -> void: postcard_requested.emit())
-	quest_content.add_child(postcard_button)
+	_quest_button = _make_button("查看明信片", false)
+	_quest_button.custom_minimum_size = Vector2(0, 32)
+	_quest_button.pressed.connect(func() -> void: postcard_requested.emit())
+	quest_content.add_child(_quest_button)
 
 	var pause_button := _make_button("暂停  Esc", true)
 	pause_button.position = Vector2(1120.0, 26.0)
