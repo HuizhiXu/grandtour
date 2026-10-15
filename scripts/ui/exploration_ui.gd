@@ -69,7 +69,7 @@ func set_npc_position(world_position: Vector2, visible: bool = true) -> void:
 
 
 func set_destination(world_position: Vector2) -> void:
-	_destination_tag.position = Vector2(clampf(world_position.x + 16.0, 8.0, 1180.0), clampf(world_position.y - 34.0, 8.0, 675.0))
+	_destination_tag.position = Vector2(clampf(world_position.x + 16.0, 8.0, 1180.0), clampf(world_position.y + 14.0, 8.0, 688.0))
 	_destination_tag.visible = true
 	_destination_timer = 0.0
 
@@ -186,7 +186,7 @@ func _build_hud() -> void:
 	_hint_panel = _paper_panel(Vector2(500.0, 44.0), Vector2(24.0, 656.0))
 	_hint_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_hint_panel)
-	_hint_label = ScreenFactory.medium_label("点击空地行走 · 点击人物或物件后，旅行者会先走近再互动", 13, MUTED)
+	_hint_label = ScreenFactory.medium_label("点击空地带 Archie 漫步 · 点击人物或物件后，他会先走近再互动", 13, MUTED)
 	_hint_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_hint_panel.add_child(_hint_label)
 

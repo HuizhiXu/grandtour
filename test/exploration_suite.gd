@@ -139,9 +139,9 @@ func _test_facing(traveler: Traveler) -> void:
 		_check(traveler.call("_direction_row", direction) == 2, "upward isometric diagonals use the back pose")
 	var sprite := traveler.get_node("TravelerFrames") as AnimatedSprite2D
 	traveler.call("_play_walk", Vector2.LEFT)
-	_check(sprite.animation == "walk_left" and sprite.flip_h, "left travel mirrors the right-facing side art")
+	_check(sprite.animation == "walk_left" and not sprite.flip_h, "left travel uses genuine left-facing Archie art")
 	traveler.cancel_path()
-	_check(sprite.animation == "idle_left" and sprite.flip_h, "left idle retains the mirrored facing")
+	_check(sprite.animation == "idle_left" and not sprite.flip_h, "left idle retains Archie facing")
 	traveler.call("_play_walk", Vector2.RIGHT)
 	_check(sprite.animation == "walk_right" and not sprite.flip_h, "right travel uses the unmirrored side art")
 	traveler.call("_play_walk", Vector2.UP)

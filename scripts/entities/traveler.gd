@@ -4,9 +4,10 @@ class_name Traveler
 signal route_completed
 signal route_blocked
 
-const SPRITE_ATLAS: Texture2D = preload("res://assets/game/runtime/traveler-atlas.png")
-const FRAME_SIZE := Vector2(128.0, 160.0)
+const SPRITE_ATLAS: Texture2D = preload("res://assets/game/runtime/archie-atlas.png")
+const FRAME_SIZE := Vector2(160.0, 160.0)
 const SPRITE_SCALE := 0.58
+const FOOT_BASELINE := 154.0
 const WALK_ANIMATIONS := ["walk_down", "walk_left", "walk_up", "walk_right"]
 const IDLE_ANIMATIONS := ["idle_down", "idle_left", "idle_up", "idle_right"]
 const WAYPOINT_TOLERANCE := 0.1
@@ -29,7 +30,7 @@ func _ready() -> void:
 	_frames = AnimatedSprite2D.new()
 	_frames.name = "TravelerFrames"
 	_frames.centered = false
-	_frames.position = Vector2(-FRAME_SIZE.x * SPRITE_SCALE * 0.5, -FRAME_SIZE.y * SPRITE_SCALE)
+	_frames.position = Vector2(-FRAME_SIZE.x * SPRITE_SCALE * 0.5, -FOOT_BASELINE * SPRITE_SCALE)
 	_frames.scale = Vector2.ONE * SPRITE_SCALE
 	_frames.sprite_frames = _make_sprite_frames()
 	add_child(_frames)
@@ -42,6 +43,18 @@ func _ready() -> void:
 	hitbox.position = Vector2(0.0, -9.0)
 	add_child(hitbox)
 	_frames.play(IDLE_ANIMATIONS[_facing_row])
+	var name_label := Label.new()
+	name_label.name = "CompanionName"
+	name_label.text = "Archie"
+	name_label.position = Vector2(-48.0, -98.0)
+	name_label.size = Vector2(96.0, 22.0)
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	name_label.add_theme_font_size_override("font_size", 12)
+	name_label.add_theme_color_override("font_color", Color("fff7e7"))
+	name_label.add_theme_color_override("font_outline_color", Color("30493a"))
+	name_label.add_theme_constant_override("outline_size", 5)
+	add_child(name_label)
 
 
 func set_walk_speed(speed: float) -> void:
@@ -126,8 +139,8 @@ func _finish_route() -> void:
 
 func _play_walk(direction: Vector2) -> void:
 	_facing_row = _direction_row(direction)
-	# Both side rows in the supplied atlas face right.
-	_frames.flip_h = _facing_row == 1
+	# Archie has genuine left/right artwork; keep his bandana and tail orientation.
+	_frames.flip_h = false
 	var animation: StringName = WALK_ANIMATIONS[_facing_row]
 	if _frames.animation != animation:
 		_frames.play(animation)
