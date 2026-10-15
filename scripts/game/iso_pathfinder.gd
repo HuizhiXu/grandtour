@@ -1,0 +1,154 @@
+extends RefCounted
+class_name IsoPathfinder
+
+const GRID_SIZE := 64
+const ACTOR_CLEARANCE := 18.0
+
+var _astar: AStarGrid2D
+var _walk_rect := Rect2()
+var _obstacles: Array[Rect2] = []
+
+
+func configure(walk_rect: Rect2, obstacles: Array[Rect2]) -> void:
+	_walk_rect = walk_rect
+	_obstacles = obstacles.duplicate()
+	_astar = AStarGrid2D.new()
+	_astar.region = Rect2i(0, 0, GRID_SIZE, GRID_SIZE)
+	_astar.cell_size = Vector2i.ONE
+	_astar.cell_shape = AStarGrid2D.CELL_SHAPE_SQUARE
+	_astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+	_astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_OCTILE
+	_astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_OCTILE
+	_astar.update()
+	for x in range(GRID_SIZE):
+		for y in range(GRID_SIZE):
+			var id := Vector2i(x, y)
+			var point := cell_to_world(id)
+			if not _walk_rect.has_point(point) or _inside_expanded_obstacle(point):
+				_astar.set_point_solid(id, true)
+
+
+func find_path(start_world: Vector2, requested_world: Vector2) -> PackedVector2Array:
+	if _astar == null:
+		return PackedVector2Array()
+	var start_id := _nearest_start_id(start_world)
+	if start_id == Vector2i(-1, -1):
+		return PackedVector2Array()
+
+	var candidates: Array[Dictionary] = []
+	for x in range(GRID_SIZE):
+		for y in range(GRID_SIZE):
+			var id := Vector2i(x, y)
+			if _astar.is_point_solid(id):
+				continue
+			var point := cell_to_world(id)
+			candidates.append({"id": id, "distance": point.distance_squared_to(requested_world)})
+	candidates.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return float(a["distance"]) < float(b["distance"])
+	)
+
+	# A clicked wall/facade or a cell beyond the walkable footprint resolves to the
+	# nearest reachable point. A bounded candidate list keeps every click inexpensive.
+	var limit := mini(candidates.size(), 160)
+	for index in range(limit):
+		var target_id: Vector2i = candidates[index]["id"]
+		var id_path: Array[Vector2i] = _astar.get_id_path(start_id, target_id)
+		if id_path.is_empty():
+			continue
+		var points := PackedVector2Array()
+		var start_center := cell_to_world(start_id)
+		if start_world.distance_to(start_center) > 3.0:
+			points.append(start_center)
+		for path_index in range(1, id_path.size()):
+			points.append(cell_to_world(id_path[path_index]))
+		if target_id == world_to_cell(requested_world) and is_world_walkable(requested_world):
+			points.append(requested_world)
+		return _smooth_path(start_world, points)
+	return PackedVector2Array()
+
+
+func is_world_walkable(point: Vector2) -> bool:
+	if _astar == null or not _walk_rect.has_point(point):
+		return false
+	var id := world_to_cell(point)
+	return _inside_grid(id) and not _astar.is_point_solid(id)
+
+
+func cell_to_world(id: Vector2i) -> Vector2:
+	# Logical square-grid neighbours become the two diagonal axes of an isometric plane.
+	return Vector2(float(id.x - id.y) * 32.0, float(id.x + id.y - 32) * 16.0)
+
+
+func world_to_cell(point: Vector2) -> Vector2i:
+	var x := point.x / 64.0
+	var y := point.y / 32.0
+	return Vector2i(roundi(x + y + 16.0), roundi(y - x + 16.0))
+
+
+func _nearest_start_id(point: Vector2) -> Vector2i:
+	var candidates: Array[Dictionary] = []
+	for x in range(GRID_SIZE):
+		for y in range(GRID_SIZE):
+			var id := Vector2i(x, y)
+			if _astar.is_point_solid(id):
+				continue
+			var cell_point := cell_to_world(id)
+			candidates.append({"id": id, "distance": cell_point.distance_squared_to(point)})
+	candidates.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return float(a["distance"]) < float(b["distance"])
+	)
+	var limit := mini(candidates.size(), 36)
+	for index in range(limit):
+		var id: Vector2i = candidates[index]["id"]
+		var candidate := cell_to_world(id)
+		if _line_is_clear(point, candidate):
+			return id
+	return Vector2i(-1, -1)
+
+
+func _smooth_path(start: Vector2, raw: PackedVector2Array) -> PackedVector2Array:
+	if raw.is_empty():
+		return raw
+	var simplified := PackedVector2Array()
+	var anchor := start
+	var index := 0
+	while index < raw.size():
+		var farthest := index
+		for candidate in range(raw.size() - 1, index - 1, -1):
+			if _line_is_clear(anchor, raw[candidate]):
+				farthest = candidate
+				break
+		if farthest == index and not _line_is_clear(anchor, raw[index]):
+			# Preserve the tested A* segment rather than creating a shortcut near a corner.
+			simplified.append(raw[index])
+			anchor = raw[index]
+			index += 1
+		else:
+			simplified.append(raw[farthest])
+			anchor = raw[farthest]
+			index = farthest + 1
+	return simplified
+
+
+func _line_is_clear(from: Vector2, to: Vector2) -> bool:
+	var distance := from.distance_to(to)
+	var samples := maxi(1, ceili(distance / 8.0))
+	for sample in range(samples + 1):
+		var point := from.lerp(to, float(sample) / float(samples))
+		if not _walk_rect.has_point(point):
+			return false
+		var id := world_to_cell(point)
+		if not _inside_grid(id) or _astar.is_point_solid(id):
+			return false
+	return true
+
+
+func _inside_expanded_obstacle(point: Vector2) -> bool:
+	for obstacle in _obstacles:
+		if obstacle.grow(ACTOR_CLEARANCE).has_point(point):
+			return true
+	return false
+
+
+func _inside_grid(id: Vector2i) -> bool:
+	return id.x >= 0 and id.y >= 0 and id.x < GRID_SIZE and id.y < GRID_SIZE

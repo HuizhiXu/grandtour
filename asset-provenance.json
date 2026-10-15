@@ -1,0 +1,1165 @@
+{
+  "assets": {
+    "assets/game/characters/photographer-idle-clean.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:af1445b698383c4ac5a45661b5322bad5a462346e227d536049af00f1e5ff593",
+      "shipped": false,
+      "size": 3238013,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/photographer-idle.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:e3b15d25fee264775e08d90aa1ead9d243ba595eb84858191ac9ab1a95655deb",
+      "shipped": false,
+      "size": 2871325,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/photographer-sheet.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:472b3b9fc7e7c48d2b23da618f9d5d3e61ad532eee3809704522178ba9bb0f58",
+      "shipped": false,
+      "size": 4458209,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/photographer-watercolor-sheet-v2.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:038f68eccfdf072a927f8f704a3c805c07fe41533822159a31e4058483bf6533",
+      "shipped": false,
+      "size": 4422078,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/photographer-watercolor-sheet.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:ec8e8662551b05acf4f950ea48829fde0fc8d2ed29e9a8b09ad22eeec6b46fef",
+      "shipped": false,
+      "size": 4477700,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/traveler-idle-clean.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:c228cfb935f34fa181de14d223b1827fe4e5896db1b812ba1c681729d25b0d4a",
+      "shipped": false,
+      "size": 3041994,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/traveler-idle-edited.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:f28378b2f20ab9693950a0bbdbc83b92c228a813e07b19428cb38d9db9c81bf2",
+      "shipped": false,
+      "size": 2972271,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/traveler-idle.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:29c230f56a39d49d8f593051a871aed59a9bb2dcaeb885dc49e5975154b58f6a",
+      "shipped": false,
+      "size": 2760156,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/traveler-sheet.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:8f48ceddd98c8c44d182831977774fdde359b46b498592310d7ac391b47b00f6",
+      "shipped": false,
+      "size": 3760245,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/traveler-walk-clean.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:a16adce1b6f018d2aefb8d21cce851f02184bec5ca55dbde1fbae48373a50a6d",
+      "shipped": false,
+      "size": 3188527,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/characters/traveler-watercolor-sheet.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:2f5a6b7fb5d38c160cbacc7244d91c630b5465552e3b9ef9bd5cccd99d5bc7d3",
+      "shipped": false,
+      "size": 4296953,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/props/intro-sign-clean.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:a41f4ecf5f605f421fc8c1bef6354e1da6903c18dc2e74373f17a15a49d6e8a4",
+      "shipped": false,
+      "size": 3581810,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/props/intro-sign.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:2cc5b2a75e3b3ad222833aedc324032a7ada13831251bb2e1eabded2706d4370",
+      "shipped": false,
+      "size": 3447863,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/props/old-mailbox-clean.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:55a41524148b16319072e8f45248fe0d1b0ae74c261838a0240a10bb9bbef553",
+      "shipped": false,
+      "size": 4354534,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/props/old-mailbox.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:6039f3508413fe2151e515ceb4058d994cd8a18c367a3b534775ac04811af6df",
+      "shipped": false,
+      "size": 3697054,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/runtime/intro-sign.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:173704cc30454955b498df76ebbc36d271341b1ec3bc633876d221ecec8a1ac5",
+      "shipped": true,
+      "size": 21673,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/game/runtime/old-mailbox.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:a9d03a2d86315648449d9628a9d0e61b79b67421c1e89139d26b91653a34e58d",
+      "shipped": true,
+      "size": 21981,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/game/runtime/photographer-atlas.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:c4f4288b76505ee65ffb949e526ac1e47275a520e6b4647385a6814677105bcd",
+      "shipped": true,
+      "size": 239124,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": [],
+      "versions": {
+        "sha256:8ce82cdc0d9837582a55570a5eb7019e00eeae520bb6a29ffa6b74ea43760be0": {
+          "generator": {},
+          "inputs": [],
+          "license": {},
+          "origin": "unknown",
+          "regions": [],
+          "sha256": "sha256:8ce82cdc0d9837582a55570a5eb7019e00eeae520bb6a29ffa6b74ea43760be0",
+          "size": 291415,
+          "source": {},
+          "transformations": [],
+          "usedBy": []
+        }
+      }
+    },
+    "assets/game/runtime/photographer-npc.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:b8497b8d4300b645d340f9e1ef29a76abdb2a096d10ff271c1629029f19872b6",
+      "shipped": true,
+      "size": 16427,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "used": true,
+      "usedBy": [],
+      "versions": {
+        "sha256:26de4d02543c61c8a754dce8a6477ae8a95a67ff44a137cc2221e86faa939ed6": {
+          "generator": {},
+          "inputs": [],
+          "license": {},
+          "origin": "unknown",
+          "regions": [],
+          "sha256": "sha256:26de4d02543c61c8a754dce8a6477ae8a95a67ff44a137cc2221e86faa939ed6",
+          "size": 20934,
+          "source": {},
+          "transformations": [],
+          "usedBy": []
+        }
+      }
+    },
+    "assets/game/runtime/post-office-interior.jpg": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:88a51354695ac7bbd4af2882472669f5d7d57d5f6a9f12e6b41842dd57844ecb",
+      "shipped": true,
+      "size": 845618,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/game/runtime/saigon-exterior.jpg": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:f3f381055934cf97c896db7764fe1b5c358e23a1616a69aaa8e19ac37373b029",
+      "shipped": true,
+      "size": 931684,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/saigon_exploration.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/game/runtime/traveler-atlas.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/entities/traveler.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:f97deb701ad5c6768d35ffb4246f00627917e80a6f7a63f767a02e6f2d326a2d",
+      "shipped": true,
+      "size": 219672,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/entities/traveler.gd"
+      ],
+      "used": true,
+      "usedBy": [],
+      "versions": {
+        "sha256:30cbdf5e9af911218a5c4d50e1bf1b7536d4a3d425be84abad268367363489f9": {
+          "generator": {},
+          "inputs": [],
+          "license": {},
+          "origin": "unknown",
+          "regions": [],
+          "sha256": "sha256:30cbdf5e9af911218a5c4d50e1bf1b7536d4a3d425be84abad268367363489f9",
+          "size": 259427,
+          "source": {},
+          "transformations": [],
+          "usedBy": []
+        }
+      }
+    },
+    "assets/game/scenes/post-office-interior.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:953ed87f960f111cd84b31507c7bee7dc28be3f17a24dbe049c5b38ec3f1ca06",
+      "shipped": false,
+      "size": 8087943,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/game/scenes/saigon-exterior.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:b3ec6f864b60b95bee7329dab5bab9235aa157e209075bca30eb95eade9a2945",
+      "shipped": false,
+      "size": 8928683,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/share/favicon-loader.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:185bfee881f88ed40b8e4113221cae6167adef26b6487fadbe576f9d6b779fb1",
+      "shipped": false,
+      "size": 10112,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/share/favicon.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "game-sharing.json",
+        "project.godot"
+      ],
+      "regions": [],
+      "sha256": "sha256:73aa10e6ca8c09473ba78f030ad123a4e46c14c59009b3a7372bc4dd415f54d6",
+      "shipped": true,
+      "size": 588831,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "game-sharing.json",
+        "project.godot"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/share/og-cover.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:397bb7ac5ef84271d2d29adb467b961a2ade1de13bacbb407f25e7815cf360c4",
+      "shipped": false,
+      "size": 7942001,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/share/og.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "game-sharing.json"
+      ],
+      "regions": [],
+      "sha256": "sha256:ae7e76d0f82bcbe7aceb7d0d8714959e5663b59c362db9e14d8ba76e8595cca8",
+      "shipped": true,
+      "size": 1836756,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "game-sharing.json"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/template/characters/runner.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:c88485773d6ff9361e036f37d8ac76fb77b8c3f7c041c3f52c8dd222adc8cc21",
+      "shipped": true,
+      "size": 68885,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/characters/sentinel.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:0d9fb751bca5507ba14f7090573e6605a94753390a9e7c53bf2f590f0a24918d",
+      "shipped": true,
+      "size": 64998,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/environment/backdrop.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:ec4ab7867e60fb483dd438459f587b478aac4c1e71ec4fe509ce74a18de34216",
+      "shipped": true,
+      "size": 971282,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/environment/foreground.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:4b6916024c69961fbfa7cdc929c68f547fea4561e61ebdb3405b3aba0efbd94d",
+      "shipped": true,
+      "size": 58603,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/fonts/Figtree-VF.subset.woff2": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [
+        "assets/template/fonts/ui_bold.tres",
+        "assets/template/fonts/ui_medium.tres",
+        "assets/template/fonts/ui_regular.tres"
+      ],
+      "regions": [],
+      "sha256": "sha256:b3976c5969c8b1afd81dc3e314b61d8ffe3f3f58cf40906443105d330e6e0bdf",
+      "shipped": true,
+      "size": 23660,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "assets/template/fonts/ui_bold.tres",
+        "assets/template/fonts/ui_medium.tres",
+        "assets/template/fonts/ui_regular.tres"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/template/fonts/NotoSansSC-VF.subset.woff2": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {
+        "id": "OFL-1.1",
+        "url": "https://openfontlicense.org/open-font-license-official-text/"
+      },
+      "origin": "template",
+      "referenceEvidence": [
+        "assets/template/fonts/noto_sans_sc_bold.tres",
+        "assets/template/fonts/noto_sans_sc_medium.tres",
+        "assets/template/fonts/noto_sans_sc_regular.tres"
+      ],
+      "regions": [],
+      "sha256": "sha256:38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412",
+      "shipped": true,
+      "size": 1869368,
+      "source": {
+        "name": "NotoSansSC-VF.subset.woff2",
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "assets/template/fonts/noto_sans_sc_bold.tres",
+        "assets/template/fonts/noto_sans_sc_medium.tres",
+        "assets/template/fonts/noto_sans_sc_regular.tres"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/template/fonts/display/Sora-VF.subset.woff2": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [
+        "assets/template/fonts/display/generic_eyebrow.tres",
+        "assets/template/fonts/display/generic_heading.tres",
+        "assets/template/fonts/display/generic_menu.tres",
+        "assets/template/fonts/display/generic_title.tres"
+      ],
+      "regions": [],
+      "sha256": "sha256:438fbf4582548e76b266a738f2c11bcbd5137978f2d2e2f3aaabd49df69186f2",
+      "shipped": true,
+      "size": 41696,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "assets/template/fonts/display/generic_eyebrow.tres",
+        "assets/template/fonts/display/generic_heading.tres",
+        "assets/template/fonts/display/generic_menu.tres",
+        "assets/template/fonts/display/generic_title.tres"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/template/powerups/energy.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:ffd7906f240f928e785d7c19a9e7a7b5dfab0d7483be5205dda3e4ba17ebe06a",
+      "shipped": true,
+      "size": 50950,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/powerups/magnet.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:6e7354aa6510a462717218b09b9d784bb161b87878bff62ef4f2a9d03c053de7",
+      "shipped": true,
+      "size": 53724,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/powerups/overdrive.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:6a48a85886c0551c1af0df576b0225f0ec3ae86b326fd84fc614083fbfe2908b",
+      "shipped": true,
+      "size": 37238,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/powerups/shield.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:8cebf0cf730ca35c8c8697192ef78121c926442328a0725e0bd3e31701d64f13",
+      "shipped": true,
+      "size": 39659,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/powerups/slow_field.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:96874c000866b2e7503b40da73888afb918ae36e462f51488415157da52a8637",
+      "shipped": true,
+      "size": 49145,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/ui/loading-background.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:16dde3061f4e60802f8f0d1a6b875e72b6add05192237b03fef1fd313968a13a",
+      "shipped": true,
+      "size": 473356,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/ui/pause_glass.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:c88a4725838df85e72c7270865848f275b62c525c5679a2a8b7ecefb1af82d4b",
+      "shipped": true,
+      "size": 115691,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/template/ui/title_glass.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "template",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:8860db07768f093d4effea10b51431f76a1552d4bc7fd4e57757f189c51f0429",
+      "shipped": true,
+      "size": 155592,
+      "source": {
+        "starterId": "game-generic-v56"
+      },
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    }
+  },
+  "discoveries": {},
+  "downloads": {},
+  "export": {
+    "coverage": "verified",
+    "hostMedia": [
+      {
+        "contentMatches": [],
+        "path": "index.apple-touch-icon.png",
+        "sha256": "sha256:add4377fdc1e8d6cf2e41acb4902c87c3d0b0bf277fe2cbe1ecb615f4299e5ed",
+        "size": 84374,
+        "sourcePaths": []
+      },
+      {
+        "contentMatches": [],
+        "path": "index.icon.png",
+        "sha256": "sha256:ea3b5d584e4267986a83463fe6cc83aeedbecdd63ec3fe76f174c3f2e362fe02",
+        "size": 591454,
+        "sourcePaths": []
+      },
+      {
+        "contentMatches": [],
+        "path": "index.png",
+        "sha256": "sha256:ea3b5d584e4267986a83463fe6cc83aeedbecdd63ec3fe76f174c3f2e362fe02",
+        "size": 591454,
+        "sourcePaths": []
+      },
+      {
+        "contentMatches": [],
+        "path": "share/73aa10e6ca8c09473ba78f030ad123a4e46c14c59009b3a7372bc4dd415f54d6.png",
+        "sha256": "sha256:73aa10e6ca8c09473ba78f030ad123a4e46c14c59009b3a7372bc4dd415f54d6",
+        "size": 588831,
+        "sourcePaths": [
+          "assets/share/favicon.png"
+        ]
+      },
+      {
+        "contentMatches": [],
+        "path": "share/ae7e76d0f82bcbe7aceb7d0d8714959e5663b59c362db9e14d8ba76e8595cca8.png",
+        "sha256": "sha256:ae7e76d0f82bcbe7aceb7d0d8714959e5663b59c362db9e14d8ba76e8595cca8",
+        "size": 1836756,
+        "sourcePaths": [
+          "assets/share/og.png"
+        ]
+      }
+    ],
+    "pckSha256": "sha256:4d5b45461e2f4b5870a6fdf1c9ed932a15bc6dbc812b38b5391ee1f195b50b5f",
+    "profile": "release",
+    "sourceFingerprint": "sha256:aaf771510ae9fadb9581f70f09f8bb2efd9f43f0ea682377da64db1a26585423"
+  },
+  "procedures": {},
+  "summary": {
+    "ancestry": {
+      "ai": {
+        "retained": 0,
+        "shipped": 0,
+        "used": 0
+      },
+      "catalog": {
+        "retained": 0,
+        "shipped": 0,
+        "used": 0
+      },
+      "procedural": {
+        "retained": 0,
+        "shipped": 0,
+        "used": 0
+      }
+    },
+    "derivatives": {
+      "retained": 0,
+      "shipped": 0,
+      "used": 0
+    },
+    "exportedHostMedia": {
+      "paths": 5,
+      "uniqueHashes": 4,
+      "unmatchedSourcePaths": 3
+    },
+    "files": {
+      "downloaded": 0,
+      "retained": 43,
+      "shipped": 24,
+      "used": 11
+    },
+    "origins": {
+      "ai": {
+        "retained": 0,
+        "shipped": 0,
+        "used": 0
+      },
+      "catalog": {
+        "retained": 0,
+        "shipped": 0,
+        "used": 0
+      },
+      "derivative": {
+        "retained": 0,
+        "shipped": 0,
+        "used": 0
+      },
+      "external": {
+        "retained": 0,
+        "shipped": 0,
+        "used": 0
+      },
+      "procedural": {
+        "retained": 0,
+        "shipped": 0,
+        "used": 0
+      },
+      "template": {
+        "retained": 15,
+        "shipped": 15,
+        "used": 3
+      },
+      "unknown": {
+        "retained": 28,
+        "shipped": 9,
+        "used": 8
+      }
+    },
+    "packs": {
+      "discovered": 0,
+      "downloaded": 0,
+      "shipped": 0,
+      "used": 0
+    },
+    "proceduralSystems": {
+      "retained": 0,
+      "used": 0
+    },
+    "spriteRegions": {
+      "retained": 0,
+      "shipped": 0,
+      "used": 0
+    },
+    "visualCoverage": {
+      "approvedRevision": 3,
+      "blueprintId": "gbp_7bc031df57692f7e955d4547",
+      "committedRoles": 6,
+      "expectedDigest": "99089b4228ffcd37a07d0c7dc39a072c4b8a30b85a33becf216b0c53dc7cc3ed",
+      "fulfilledRoles": 0,
+      "roles": [
+        {
+          "id": "post_office_exterior",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "post_office_interior",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "traveler_player",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "photographer_npc",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "interactive_objects",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "dialog_info_ui",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        }
+      ],
+      "search": {
+        "checkedPages": 0,
+        "outcomes": 0,
+        "overflowEvents": 0,
+        "requests": 0
+      },
+      "selectedButUnusedAssets": [],
+      "staleRenderedEvidence": [],
+      "status": "incomplete",
+      "unexplainedFallbacks": [],
+      "unresolvedRoles": [
+        "post_office_exterior",
+        "post_office_interior",
+        "traveler_player",
+        "photographer_npc",
+        "interactive_objects",
+        "dialog_info_ui"
+      ],
+      "visualQuality": "requires_agent_review"
+    }
+  },
+  "version": 1,
+  "visualCoverage": {
+    "attempts": {},
+    "expected": {
+      "approvedRevision": 3,
+      "blueprintId": "gbp_7bc031df57692f7e955d4547",
+      "digest": "99089b4228ffcd37a07d0c7dc39a072c4b8a30b85a33becf216b0c53dc7cc3ed",
+      "roles": [
+        {
+          "description": "你的室外场景需要以具备主要识别特征的西贡中央邮局外观、入口、前方广场及少量相连街道构成可寻路的等距空间；周边树木、路灯、长椅、少量摩托车与咖啡桌只作为必要的障碍和尺度参照，不扩展场景范围。",
+          "id": "post_office_exterior",
+          "label": "西贡中央邮局室外核心场景"
+        },
+        {
+          "description": "你的室内场景需要以简化但有代表性的大厅、柜台、拱形结构、装饰元素、入口与返回点构成清楚可行走的等距空间，并与室外保持同一比例、光线和手绘旅行风格。",
+          "id": "post_office_interior",
+          "label": "邮局内部大厅场景"
+        },
+        {
+          "description": "你的玩家需要一名适配等距移动方向与场景比例的普通旅行者，至少具备可读的站立和流畅行走动画，使点击寻路、途中改道与停止状态能被清楚辨认。",
+          "id": "traveler_player",
+          "label": "普通旅行者玩家角色"
+        },
+        {
+          "description": "你的 NPC 需要以相机形成明确身份识别，并与玩家角色共享相同比例、等距朝向、绘制方式和暖色旅行氛围；至少需要稳定的待机表现以支持靠近后对话。",
+          "id": "photographer_npc",
+          "label": "旅行摄影师 NPC"
+        },
+        {
+          "description": "你的建筑介绍牌和街边旧邮筒需要在等距场景中清楚可辨、具有一致比例和交互落点，并分别支持角色自动靠近后触发指定信息内容。",
+          "id": "interactive_objects",
+          "label": "介绍牌与旧邮筒交互物件"
+        },
+        {
+          "description": "你的界面需要覆盖摄影师姓名、指定对话文本、两个回答选项、对应回应，以及介绍牌和邮筒的可关闭信息框；保持优雅清晰、不过度遮挡，并采用统一的旅行手账审美，但不实现手账、地图或任务系统。",
+          "id": "dialog_info_ui",
+          "label": "对话框与信息框界面"
+        }
+      ]
+    },
+    "overflowEvents": 0,
+    "resolutions": {},
+    "version": 1
+  }
+}

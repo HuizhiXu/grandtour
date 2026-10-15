@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2,
+  "title": "The Grand Tour",
+  "description": "在胡志明市漫步探索西贡中央邮局，遇见旅行摄影师、发现旧邮筒，并走进历史悠久的大厅。",
+  "defaultCaptions": {},
+  "assets": {
+    "og": "assets/share/og.png",
+    "favicon": "assets/share/favicon.png"
+  }
+}

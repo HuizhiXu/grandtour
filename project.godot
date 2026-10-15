@@ -1,0 +1,54 @@
+; Engine configuration file for The Grand Tour.
+; Authored game-specific settings; shared Manus autoloads and typography are preserved.
+
+config_version=5
+
+[application]
+
+boot_splash/image="res://assets/share/favicon.png"
+boot_splash/show_image=false
+boot_splash/fullsize=true
+boot_splash/use_filter=true
+boot_splash/bg_color=Color(0.96863, 0.94902, 0.90588, 1)
+
+config/name="The Grand Tour"
+config/description="在胡志明市西贡中央邮局及周边街区自由漫步、探索并与旅人交谈。"
+config/version="0.1.0"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="res://assets/share/favicon.png"
+
+[autoload]
+
+TuningBridge="*res://scripts/manus/preview/tuning_adapter.gd"
+ManusFontTheme="*res://autoload/manus_font_theme.gd"
+SaveStore="*res://autoload/save_store.gd"
+I18n="*res://autoload/i18n.gd"
+TuningStore="*res://autoload/tuning_store.gd"
+AudioDirector="*res://autoload/audio_director.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[input]
+
+pause={
+"deadzone": 0.3,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.96863, 0.94902, 0.90588, 1)
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+
+[editor]
+import/use_multiple_threads=false

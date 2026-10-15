@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "checks": [
+    {
+      "kind": "script",
+      "path": "res://test/exploration_suite.gd",
+      "expect": "[grand-tour-tests] PASS:",
+      "profile": "source"
+    },
+    {
+      "kind": "script",
+      "path": "res://tools/verify_exported_pack.gd",
+      "expect": "[exported-pack] PASS:",
+      "profile": "pack"
+    }
+  ]
+}

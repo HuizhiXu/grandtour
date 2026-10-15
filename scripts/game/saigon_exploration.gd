@@ -1,0 +1,382 @@
+extends Node2D
+
+const Pathfinder := preload("res://scripts/game/iso_pathfinder.gd")
+const TravelerType := preload("res://scripts/entities/traveler.gd")
+const TargetType := preload("res://scripts/entities/exploration_target.gd")
+const UIType := preload("res://scripts/ui/exploration_ui.gd")
+const OpenSourceLicenseHelper := preload("res://scripts/manus/open_source_licenses.gd")
+const OUTDOOR_BG: Texture2D = preload("res://assets/game/runtime/saigon-exterior.jpg")
+const INDOOR_BG: Texture2D = preload("res://assets/game/runtime/post-office-interior.jpg")
+const SIGN_TEXTURE: Texture2D = preload("res://assets/game/runtime/intro-sign.png")
+const MAILBOX_TEXTURE: Texture2D = preload("res://assets/game/runtime/old-mailbox.png")
+const PHOTOGRAPHER_TEXTURE: Texture2D = preload("res://assets/game/runtime/photographer-npc.png")
+const WORLD_SIZE := Vector2(1280.0, 720.0)
+
+const SIGN_BODY := "西贡中央邮局是胡志明市最具代表性的历史建筑之一，以其宏伟的空间和法国殖民时期的建筑风格闻名。"
+const MAILBOX_BODY := "这个旧邮筒似乎已经在这里很久了。不知道它曾经寄出过多少封信。"
+const PHOTOGRAPHER_REPLIES := [
+	"那你一定要看看这座邮局。这里有很多值得发现的建筑细节。",
+	"那你来对地方了。西贡的每一条街道，似乎都有自己的故事。",
+]
+
+var _background_root: Node2D
+var _collision_root: Node2D
+var _sortable_world: Node2D
+var _ui_layer: CanvasLayer
+var _ui: ExplorationUI
+var _traveler: Traveler
+var _photographer: Sprite2D
+var _pathfinder: IsoPathfinder
+var _targets: Dictionary = {}
+var _pending_target: ExplorationTarget
+var _scene_id := "outdoor"
+var _transitioning := false
+var _paused := false
+var _fade: ColorRect
+
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	var locale_service := get_node_or_null("/root/I18n")
+	if locale_service != null:
+		locale_service.call("set_locale", "zh-CN")
+	_build_world_layers()
+	_build_ui()
+	_build_traveler()
+	_setup_scene("outdoor", Vector2(640.0, 622.0))
+	var tuning_store := get_node_or_null("/root/TuningStore")
+	if tuning_store != null:
+		tuning_store.connect("value_changed", _on_tuning_changed)
+	_apply_tuning()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		if _ui.has_modal():
+			_ui.close_modal()
+		elif _paused:
+			_set_paused(false)
+		else:
+			_set_paused(true)
+		get_viewport().set_input_as_handled()
+		return
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if _paused or _ui.has_modal() or _transitioning:
+			return
+		var destination := get_global_mouse_position()
+		var clicked_target := _target_at(destination)
+		if clicked_target != null:
+			_on_target_selected(clicked_target)
+		else:
+			_pending_target = null
+			_request_walk(destination)
+		get_viewport().set_input_as_handled()
+
+
+func _target_at(world_position: Vector2) -> ExplorationTarget:
+	var query := PhysicsPointQueryParameters2D.new()
+	query.position = world_position
+	query.collision_mask = 2
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	for hit in get_world_2d().direct_space_state.intersect_point(query, 16):
+		var target := hit.get("collider") as ExplorationTarget
+		if target != null:
+			return target
+	return null
+
+
+func _build_world_layers() -> void:
+	var letterbox_layer := CanvasLayer.new()
+	letterbox_layer.name = "WarmLetterbox"
+	letterbox_layer.layer = -10
+	add_child(letterbox_layer)
+	var warm_canvas := ColorRect.new()
+	warm_canvas.name = "PaperCanvasFill"
+	warm_canvas.color = Color("f7f2e7")
+	warm_canvas.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	warm_canvas.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	letterbox_layer.add_child(warm_canvas)
+	_background_root = Node2D.new()
+	_background_root.name = "PaintedWorld"
+	add_child(_background_root)
+	_collision_root = Node2D.new()
+	_collision_root.name = "WorldColliders"
+	add_child(_collision_root)
+	_sortable_world = Node2D.new()
+	_sortable_world.name = "ActorsAndClickableProps"
+	_sortable_world.y_sort_enabled = true
+	add_child(_sortable_world)
+	_ui_layer = CanvasLayer.new()
+	_ui_layer.layer = 10
+	add_child(_ui_layer)
+	_fade = ColorRect.new()
+	_fade.name = "SceneTransition"
+	_fade.color = Color(0.11, 0.16, 0.12, 0.0)
+	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_fade.z_index = 80
+	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_ui_layer.add_child(_fade)
+
+
+func _build_ui() -> void:
+	_ui = UIType.new()
+	_ui_layer.add_child(_ui)
+	_ui.pause_requested.connect(_toggle_pause)
+	_ui.return_to_start_requested.connect(_return_to_start)
+	_ui.licenses_requested.connect(_open_licenses)
+	_ui.dialogue_choice.connect(_on_dialogue_choice)
+
+
+func _build_traveler() -> void:
+	_traveler = TravelerType.new()
+	_traveler.name = "Traveler"
+	_traveler.route_completed.connect(_on_traveler_arrived)
+	_traveler.route_blocked.connect(_on_traveler_blocked)
+	_sortable_world.add_child(_traveler)
+	var shadow := Polygon2D.new()
+	shadow.name = "FootShadow"
+	shadow.color = Color(0.20, 0.18, 0.12, 0.19)
+	shadow.polygon = PackedVector2Array([Vector2(-15, 1), Vector2(-11, -4), Vector2(11, -4), Vector2(15, 1), Vector2(10, 5), Vector2(-10, 5)])
+	shadow.z_index = -1
+	_traveler.add_child(shadow)
+
+
+func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
+	_scene_id = scene_name
+	_pending_target = null
+	_traveler.cancel_path()
+	_traveler.global_position = player_spawn
+	for child in _background_root.get_children():
+		child.free()
+	for child in _collision_root.get_children():
+		child.free()
+	for child in _sortable_world.get_children():
+		if child != _traveler:
+			child.free()
+	_targets.clear()
+	_photographer = null
+
+	var background := Sprite2D.new()
+	background.name = "SceneIllustration"
+	background.texture = OUTDOOR_BG if scene_name == "outdoor" else INDOOR_BG
+	background.position = WORLD_SIZE * 0.5
+	background.scale = Vector2(0.8, 0.8)
+	background.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	_background_root.add_child(background)
+
+	var walk_rect: Rect2
+	var obstacles: Array[Rect2]
+	if scene_name == "outdoor":
+		walk_rect = Rect2(Vector2(18.0, 230.0), Vector2(1244.0, 478.0))
+		obstacles = _outdoor_obstacles()
+		_ui.set_location("胡志明市 · 西贡中央邮局")
+	else:
+		walk_rect = Rect2(Vector2(72.0, 158.0), Vector2(1136.0, 535.0))
+		obstacles = _indoor_obstacles()
+		_ui.set_location("西贡中央邮局 · 内部大厅")
+	_pathfinder = Pathfinder.new()
+	_pathfinder.configure(walk_rect, obstacles)
+	for index in range(obstacles.size()):
+		_add_physical_obstacle(obstacles[index], index)
+
+	if scene_name == "outdoor":
+		_build_outdoor_targets()
+		_ui.set_npc_position(Vector2(938.0, 528.0), true)
+	else:
+		_add_target("outdoor_exit", "exit", "返回广场", Vector2(640.0, 674.0), Vector2(640.0, 575.0), Vector2(164.0, 98.0))
+		_ui.set_npc_position(Vector2.ZERO, false)
+	_ui.clear_destination()
+	_ui.set_paused(false)
+
+
+func _outdoor_obstacles() -> Array[Rect2]:
+	return [
+		Rect2(Vector2(0.0, 0.0), Vector2(586.0, 250.0)),
+		Rect2(Vector2(694.0, 0.0), Vector2(586.0, 250.0)),
+		Rect2(Vector2(586.0, 0.0), Vector2(108.0, 178.0)),
+		Rect2(Vector2(26.0, 330.0), Vector2(108.0, 180.0)),
+		Rect2(Vector2(0.0, 520.0), Vector2(245.0, 200.0)),
+		Rect2(Vector2(1150.0, 320.0), Vector2(130.0, 218.0)),
+		Rect2(Vector2(1024.0, 542.0), Vector2(132.0, 106.0)),
+			Rect2(Vector2(270.0, 344.0), Vector2(72.0, 38.0)),
+			Rect2(Vector2(948.0, 375.0), Vector2(74.0, 38.0)),
+			Rect2(Vector2(752.0, 360.0), Vector2(30.0, 22.0)),
+			Rect2(Vector2(322.0, 510.0), Vector2(24.0, 18.0)),
+			Rect2(Vector2(924.0, 512.0), Vector2(28.0, 18.0)),
+		]
+
+
+func _indoor_obstacles() -> Array[Rect2]:
+	return [
+		Rect2(Vector2(0.0, 0.0), Vector2(1280.0, 150.0)),
+		Rect2(Vector2(0.0, 150.0), Vector2(142.0, 492.0)),
+		Rect2(Vector2(1138.0, 150.0), Vector2(142.0, 492.0)),
+		Rect2(Vector2(0.0, 648.0), Vector2(542.0, 72.0)),
+		Rect2(Vector2(738.0, 648.0), Vector2(542.0, 72.0)),
+		Rect2(Vector2(172.0, 306.0), Vector2(280.0, 144.0)),
+		Rect2(Vector2(828.0, 306.0), Vector2(280.0, 144.0)),
+		Rect2(Vector2(222.0, 486.0), Vector2(188.0, 60.0)),
+		Rect2(Vector2(870.0, 486.0), Vector2(188.0, 60.0)),
+	]
+
+
+func _add_physical_obstacle(rect: Rect2, index: int) -> void:
+	var body := StaticBody2D.new()
+	body.name = "BlockedSurface_%02d" % index
+	body.collision_layer = 1
+	body.collision_mask = 1
+	body.position = rect.position + rect.size * 0.5
+	var collision := CollisionShape2D.new()
+	var shape := RectangleShape2D.new()
+	shape.size = rect.size
+	collision.shape = shape
+	body.add_child(collision)
+	_collision_root.add_child(body)
+
+
+func _build_outdoor_targets() -> void:
+	_add_target("post_office_info", "info", "建筑介绍牌", Vector2(766.0, 378.0), Vector2(816.0, 446.0), Vector2(108.0, 128.0), SIGN_TEXTURE)
+	_add_target("old_mailbox", "mailbox", "旧邮筒", Vector2(334.0, 524.0), Vector2(400.0, 542.0), Vector2(86.0, 114.0), MAILBOX_TEXTURE)
+	_add_target("photographer", "npc", "旅行摄影师", Vector2(938.0, 528.0), Vector2(862.0, 540.0), Vector2(92.0, 126.0), PHOTOGRAPHER_TEXTURE)
+	_add_target("post_office_door", "enter", "进入邮局", Vector2(640.0, 213.0), Vector2(640.0, 278.0), Vector2(132.0, 104.0))
+
+
+func _add_target(id: String, kind: String, title: String, world_position: Vector2, stand: Vector2, hitbox: Vector2, texture: Texture2D = null) -> ExplorationTarget:
+	var target := TargetType.new()
+	target.name = "Target_" + id
+	target.configure(id, kind, title, world_position, stand, hitbox)
+	target.selected.connect(_on_target_selected)
+	var target_sprite: Sprite2D
+	if texture != null:
+		target_sprite = Sprite2D.new()
+		target_sprite.texture = texture
+		target_sprite.centered = false
+		var sprite_scale := 0.58 if id == "photographer" else 0.68
+		target_sprite.position = Vector2(-64.0 * sprite_scale, -160.0 * sprite_scale)
+		target_sprite.scale = Vector2.ONE * sprite_scale
+		target_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		target.add_child(target_sprite)
+	if id == "photographer" and target_sprite != null:
+		_photographer = target_sprite
+		var rest_y := target_sprite.position.y
+		var idle_tween := target.create_tween().set_loops()
+		idle_tween.tween_property(target_sprite, "position:y", rest_y - 2.0, 1.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		idle_tween.tween_property(target_sprite, "position:y", rest_y, 1.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_sortable_world.add_child(target)
+	_targets[id] = target
+	return target
+
+
+func _request_walk(destination: Vector2) -> void:
+	var route := _pathfinder.find_path(_traveler.global_position, destination)
+	if route.is_empty():
+		_pending_target = null
+		_ui.clear_destination()
+		_ui.show_feedback("这里暂时无法通行，请换一处点击。")
+		return
+	_traveler.set_path(route)
+	_ui.set_destination(route[route.size() - 1])
+
+
+func _on_target_selected(target: ExplorationTarget) -> void:
+	if _paused or _transitioning or _ui.has_modal():
+		return
+	_pending_target = target
+	_request_walk(target.stand_position)
+
+
+func _on_traveler_arrived() -> void:
+	_ui.clear_destination()
+	if _pending_target == null or not is_instance_valid(_pending_target):
+		return
+	var target := _pending_target
+	_pending_target = null
+	if _traveler.global_position.distance_to(target.stand_position) > 26.0:
+		return
+	_activate_target(target)
+
+
+func _on_traveler_blocked() -> void:
+	_pending_target = null
+	_ui.clear_destination()
+	_ui.show_feedback("前方有障碍，路线已停止；请点击附近空地重新规划。")
+
+
+func _activate_target(target: ExplorationTarget) -> void:
+	match target.target_kind:
+		"info":
+			_ui.show_information("Saigon Central Post Office", SIGN_BODY)
+		"mailbox":
+			_ui.show_information("旧邮筒", MAILBOX_BODY)
+		"npc":
+			_ui.show_dialogue("第一次来西贡吗？")
+		"enter":
+			_transition_to("indoor")
+		"exit":
+			_transition_to("outdoor")
+
+
+func _on_dialogue_choice(choice_index: int) -> void:
+	if choice_index < 0 or choice_index >= PHOTOGRAPHER_REPLIES.size():
+		return
+	_ui.show_dialogue_reply(PHOTOGRAPHER_REPLIES[choice_index])
+
+
+func _transition_to(next_scene: String) -> void:
+	if _transitioning:
+		return
+	_transitioning = true
+	_pending_target = null
+	_ui.clear_destination()
+	var fade_out := create_tween()
+	fade_out.tween_property(_fade, "color:a", 0.96, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await fade_out.finished
+	var spawn := Vector2(640.0, 575.0) if next_scene == "indoor" else Vector2(640.0, 296.0)
+	_setup_scene(next_scene, spawn)
+	await get_tree().process_frame
+	var fade_in := create_tween()
+	fade_in.tween_property(_fade, "color:a", 0.0, 0.22).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await fade_in.finished
+	_transitioning = false
+
+
+func _toggle_pause() -> void:
+	_set_paused(not _paused)
+
+
+func _set_paused(paused: bool) -> void:
+	_paused = paused
+	get_tree().paused = paused
+	_ui.set_paused(paused)
+	var audio_director := get_node_or_null("/root/AudioDirector")
+	if audio_director != null:
+		audio_director.call("set_game_paused", paused)
+
+
+func _return_to_start() -> void:
+	_set_paused(false)
+	_setup_scene("outdoor", Vector2(640.0, 622.0))
+	_ui.show_feedback("旅程从西贡中央邮局前重新开始。")
+
+
+func _open_licenses() -> void:
+	OpenSourceLicenseHelper.open(self)
+
+
+func _apply_tuning() -> void:
+	var tuning_store := get_node_or_null("/root/TuningStore")
+	if is_instance_valid(_traveler):
+		var speed := 190.0
+		if tuning_store != null:
+			speed = float(tuning_store.call("get_value", "player.move.max_speed", speed))
+		_traveler.set_walk_speed(speed)
+	if is_instance_valid(_ui):
+		var opacity := 0.96
+		if tuning_store != null:
+			opacity = float(tuning_store.call("get_value", "ui.hud.opacity", opacity))
+		_ui.set_panel_opacity(opacity)
+
+
+func _on_tuning_changed(_id: String, _requested: Variant, _active: Variant) -> void:
+	_apply_tuning()
