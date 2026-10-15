@@ -5,13 +5,16 @@ const GRID_SIZE := 64
 const ACTOR_CLEARANCE := 18.0
 
 var _astar: AStarGrid2D
+var _graph: AStar2D
 var _walk_rect := Rect2()
 var _obstacles: Array[Rect2] = []
+var _walls: Array[PackedVector2Array] = []
 
 
-func configure(walk_rect: Rect2, obstacles: Array[Rect2]) -> void:
+func configure(walk_rect: Rect2, obstacles: Array[Rect2], walls: Array[PackedVector2Array] = []) -> void:
 	_walk_rect = walk_rect
 	_obstacles = obstacles.duplicate()
+	_walls = walls.duplicate()
 	_astar = AStarGrid2D.new()
 	_astar.region = Rect2i(0, 0, GRID_SIZE, GRID_SIZE)
 	_astar.cell_size = Vector2i.ONE
@@ -26,6 +29,27 @@ func configure(walk_rect: Rect2, obstacles: Array[Rect2]) -> void:
 			var point := cell_to_world(id)
 			if not _walk_rect.has_point(point) or _inside_expanded_obstacle(point):
 				_astar.set_point_solid(id, true)
+	# Validate edges as well as cell centers: a slanted wall can cross a grid edge.
+	_graph = AStar2D.new()
+	for x in range(GRID_SIZE):
+		for y in range(GRID_SIZE):
+			var id := Vector2i(x, y)
+			if not _astar.is_point_solid(id):
+				_graph.add_point(_point_id(id), cell_to_world(id))
+	for x in range(GRID_SIZE):
+		for y in range(GRID_SIZE):
+			var id := Vector2i(x, y)
+			if _astar.is_point_solid(id):
+				continue
+			for offset: Vector2i in [Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(1, -1)]:
+				var neighbor := id + offset
+				if not _inside_grid(neighbor) or _astar.is_point_solid(neighbor):
+					continue
+				if offset.x != 0 and offset.y != 0:
+					if _astar.is_point_solid(id + Vector2i(offset.x, 0)) or _astar.is_point_solid(id + Vector2i(0, offset.y)):
+						continue
+				if _line_is_clear(cell_to_world(id), cell_to_world(neighbor)):
+					_graph.connect_points(_point_id(id), _point_id(neighbor))
 
 
 func find_path(start_world: Vector2, requested_world: Vector2) -> PackedVector2Array:
@@ -48,11 +72,10 @@ func find_path(start_world: Vector2, requested_world: Vector2) -> PackedVector2A
 	)
 
 	# A clicked wall/facade or a cell beyond the walkable footprint resolves to the
-	# nearest reachable point. A bounded candidate list keeps every click inexpensive.
-	var limit := mini(candidates.size(), 160)
-	for index in range(limit):
+	# nearest reachable point, even when the closest ground belongs to another area.
+	for index in range(candidates.size()):
 		var target_id: Vector2i = candidates[index]["id"]
-		var id_path: Array[Vector2i] = _astar.get_id_path(start_id, target_id)
+		var id_path := _graph.get_id_path(_point_id(start_id), _point_id(target_id))
 		if id_path.is_empty():
 			continue
 		var points := PackedVector2Array()
@@ -60,15 +83,17 @@ func find_path(start_world: Vector2, requested_world: Vector2) -> PackedVector2A
 		if start_world.distance_to(start_center) > 3.0:
 			points.append(start_center)
 		for path_index in range(1, id_path.size()):
-			points.append(cell_to_world(id_path[path_index]))
+			points.append(_graph.get_point_position(id_path[path_index]))
 		if target_id == world_to_cell(requested_world) and is_world_walkable(requested_world):
 			points.append(requested_world)
-		return _smooth_path(start_world, points)
+		var route := _smooth_path(start_world, points)
+		if not route.is_empty():
+			return route
 	return PackedVector2Array()
 
 
 func is_world_walkable(point: Vector2) -> bool:
-	if _astar == null or not _walk_rect.has_point(point):
+	if _astar == null or not _walk_rect.has_point(point) or _inside_expanded_obstacle(point):
 		return false
 	var id := world_to_cell(point)
 	return _inside_grid(id) and not _astar.is_point_solid(id)
@@ -119,10 +144,8 @@ func _smooth_path(start: Vector2, raw: PackedVector2Array) -> PackedVector2Array
 				farthest = candidate
 				break
 		if farthest == index and not _line_is_clear(anchor, raw[index]):
-			# Preserve the tested A* segment rather than creating a shortcut near a corner.
-			simplified.append(raw[index])
-			anchor = raw[index]
-			index += 1
+			# A grid edge can graze a slanted wall between its endpoints.
+			return PackedVector2Array()
 		else:
 			simplified.append(raw[farthest])
 			anchor = raw[farthest]
@@ -135,7 +158,7 @@ func _line_is_clear(from: Vector2, to: Vector2) -> bool:
 	var samples := maxi(1, ceili(distance / 8.0))
 	for sample in range(samples + 1):
 		var point := from.lerp(to, float(sample) / float(samples))
-		if not _walk_rect.has_point(point):
+		if not _walk_rect.has_point(point) or _inside_expanded_obstacle(point):
 			return false
 		var id := world_to_cell(point)
 		if not _inside_grid(id) or _astar.is_point_solid(id):
@@ -147,8 +170,19 @@ func _inside_expanded_obstacle(point: Vector2) -> bool:
 	for obstacle in _obstacles:
 		if obstacle.grow(ACTOR_CLEARANCE).has_point(point):
 			return true
+	for wall in _walls:
+		if Geometry2D.is_point_in_polygon(point, wall):
+			return true
+		for index in range(wall.size()):
+			var nearest := Geometry2D.get_closest_point_to_segment(point, wall[index], wall[(index + 1) % wall.size()])
+			if point.distance_to(nearest) <= ACTOR_CLEARANCE:
+				return true
 	return false
 
 
 func _inside_grid(id: Vector2i) -> bool:
 	return id.x >= 0 and id.y >= 0 and id.x < GRID_SIZE and id.y < GRID_SIZE
+
+
+func _point_id(id: Vector2i) -> int:
+	return id.x * GRID_SIZE + id.y

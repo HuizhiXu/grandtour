@@ -43,7 +43,12 @@ func _run() -> void:
 	_check(photographer_hit_test != null and main.call("_target_at", photographer_hit_test.global_position) == photographer_hit_test, "a real point query picks the photographer hitbox")
 
 	_test_astar_obstacle_detour()
+	_test_facing(traveler)
+	await _test_collision_safe_waypoints()
 	var pathfinder := main.get("_pathfinder") as IsoPathfinder
+	_test_wall_routes(pathfinder, traveler.global_position, [Vector2(420, 300), Vector2(900, 350), Vector2(608, 260)], "outdoor")
+	var porch_route := pathfinder.find_path(traveler.global_position, Vector2(608, 320))
+	_check(not porch_route.is_empty() and porch_route[-1].distance_to(Vector2(608, 320)) < 1.0, "central porch remains reachable")
 	var origin := traveler.global_position
 	var first_destination := Vector2(1090.0, 430.0)
 	var first_route := pathfinder.find_path(origin, first_destination)
@@ -107,12 +112,14 @@ func _run() -> void:
 	var entrance_opened := await _wait_for_scene(main, "indoor")
 	_check(entrance_opened, "the entrance opens the post-office hall")
 	_check(traveler.global_position.distance_to(Vector2(640.0, 575.0)) < 2.0, "indoor entry spawns beside the lobby entrance")
+	pathfinder = main.get("_pathfinder") as IsoPathfinder
+	_test_wall_routes(pathfinder, traveler.global_position, [Vector2(250, 280), Vector2(476, 270), Vector2(1000, 350)], "indoor")
 	var exit_target := (main.get("_targets") as Dictionary).get("outdoor_exit") as ExplorationTarget
 	_check(exit_target != null, "the hall has a clickable outdoor exit")
 	if exit_target != null:
 		_press_target(exit_target)
 		_check(await _wait_for_scene(main, "outdoor"), "the hall exit returns to the street")
-		_check(traveler.global_position.distance_to(Vector2(640.0, 296.0)) < 2.0, "the street return spawns by the doorway")
+		_check(traveler.global_position.distance_to(Vector2(608.0, 400.0)) < 2.0, "the street return spawns by the doorway")
 		var return_origin := traveler.global_position
 		main.call("_request_walk", Vector2(540.0, 386.0))
 		_check(traveler.is_walking(), "the traveler stays controllable after switching scenes")
@@ -121,6 +128,75 @@ func _run() -> void:
 		_check(traveler.global_position.distance_to(return_origin) > 1.0, "the returned traveler can move outside")
 
 	await _finish(main)
+
+
+func _test_facing(traveler: Traveler) -> void:
+	for direction: Vector2 in [Vector2(32, 16), Vector2(-32, 16)]:
+		_check(traveler.call("_direction_row", direction) == 0, "downward isometric diagonals use the front pose")
+	for direction: Vector2 in [Vector2(32, -16), Vector2(-32, -16)]:
+		_check(traveler.call("_direction_row", direction) == 2, "upward isometric diagonals use the back pose")
+	var sprite := traveler.get_node("TravelerFrames") as AnimatedSprite2D
+	traveler.call("_play_walk", Vector2.LEFT)
+	_check(sprite.animation == "walk_left" and sprite.flip_h, "left travel mirrors the right-facing side art")
+	traveler.cancel_path()
+	_check(sprite.animation == "idle_left" and sprite.flip_h, "left idle retains the mirrored facing")
+	traveler.call("_play_walk", Vector2.RIGHT)
+	_check(sprite.animation == "walk_right" and not sprite.flip_h, "right travel uses the unmirrored side art")
+	traveler.call("_play_walk", Vector2.UP)
+	_check(sprite.animation == "walk_up" and not sprite.flip_h, "back travel clears the side mirror")
+	traveler.cancel_path()
+
+
+func _test_wall_routes(pathfinder: IsoPathfinder, start: Vector2, wall_clicks: Array[Vector2], context: String) -> void:
+	for wall in wall_clicks:
+		_check(not pathfinder.is_world_walkable(wall), context + " wall is blocked: " + str(wall))
+		var route := pathfinder.find_path(start, wall)
+		_check(not route.is_empty(), context + " wall click resolves to reachable ground")
+		_check(_route_is_clear(pathfinder, start, route), context + " wall route avoids the facade")
+		if not route.is_empty():
+			_check(route[-1].distance_to(wall) > 18.0, context + " wall destination keeps actor clearance")
+
+
+func _test_collision_safe_waypoints() -> void:
+	# Isolate a thin blocker close enough to trigger the old 3.5px waypoint snap.
+	var arena := Node2D.new()
+	arena.position = Vector2(3000, 3000)
+	root.add_child(arena)
+	var traveler := Traveler.new()
+	arena.add_child(traveler)
+	traveler.set_physics_process(false)
+	var wall := StaticBody2D.new()
+	wall.position = Vector2(10.5, -9)
+	var hitbox := CollisionShape2D.new()
+	var shape := RectangleShape2D.new()
+	shape.size = Vector2(1, 100)
+	hitbox.shape = shape
+	wall.add_child(hitbox)
+	arena.add_child(wall)
+	await physics_frame
+	await physics_frame
+	traveler.set_path(PackedVector2Array([arena.global_position + Vector2(3, 0)]))
+	var blocked_routes: Array[bool] = []
+	traveler.route_blocked.connect(func() -> void: blocked_routes.append(true))
+	for frame in range(24):
+		traveler.call("_physics_process", 1.0 / 60.0)
+		await physics_frame
+	_check(traveler.position.x < 1.1, "a short waypoint cannot snap the actor into a thin wall")
+	_check(not blocked_routes.is_empty(), "a blocked waypoint stops and reports the collision")
+	arena.remove_child(wall)
+	wall.free()
+	await physics_frame
+	traveler.position = Vector2.ZERO
+	traveler.set_path(PackedVector2Array([arena.global_position + Vector2(2, 0)]))
+	traveler.call("_physics_process", 1.0 / 60.0)
+	_check(traveler.position.distance_to(Vector2(2, 0)) <= 0.1, "a short unobstructed waypoint reaches its target without overshoot")
+	_check(not traveler.is_walking(), "short routes complete through physics")
+	traveler.position = Vector2.ZERO
+	traveler.set_path(PackedVector2Array([arena.global_position + Vector2(100, 0)]))
+	traveler.call("_physics_process", 1.0 / 60.0)
+	_check(traveler.position.length() <= traveler.walk_speed / 60.0 + 0.01, "each frame respects the configured movement speed")
+	arena.queue_free()
+	await process_frame
 
 
 func _test_astar_obstacle_detour() -> void:

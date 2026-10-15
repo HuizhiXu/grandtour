@@ -9,6 +9,7 @@ const FRAME_SIZE := Vector2(128.0, 160.0)
 const SPRITE_SCALE := 0.58
 const WALK_ANIMATIONS := ["walk_down", "walk_left", "walk_up", "walk_right"]
 const IDLE_ANIMATIONS := ["idle_down", "idle_left", "idle_up", "idle_right"]
+const WAYPOINT_TOLERANCE := 0.1
 
 @export var walk_speed := 190.0
 
@@ -51,7 +52,7 @@ func set_path(points: PackedVector2Array) -> void:
 	_path = points.duplicate()
 	_path_index = 0
 	_stalled_frames = 0
-	while _path_index < _path.size() and global_position.distance_to(_path[_path_index]) < 4.0:
+	while _path_index < _path.size() and global_position.distance_to(_path[_path_index]) <= WAYPOINT_TOLERANCE:
 		_path_index += 1
 	if _path_index >= _path.size():
 		_path.clear()
@@ -83,15 +84,19 @@ func current_destination() -> Vector2:
 func _physics_process(delta: float) -> void:
 	if not is_walking():
 		return
+	if delta <= 0.0:
+		return
 	var target := _path[_path_index]
 	var direction := global_position.direction_to(target)
-	if direction == Vector2.ZERO:
+	var distance := global_position.distance_to(target)
+	if distance <= WAYPOINT_TOLERANCE:
 		_path_index += 1
 		if _path_index >= _path.size():
 			_finish_route()
 		return
 	_play_walk(direction)
-	velocity = direction * walk_speed
+	# Reach short segments through physics as well; never snap across a collider.
+	velocity = direction * minf(walk_speed, distance / delta)
 	var before := global_position
 	move_and_slide()
 	if before.distance_squared_to(global_position) < 0.04:
@@ -102,8 +107,7 @@ func _physics_process(delta: float) -> void:
 		cancel_path()
 		route_blocked.emit()
 		return
-	if global_position.distance_to(target) <= maxf(3.5, walk_speed * delta * 0.65):
-		global_position = target
+	if global_position.distance_to(target) <= WAYPOINT_TOLERANCE:
 		_path_index += 1
 		if _path_index >= _path.size():
 			_finish_route()
@@ -122,6 +126,8 @@ func _finish_route() -> void:
 
 func _play_walk(direction: Vector2) -> void:
 	_facing_row = _direction_row(direction)
+	# Both side rows in the supplied atlas face right.
+	_frames.flip_h = _facing_row == 1
 	var animation: StringName = WALK_ANIMATIONS[_facing_row]
 	if _frames.animation != animation:
 		_frames.play(animation)
@@ -135,7 +141,9 @@ func _play_idle() -> void:
 
 
 func _direction_row(direction: Vector2) -> int:
-	if absf(direction.x) > absf(direction.y):
+	# Undo the ground plane's 2:1 projection before selecting a four-way pose.
+	# Prefer front/back at diagonal ties so an isometric step does not look sideways.
+	if absf(direction.x) > absf(direction.y) * 2.0 + 0.001:
 		return 3 if direction.x > 0.0 else 1
 	return 0 if direction.y > 0.0 else 2
 
