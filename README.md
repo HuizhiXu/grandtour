@@ -1,4 +1,41 @@
-# Generic Game Template
+# The Grand Tour · 西贡漫步
+
+一款 Godot 2D 手绘旅行探索原型。在西贡中央邮局前漫步，与摄影师交谈，了解建筑的故事，并寄出第一张明信片。
+
+## 当前玩法
+
+- 点击空地行走，再次点击可改道；点击人物、物件或门廊会先走近再互动。
+- 邮局外广场与内部大厅可以往返，墙面点击会调整到附近可达地面。
+- **寄出西贡的第一张明信片**：向摄影师领取 → 阅读建筑介绍牌 → 到大厅右侧书写台选择三种寄语之一 → 回到旧邮筒确认投递。
+- 左上角显示任务进度；明信片与进度自动保存在当前设备。回到街区入口会保留任务进度。
+- `Esc` 关闭对话或暂停；悬停显示可互动物件名称，地面菱形标记显示目的地。
+
+## 本地运行与验证
+
+使用 Godot 4.7.2 打开 `project.godot` 并运行主场景；也可以使用命令行：
+
+```sh
+godot --editor --path .
+godot --path .
+```
+
+首次运行命令行测试前先导入资源：
+
+```sh
+godot --headless --editor --import --path .
+godot --headless --path . --script res://test/exploration_suite.gd
+godot --headless --path . --script res://test/postcard_suite.gd
+```
+
+`postcard_suite.gd` 覆盖八方向移动、改道与暂停、完整任务、取消投递、存档恢复和对话框布局。设置 `GRANDTOUR_CAPTURE_DIR` 并使用真实图形渲染运行该测试，可保存场景、方向动画与任务截图；截图模式不能使用 `--headless`。
+
+网页导出使用项目中的 `Web` 预设，需要对应 Godot 导出模板。模板自带的 `npm` 命令依赖 Manus Game runtime；直接使用 Godot 运行和测试无需该 runtime。
+
+---
+
+## 原始模板参考
+
+以下内容保留初始化模板的历史说明；其中迷宫玩法和模板交付记录不代表当前的西贡探索版本。
 
 This versioned source is owned by the Webdev Addon. Use the installed Game workflow for initialization, preview, release and publishing. Matching gameplay source: template-provenance.json. Existing projects are never overwritten by a new starter.
 

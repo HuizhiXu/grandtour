@@ -20,6 +20,7 @@ func _default_data() -> Dictionary:
 		"tutorial_version": 0,
 		"player_name": "PLAYER",
 		"leaderboard": [],
+		"postcard_quest": {},
 	}
 
 
@@ -45,6 +46,9 @@ func _load() -> void:
 		else clampi(int(candidate.get("tutorial_version", 0)), 0, TUTORIAL_VERSION)
 	)
 	_data.player_name = _sanitize_name(str(candidate.get("player_name", "PLAYER")))
+	var postcard: Variant = candidate.get("postcard_quest", {})
+	if postcard is Dictionary:
+		_data.postcard_quest = postcard.duplicate(true)
 	var clean_rows: Array = []
 	var rows: Variant = candidate.get("leaderboard", [])
 	if rows is Array:
@@ -95,6 +99,15 @@ func set_tutorial_completed(completed: bool, version: int = TUTORIAL_VERSION) ->
 
 func get_player_name() -> String:
 	return str(_data.get("player_name", "PLAYER"))
+
+
+func get_postcard_progress() -> Dictionary:
+	return (_data.get("postcard_quest", {}) as Dictionary).duplicate(true)
+
+
+func set_postcard_progress(progress: Dictionary) -> bool:
+	_data.postcard_quest = progress.duplicate(true)
+	return save()
 
 
 func record_result(player_name: String, result: Dictionary) -> bool:

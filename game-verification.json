@@ -3,6 +3,12 @@
   "checks": [
     {
       "kind": "script",
+      "path": "res://test/postcard_suite.gd",
+      "expect": "[postcard-tests] PASS:",
+      "profile": "source"
+    },
+    {
+      "kind": "script",
       "path": "res://test/exploration_suite.gd",
       "expect": "[grand-tour-tests] PASS:",
       "profile": "source"

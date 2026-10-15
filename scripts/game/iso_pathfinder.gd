@@ -60,13 +60,18 @@ func find_path(start_world: Vector2, requested_world: Vector2) -> PackedVector2A
 		return PackedVector2Array()
 
 	var candidates: Array[Dictionary] = []
+	var requested_id := world_to_cell(requested_world)
+	var requested_is_walkable := is_world_walkable(requested_world)
 	for x in range(GRID_SIZE):
 		for y in range(GRID_SIZE):
 			var id := Vector2i(x, y)
 			if _astar.is_point_solid(id):
 				continue
 			var point := cell_to_world(id)
-			candidates.append({"id": id, "distance": point.distance_squared_to(requested_world)})
+			# The nearest center is not always the cell containing a click on a 2:1 grid.
+			# Prefer the containing cell so valid ground clicks reach the exact position.
+			var distance := -1.0 if requested_is_walkable and id == requested_id else point.distance_squared_to(requested_world)
+			candidates.append({"id": id, "distance": distance})
 	candidates.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		return float(a["distance"]) < float(b["distance"])
 	)

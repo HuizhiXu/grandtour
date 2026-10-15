@@ -5,6 +5,7 @@ const TravelerType := preload("res://scripts/entities/traveler.gd")
 const TargetType := preload("res://scripts/entities/exploration_target.gd")
 const UIType := preload("res://scripts/ui/exploration_ui.gd")
 const OpenSourceLicenseHelper := preload("res://scripts/manus/open_source_licenses.gd")
+const Postcard := preload("res://scripts/game/postcard_quest.gd")
 const OUTDOOR_BG: Texture2D = preload("res://assets/game/runtime/saigon-exterior.jpg")
 const INDOOR_BG: Texture2D = preload("res://assets/game/runtime/post-office-interior.jpg")
 const SIGN_TEXTURE: Texture2D = preload("res://assets/game/runtime/intro-sign.png")
@@ -33,10 +34,17 @@ var _scene_id := "outdoor"
 var _transitioning := false
 var _paused := false
 var _fade: ColorRect
+var _postcard := Postcard.new()
+var _postcard_context := ""
+var _destination_marker: Line2D
+var _hovered_target: ExplorationTarget
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	var save_store := get_node_or_null("/root/SaveStore")
+	if save_store != null:
+		_postcard.restore(save_store.call("get_postcard_progress"))
 	var locale_service := get_node_or_null("/root/I18n")
 	if locale_service != null:
 		locale_service.call("set_locale", "zh-CN")
@@ -48,6 +56,21 @@ func _ready() -> void:
 	if tuning_store != null:
 		tuning_store.connect("value_changed", _on_tuning_changed)
 	_apply_tuning()
+	_update_postcard_hud()
+
+
+func _process(_delta: float) -> void:
+	var hovered: ExplorationTarget
+	if not _paused and not _transitioning and not _ui.has_modal() and not _ui.is_pointer_over_panel():
+		hovered = _target_at(get_global_mouse_position())
+	if hovered == _hovered_target:
+		return
+	if is_instance_valid(_hovered_target):
+		_hovered_target.set_highlighted(false)
+	_hovered_target = hovered
+	if is_instance_valid(_hovered_target):
+		_hovered_target.set_highlighted(true)
+	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND if hovered != null else Input.CURSOR_ARROW)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -126,6 +149,9 @@ func _build_ui() -> void:
 	_ui.return_to_start_requested.connect(_return_to_start)
 	_ui.licenses_requested.connect(_open_licenses)
 	_ui.dialogue_choice.connect(_on_dialogue_choice)
+	_ui.postcard_requested.connect(_show_postcard)
+	_ui.postcard_choice.connect(_on_postcard_choice)
+	_ui.modal_closed.connect(func() -> void: _postcard_context = "")
 
 
 func _build_traveler() -> void:
@@ -144,6 +170,8 @@ func _build_traveler() -> void:
 
 func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	_scene_id = scene_name
+	_hovered_target = null
+	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	_pending_target = null
 	_traveler.cancel_path()
 	_traveler.global_position = player_spawn
@@ -164,6 +192,14 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	background.scale = Vector2(0.8, 0.8)
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_background_root.add_child(background)
+	_destination_marker = Line2D.new()
+	_destination_marker.name = "DestinationFootprint"
+	_destination_marker.points = PackedVector2Array([Vector2(0, -6), Vector2(13, 0), Vector2(0, 6), Vector2(-13, 0), Vector2(0, -6)])
+	_destination_marker.width = 2.0
+	_destination_marker.default_color = Color("456754")
+	_destination_marker.antialiased = true
+	_destination_marker.visible = false
+	_background_root.add_child(_destination_marker)
 
 	var walk_rect: Rect2
 	var obstacles: Array[Rect2]
@@ -197,6 +233,7 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 		_ui.set_npc_position(Vector2(938.0, 528.0), true)
 	else:
 		_add_target("outdoor_exit", "exit", "返回广场", Vector2(640.0, 674.0), Vector2(640.0, 575.0), Vector2(164.0, 98.0))
+		_add_target("postcard_desk", "postcard", "明信片书写台", Vector2(828.0, 366.0), Vector2(770.0, 460.0), Vector2(116.0, 90.0))
 		_ui.set_npc_position(Vector2.ZERO, false)
 	_ui.clear_destination()
 	_ui.set_paused(false)
@@ -296,11 +333,14 @@ func _request_walk(destination: Vector2) -> void:
 	var route := _pathfinder.find_path(_traveler.global_position, destination)
 	if route.is_empty():
 		_pending_target = null
-		_ui.clear_destination()
+		_traveler.cancel_path()
+		_clear_destination()
 		_ui.show_feedback("这里暂时无法通行，请换一处点击。")
 		return
-	_traveler.set_path(route)
 	_ui.set_destination(route[route.size() - 1])
+	_destination_marker.position = route[route.size() - 1]
+	_destination_marker.visible = true
+	_traveler.set_path(route)
 
 
 func _on_target_selected(target: ExplorationTarget) -> void:
@@ -311,7 +351,7 @@ func _on_target_selected(target: ExplorationTarget) -> void:
 
 
 func _on_traveler_arrived() -> void:
-	_ui.clear_destination()
+	_clear_destination()
 	if _pending_target == null or not is_instance_valid(_pending_target):
 		return
 	var target := _pending_target
@@ -323,18 +363,25 @@ func _on_traveler_arrived() -> void:
 
 func _on_traveler_blocked() -> void:
 	_pending_target = null
-	_ui.clear_destination()
+	_clear_destination()
 	_ui.show_feedback("前方有障碍，路线已停止；请点击附近空地重新规划。")
 
 
 func _activate_target(target: ExplorationTarget) -> void:
 	match target.target_kind:
 		"info":
+			if _postcard.read_sign():
+				_save_postcard()
 			_ui.show_information("Saigon Central Post Office", SIGN_BODY)
 		"mailbox":
-			_ui.show_information("旧邮筒", MAILBOX_BODY)
+			if _postcard.stage() >= Postcard.Stage.POST_CARD:
+				_show_postcard()
+			else:
+				_ui.show_information("旧邮筒", MAILBOX_BODY)
 		"npc":
 			_ui.show_dialogue("第一次来西贡吗？")
+		"postcard":
+			_show_postcard()
 		"enter":
 			_transition_to("indoor")
 		"exit":
@@ -347,12 +394,85 @@ func _on_dialogue_choice(choice_index: int) -> void:
 	_ui.show_dialogue_reply(PHOTOGRAPHER_REPLIES[choice_index])
 
 
+func _clear_destination() -> void:
+	_ui.clear_destination()
+	if is_instance_valid(_destination_marker):
+		_destination_marker.visible = false
+
+
+func _near_target(id: String) -> bool:
+	var target := _targets.get(id) as ExplorationTarget
+	return target != null and _traveler.global_position.distance_to(target.stand_position) <= 26.0
+
+
+func _update_postcard_hud() -> void:
+	_ui.set_quest_progress(_postcard.stage(), Postcard.HINTS[_postcard.stage()])
+
+
+func _save_postcard() -> void:
+	_update_postcard_hud()
+	var save_store := get_node_or_null("/root/SaveStore")
+	if save_store != null and not save_store.call("set_postcard_progress", _postcard.serialize()):
+		_ui.show_feedback("暂时无法保存；本次漫步仍可继续。")
+
+
+func _show_postcard() -> void:
+	if _paused or _transitioning:
+		return
+	_traveler.cancel_path()
+	_pending_target = null
+	_clear_destination()
+	_postcard_context = "status"
+	match _postcard.stage():
+		Postcard.Stage.MEET_PHOTOGRAPHER:
+			if _near_target("photographer"):
+				_postcard_context = "offer"
+				_ui.show_postcard(Postcard.TITLE, "摄影师递来一张空白明信片。\n“先看看邮局的故事，再进去写一句话吧。广场上的旧邮筒，会替你把问候寄出去。”", ["收下空白明信片"])
+			else:
+				_ui.show_postcard(Postcard.TITLE, Postcard.HINTS[0])
+		Postcard.Stage.READ_SIGN:
+			_ui.show_postcard("一张空白明信片", Postcard.HINTS[1])
+		Postcard.Stage.WRITE_CARD:
+			if _scene_id == "indoor" and _near_target("postcard_desk"):
+				_postcard_context = "write"
+				_ui.show_postcard("写下这一刻 · 西贡中央邮局", "坐在老邮局的书写台前，你想把哪一句话寄给远方的人？", Postcard.MESSAGES)
+			else:
+				_ui.show_postcard("空白明信片 · 已了解邮局", Postcard.HINTS[2])
+		Postcard.Stage.POST_CARD:
+			if _scene_id == "outdoor" and _near_target("old_mailbox"):
+				_postcard_context = "send"
+				_ui.show_postcard("投递前，再看一眼", "“%s”\n\n西贡中央邮局 · 你的第一张明信片，准备出发。" % _postcard.message(), ["投入旧邮筒"])
+			else:
+				_ui.show_postcard("明信片已写好", "“%s”\n\n%s" % [_postcard.message(), Postcard.HINTS[3]])
+		Postcard.Stage.COMPLETE:
+			_ui.show_postcard("明信片已寄出 · 西贡的第一份问候", "“%s”\n\n明信片落进邮筒，发出轻轻的一声响。\n这座城市的阳光与故事，正向远方出发。" % _postcard.message())
+
+
+func _on_postcard_choice(index: int) -> void:
+	if _paused or _transitioning or not _ui.has_modal():
+		return
+	var changed := false
+	match _postcard_context:
+		"offer":
+			if index == 0 and _near_target("photographer"):
+				changed = _postcard.accept()
+		"write":
+			if _scene_id == "indoor" and _near_target("postcard_desk"):
+				changed = _postcard.write_message(index)
+		"send":
+			if index == 0 and _scene_id == "outdoor" and _near_target("old_mailbox"):
+				changed = _postcard.post()
+	if changed:
+		_save_postcard()
+		_show_postcard()
+
+
 func _transition_to(next_scene: String) -> void:
 	if _transitioning:
 		return
 	_transitioning = true
 	_pending_target = null
-	_ui.clear_destination()
+	_clear_destination()
 	var fade_out := create_tween()
 	fade_out.tween_property(_fade, "color:a", 0.96, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	await fade_out.finished

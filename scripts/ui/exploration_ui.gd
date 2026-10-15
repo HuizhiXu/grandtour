@@ -6,6 +6,8 @@ signal modal_closed
 signal pause_requested
 signal return_to_start_requested
 signal licenses_requested
+signal postcard_requested
+signal postcard_choice(choice_index: int)
 
 const ScreenFactory := preload("res://scripts/ui/screen_factory.gd")
 const PAPER := Color("f7f0e2")
@@ -32,6 +34,9 @@ var _pause_scrim: ColorRect
 var _pause_panel: PanelContainer
 var _paused := false
 var _modal_open := false
+var _quest_label: Label
+var _quest_progress: Label
+var _quest_panel: PanelContainer
 
 
 func _ready() -> void:
@@ -64,9 +69,9 @@ func set_npc_position(world_position: Vector2, visible: bool = true) -> void:
 
 
 func set_destination(world_position: Vector2) -> void:
-	_destination_tag.position = world_position + Vector2(12.0, -34.0)
+	_destination_tag.position = Vector2(clampf(world_position.x + 16.0, 8.0, 1180.0), clampf(world_position.y - 34.0, 8.0, 675.0))
 	_destination_tag.visible = true
-	_destination_timer = 1.5
+	_destination_timer = 0.0
 
 
 func clear_destination() -> void:
@@ -84,6 +89,11 @@ func has_modal() -> bool:
 	return _modal_open
 
 
+func is_pointer_over_panel() -> bool:
+	var pointer := get_global_mouse_position()
+	return _identity.get_global_rect().has_point(pointer) or _quest_panel.get_global_rect().has_point(pointer) or pointer.x > 1110.0 and pointer.y < 85.0
+
+
 func show_information(title: String, body: String) -> void:
 	_open_modal(title, body)
 	_add_action_button("继续漫步", func() -> void: close_modal(), true)
@@ -93,6 +103,20 @@ func show_dialogue(first_line: String) -> void:
 	_open_modal("旅行摄影师", first_line)
 	_add_action_button("是的，我正在探索这座城市。", func() -> void: dialogue_choice.emit(0), false)
 	_add_action_button("我对这座城市的历史很感兴趣。", func() -> void: dialogue_choice.emit(1), false)
+	_add_action_button("我想寄一张明信片。", func() -> void: postcard_requested.emit(), true)
+
+
+func set_quest_progress(stage: int, hint: String) -> void:
+	_quest_progress.text = "旅途小事  ·  %d / 4" % stage if stage < 4 else "旅途小事  ·  已完成 ✓"
+	_quest_label.text = hint
+
+
+func show_postcard(title: String, body: String, choices: Array[String] = []) -> void:
+	_open_modal(title, body)
+	for index in range(choices.size()):
+		var selected := index
+		_add_action_button(choices[index], func() -> void: postcard_choice.emit(selected), index == 0)
+	_add_action_button("继续漫步" if choices.is_empty() else "稍后再说", close_modal, false)
 
 
 func show_dialogue_reply(text: String) -> void:
@@ -119,6 +143,7 @@ func set_panel_opacity(value: float) -> void:
 	var opacity := clampf(value, 0.55, 1.0)
 	_identity.modulate.a = opacity
 	_hint_panel.modulate.a = opacity
+	_quest_panel.modulate.a = opacity
 
 
 func _build_hud() -> void:
@@ -133,6 +158,24 @@ func _build_hud() -> void:
 	_location_label = ScreenFactory.medium_label("胡志明市 · 西贡中央邮局", 14, GREEN)
 	_location_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	identity_content.add_child(_location_label)
+
+	_quest_panel = _paper_panel(Vector2(365.0, 0.0), Vector2(26.0, 118.0))
+	add_child(_quest_panel)
+	var quest_content := VBoxContainer.new()
+	quest_content.add_theme_constant_override("separation", 7)
+	_quest_panel.add_child(quest_content)
+	_quest_progress = ScreenFactory.medium_label("旅途小事  ·  0 / 4", 12, GOLD)
+	quest_content.add_child(_quest_progress)
+	var quest_title := ScreenFactory.medium_label("寄出西贡的第一张明信片", 15, INK)
+	quest_content.add_child(quest_title)
+	_quest_label = ScreenFactory.label("", 13, MUTED)
+	_quest_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_quest_label.custom_minimum_size.x = 333.0
+	quest_content.add_child(_quest_label)
+	var postcard_button := _make_button("查看明信片", false)
+	postcard_button.custom_minimum_size = Vector2(0, 32)
+	postcard_button.pressed.connect(func() -> void: postcard_requested.emit())
+	quest_content.add_child(postcard_button)
 
 	var pause_button := _make_button("暂停  Esc", true)
 	pause_button.position = Vector2(1120.0, 26.0)
@@ -184,17 +227,18 @@ func _build_modal() -> void:
 	_modal_scrim.gui_input.connect(_on_modal_scrim_input)
 	add_child(_modal_scrim)
 
-	_modal_panel = _paper_panel(Vector2(760.0, 218.0), Vector2.ZERO)
+	_modal_panel = _paper_panel(Vector2(760.0, 0.0), Vector2.ZERO)
 	_modal_panel.anchor_left = 0.5
 	_modal_panel.anchor_right = 0.5
 	_modal_panel.anchor_top = 1.0
 	_modal_panel.anchor_bottom = 1.0
 	_modal_panel.offset_left = -380.0
 	_modal_panel.offset_right = 380.0
-	_modal_panel.offset_top = -242.0
+	_modal_panel.offset_top = -355.0
 	_modal_panel.offset_bottom = -22.0
 	_modal_panel.visible = false
 	_modal_panel.z_index = 1
+	_modal_panel.minimum_size_changed.connect(_fit_modal)
 	add_child(_modal_panel)
 
 	var content := VBoxContainer.new()
@@ -213,7 +257,8 @@ func _build_modal() -> void:
 	_modal_body = ScreenFactory.label("", 15, INK)
 	_modal_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_modal_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_modal_body.custom_minimum_size.y = 30.0
+	# Give wrapping a real width even when this is the first modal after loading.
+	_modal_body.custom_minimum_size = Vector2(728.0, 30.0)
 	content.add_child(_modal_body)
 	_modal_actions = VBoxContainer.new()
 	_modal_actions.add_theme_constant_override("separation", 6)
@@ -257,9 +302,17 @@ func _open_modal(title: String, body: String) -> void:
 	_modal_title.text = title
 	_modal_body.text = body
 	for child in _modal_actions.get_children():
+		_modal_actions.remove_child(child)
 		child.queue_free()
 	_modal_scrim.visible = true
 	_modal_panel.visible = true
+	_fit_modal.call_deferred()
+
+
+func _fit_modal() -> void:
+	var height := maxf(180.0, _modal_panel.get_combined_minimum_size().y)
+	_modal_panel.offset_top = -22.0 - height
+	_modal_panel.offset_bottom = -22.0
 
 
 func _add_action_button(text: String, action: Callable, primary: bool) -> void:
