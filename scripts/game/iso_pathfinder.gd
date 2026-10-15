@@ -2,19 +2,21 @@ extends RefCounted
 class_name IsoPathfinder
 
 const GRID_SIZE := 64
-const ACTOR_CLEARANCE := 18.0
+const ACTOR_CLEARANCE := 24.0
 
 var _astar: AStarGrid2D
 var _graph: AStar2D
 var _walk_rect := Rect2()
 var _obstacles: Array[Rect2] = []
 var _walls: Array[PackedVector2Array] = []
+var _floor := PackedVector2Array()
 
 
-func configure(walk_rect: Rect2, obstacles: Array[Rect2], walls: Array[PackedVector2Array] = []) -> void:
+func configure(walk_rect: Rect2, obstacles: Array[Rect2], walls: Array[PackedVector2Array] = [], floor_outline: PackedVector2Array = PackedVector2Array()) -> void:
 	_walk_rect = walk_rect
 	_obstacles = obstacles.duplicate()
 	_walls = walls.duplicate()
+	_floor = floor_outline.duplicate()
 	_astar = AStarGrid2D.new()
 	_astar.region = Rect2i(0, 0, GRID_SIZE, GRID_SIZE)
 	_astar.cell_size = Vector2i.ONE
@@ -27,7 +29,7 @@ func configure(walk_rect: Rect2, obstacles: Array[Rect2], walls: Array[PackedVec
 		for y in range(GRID_SIZE):
 			var id := Vector2i(x, y)
 			var point := cell_to_world(id)
-			if not _walk_rect.has_point(point) or _inside_expanded_obstacle(point):
+			if not _inside_floor(point) or _inside_expanded_obstacle(point):
 				_astar.set_point_solid(id, true)
 	# Validate edges as well as cell centers: a slanted wall can cross a grid edge.
 	_graph = AStar2D.new()
@@ -98,7 +100,7 @@ func find_path(start_world: Vector2, requested_world: Vector2) -> PackedVector2A
 
 
 func is_world_walkable(point: Vector2) -> bool:
-	if _astar == null or not _walk_rect.has_point(point) or _inside_expanded_obstacle(point):
+	if _astar == null or not _inside_floor(point) or _inside_expanded_obstacle(point):
 		return false
 	var id := world_to_cell(point)
 	return _inside_grid(id) and not _astar.is_point_solid(id)
@@ -159,11 +161,17 @@ func _smooth_path(start: Vector2, raw: PackedVector2Array) -> PackedVector2Array
 
 
 func _line_is_clear(from: Vector2, to: Vector2) -> bool:
+	# Reject boundary crossings exactly, including segments between sampled cells.
+	if not _floor.is_empty() and not _segment_avoids_edges(from, to, _floor):
+		return false
+	for wall in _walls:
+		if not _segment_avoids_edges(from, to, wall):
+			return false
 	var distance := from.distance_to(to)
 	var samples := maxi(1, ceili(distance / 8.0))
 	for sample in range(samples + 1):
 		var point := from.lerp(to, float(sample) / float(samples))
-		if not _walk_rect.has_point(point) or _inside_expanded_obstacle(point):
+		if not _inside_floor(point) or _inside_expanded_obstacle(point):
 			return false
 		var id := world_to_cell(point)
 		if not _inside_grid(id) or _astar.is_point_solid(id):
@@ -191,3 +199,35 @@ func _inside_grid(id: Vector2i) -> bool:
 
 func _point_id(id: Vector2i) -> int:
 	return id.x * GRID_SIZE + id.y
+
+
+func _inside_floor(point: Vector2) -> bool:
+	if not _walk_rect.has_point(point):
+		return false
+	if _floor.is_empty():
+		return true
+	if not Geometry2D.is_point_in_polygon(point, _floor):
+		return false
+	for index in range(_floor.size()):
+		var nearest := Geometry2D.get_closest_point_to_segment(point, _floor[index], _floor[(index + 1) % _floor.size()])
+		if point.distance_to(nearest) <= ACTOR_CLEARANCE:
+			return false
+	return true
+
+
+func _segment_avoids_edges(from: Vector2, to: Vector2, polygon: PackedVector2Array) -> bool:
+	for index in range(polygon.size()):
+		var a := polygon[index]
+		var b := polygon[(index + 1) % polygon.size()]
+		if Geometry2D.segment_intersects_segment(from, to, a, b) != null:
+			return false
+		# Closest points of two non-intersecting segments include an endpoint.
+		if from.distance_to(Geometry2D.get_closest_point_to_segment(from, a, b)) <= ACTOR_CLEARANCE:
+			return false
+		if to.distance_to(Geometry2D.get_closest_point_to_segment(to, a, b)) <= ACTOR_CLEARANCE:
+			return false
+		if a.distance_to(Geometry2D.get_closest_point_to_segment(a, from, to)) <= ACTOR_CLEARANCE:
+			return false
+		if b.distance_to(Geometry2D.get_closest_point_to_segment(b, from, to)) <= ACTOR_CLEARANCE:
+			return false
+	return true

@@ -7,7 +7,7 @@
 ## 当前玩法
 
 - 点击空地行走，再次点击可改道；点击人物、物件或门廊会先走近再互动。
-- 邮局外广场与内部大厅可以往返，墙面点击会调整到附近可达地面。
+- 邮局外广场与内部大厅可以往返，角色只能在明确标出的地面范围内行走；建筑、围栏和立柱后的点击会调整到附近可达地面。
 - **寄出西贡的第一张明信片**：向摄影师领取 → 阅读建筑介绍牌 → 到大厅右侧书写台选择三种寄语之一 → 回到旧邮筒确认投递。
 - 左上角显示任务进度；明信片与进度自动保存在当前设备。回到街区入口会保留任务进度。
 - `Esc` 关闭对话或暂停；悬停显示可互动物件名称，地面菱形标记显示目的地。
@@ -27,6 +27,7 @@ godot --path .
 godot --headless --editor --import --path .
 godot --headless --path . --script res://test/exploration_suite.gd
 godot --headless --path . --script res://test/postcard_suite.gd
+godot --headless --path . --script res://test/walkable_ground_suite.gd
 ```
 
 `postcard_suite.gd` 覆盖八方向移动、改道与暂停、完整任务、取消投递、存档恢复和对话框布局。设置 `GRANDTOUR_CAPTURE_DIR` 并使用真实图形渲染运行该测试，可保存场景、方向动画与任务截图；截图模式不能使用 `--headless`。

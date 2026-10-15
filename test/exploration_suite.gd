@@ -49,8 +49,8 @@ func _run() -> void:
 	await _test_collision_safe_waypoints()
 	var pathfinder := main.get("_pathfinder") as IsoPathfinder
 	_test_wall_routes(pathfinder, traveler.global_position, [Vector2(420, 300), Vector2(900, 350), Vector2(608, 260)], "outdoor")
-	var porch_route := pathfinder.find_path(traveler.global_position, Vector2(608, 320))
-	_check(not porch_route.is_empty() and porch_route[-1].distance_to(Vector2(608, 320)) < 1.0, "central porch remains reachable")
+	var porch_route := pathfinder.find_path(traveler.global_position, Vector2(608, 416))
+	_check(not porch_route.is_empty() and porch_route[-1].distance_to(Vector2(608, 416)) < 1.0, "central porch remains reachable")
 	var origin := traveler.global_position
 	var first_destination := Vector2(1090.0, 430.0)
 	var first_route := pathfinder.find_path(origin, first_destination)
@@ -121,7 +121,7 @@ func _run() -> void:
 	if exit_target != null:
 		_press_target(exit_target)
 		_check(await _wait_for_scene(main, "outdoor"), "the hall exit returns to the street")
-		_check(traveler.global_position.distance_to(Vector2(608.0, 400.0)) < 2.0, "the street return spawns by the doorway")
+		_check(traveler.global_position.distance_to(Vector2(608.0, 432.0)) < 2.0, "the street return spawns by the doorway")
 		var return_origin := traveler.global_position
 		main.call("_request_walk", Vector2(540.0, 386.0))
 		_check(traveler.is_walking(), "the traveler stays controllable after switching scenes")

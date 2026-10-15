@@ -3,6 +3,12 @@
   "checks": [
     {
       "kind": "script",
+      "path": "res://test/walkable_ground_suite.gd",
+      "expect": "[ground-tests] PASS:",
+      "profile": "source"
+    },
+    {
+      "kind": "script",
       "path": "res://test/postcard_suite.gd",
       "expect": "[postcard-tests] PASS:",
       "profile": "source"

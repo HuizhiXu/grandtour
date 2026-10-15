@@ -204,18 +204,22 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	var walk_rect: Rect2
 	var obstacles: Array[Rect2]
 	var walls: Array[PackedVector2Array]
+	var floor_outline: PackedVector2Array
 	if scene_name == "outdoor":
 		walk_rect = Rect2(Vector2(18.0, 230.0), Vector2(1244.0, 478.0))
 		obstacles = _outdoor_obstacles()
 		walls = _outdoor_walls()
+		floor_outline = _outdoor_floor()
 		_ui.set_location("胡志明市 · 西贡中央邮局")
 	else:
 		walk_rect = Rect2(Vector2(72.0, 158.0), Vector2(1136.0, 535.0))
 		obstacles = _indoor_obstacles()
 		walls = _indoor_walls()
+		floor_outline = _indoor_floor()
 		_ui.set_location("西贡中央邮局 · 内部大厅")
 	_pathfinder = Pathfinder.new()
-	_pathfinder.configure(walk_rect, obstacles, walls)
+	_pathfinder.configure(walk_rect, obstacles, walls, floor_outline)
+	_add_floor_boundary(floor_outline)
 	for index in range(obstacles.size()):
 		_add_physical_obstacle(obstacles[index], index)
 	for index in range(walls.size()):
@@ -239,6 +243,42 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	_ui.set_paused(false)
 
 
+func _outdoor_floor() -> PackedVector2Array:
+	# Public paving only: follow the FRONT of fences and pillars, not the facade.
+	# The concave central notch is the one open route to the porch.
+	return PackedVector2Array([
+		Vector2(142, 440), Vector2(246, 412), Vector2(430, 402),
+		Vector2(492, 389), Vector2(548, 380), Vector2(560, 366),
+		Vector2(650, 382), Vector2(678, 404), Vector2(690, 442),
+		Vector2(756, 466), Vector2(850, 498), Vector2(942, 528),
+		Vector2(1044, 559), Vector2(1128, 586), Vector2(1128, 676),
+		Vector2(1030, 704), Vector2(258, 704), Vector2(258, 606),
+		Vector2(220, 550), Vector2(164, 510),
+	])
+
+
+func _indoor_floor() -> PackedVector2Array:
+	return PackedVector2Array([
+		Vector2(376, 322), Vector2(576, 322), Vector2(1130, 540),
+		Vector2(1120, 592), Vector2(892, 652), Vector2(738, 652),
+		Vector2(738, 706), Vector2(542, 706), Vector2(542, 652),
+		Vector2(280, 652), Vector2(130, 574), Vector2(100, 544),
+	])
+
+
+func _add_floor_boundary(outline: PackedVector2Array) -> void:
+	var body := StaticBody2D.new()
+	body.name = "WalkableGroundBoundary"
+	body.collision_layer = 1
+	body.collision_mask = 1
+	var boundary := CollisionPolygon2D.new()
+	boundary.name = "SharedFloorOutline"
+	boundary.build_mode = CollisionPolygon2D.BUILD_SEGMENTS
+	boundary.polygon = outline
+	body.add_child(boundary)
+	_collision_root.add_child(body)
+
+
 func _outdoor_obstacles() -> Array[Rect2]:
 	return [
 		Rect2(Vector2(26.0, 330.0), Vector2(108.0, 180.0)),
@@ -250,6 +290,8 @@ func _outdoor_obstacles() -> Array[Rect2]:
 		Rect2(Vector2(752.0, 360.0), Vector2(30.0, 22.0)),
 		Rect2(Vector2(322.0, 510.0), Vector2(24.0, 18.0)),
 		Rect2(Vector2(924.0, 512.0), Vector2(28.0, 18.0)),
+		Rect2(Vector2(269.0, 518.0), Vector2(24.0, 14.0)),
+		Rect2(Vector2(334.0, 610.0), Vector2(34.0, 24.0)),
 	]
 
 
@@ -297,10 +339,10 @@ func _add_physical_obstacle(rect: Rect2, index: int) -> void:
 
 
 func _build_outdoor_targets() -> void:
-	_add_target("post_office_info", "info", "建筑介绍牌", Vector2(766.0, 378.0), Vector2(816.0, 446.0), Vector2(108.0, 128.0), SIGN_TEXTURE)
+	_add_target("post_office_info", "info", "建筑介绍牌", Vector2(766.0, 378.0), Vector2(800.0, 530.0), Vector2(108.0, 128.0), SIGN_TEXTURE)
 	_add_target("old_mailbox", "mailbox", "旧邮筒", Vector2(334.0, 524.0), Vector2(400.0, 542.0), Vector2(86.0, 114.0), MAILBOX_TEXTURE)
 	_add_target("photographer", "npc", "旅行摄影师", Vector2(938.0, 528.0), Vector2(862.0, 540.0), Vector2(92.0, 126.0), PHOTOGRAPHER_TEXTURE)
-	_add_target("post_office_door", "enter", "进入邮局", Vector2(608.0, 330.0), Vector2(608.0, 382.0), Vector2(100.0, 96.0))
+	_add_target("post_office_door", "enter", "进入邮局", Vector2(608.0, 330.0), Vector2(608.0, 416.0), Vector2(100.0, 96.0))
 
 
 func _add_target(id: String, kind: String, title: String, world_position: Vector2, stand: Vector2, hitbox: Vector2, texture: Texture2D = null) -> ExplorationTarget:
@@ -476,7 +518,7 @@ func _transition_to(next_scene: String) -> void:
 	var fade_out := create_tween()
 	fade_out.tween_property(_fade, "color:a", 0.96, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	await fade_out.finished
-	var spawn := Vector2(640.0, 575.0) if next_scene == "indoor" else Vector2(608.0, 400.0)
+	var spawn := Vector2(640.0, 575.0) if next_scene == "indoor" else Vector2(608.0, 432.0)
 	_setup_scene(next_scene, spawn)
 	await get_tree().process_frame
 	var fade_in := create_tween()
