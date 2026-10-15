@@ -2,6 +2,8 @@
 
 一款 Godot 2D 手绘旅行探索原型。在西贡中央邮局前漫步，与摄影师交谈，了解建筑的故事，并寄出第一张明信片。
 
+**[点击这里直接玩网页版](https://huizhixu.github.io/grandtour/)** · 建议使用电脑浏览器，首次打开需要加载游戏资源。明信片进度保存在当前浏览器，清除网站数据会清除进度。
+
 ## 当前玩法
 
 - 点击空地行走，再次点击可改道；点击人物、物件或门廊会先走近再互动。
@@ -30,6 +32,8 @@ godot --headless --path . --script res://test/postcard_suite.gd
 `postcard_suite.gd` 覆盖八方向移动、改道与暂停、完整任务、取消投递、存档恢复和对话框布局。设置 `GRANDTOUR_CAPTURE_DIR` 并使用真实图形渲染运行该测试，可保存场景、方向动画与任务截图；截图模式不能使用 `--headless`。
 
 网页导出使用项目中的 `Web` 预设，需要对应 Godot 导出模板。模板自带的 `npm` 命令依赖 Manus Game runtime；直接使用 Godot 运行和测试无需该 runtime。
+
+安装 Web 导出模板后执行 `bash tools/export_web.sh`，输出位于 `dist/web/`。仓库推送到 `main` 后，GitHub Actions 会自动导出、验证并发布到 GitHub Pages。
 
 ---
 

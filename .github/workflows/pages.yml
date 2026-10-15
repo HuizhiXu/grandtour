@@ -1,0 +1,56 @@
+name: Publish playable Web game
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+env:
+  GODOT_VERSION: 4.7.2
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      - name: Install official Godot and Web templates
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/godot"
+          curl --fail --location --retry 3 \
+            "https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip" \
+            --output "$RUNNER_TEMP/godot/engine.zip"
+          unzip -q "$RUNNER_TEMP/godot/engine.zip" -d "$RUNNER_TEMP/godot"
+          chmod +x "$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64"
+          echo "GODOT_BIN=$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64" >> "$GITHUB_ENV"
+          template_dir="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          python3 tools/fetch_web_template.py --version "$GODOT_VERSION" --output "$template_dir/web_nothreads_release.zip"
+          python3 tools/fetch_web_template.py --version "$GODOT_VERSION" --debug --output "$template_dir/web_nothreads_debug.zip"
+      - name: Import and export the playable game
+        run: bash tools/export_web.sh
+      - name: Verify movement, interactions and postcard quest
+        shell: bash
+        run: |
+          "$GODOT_BIN" --headless --path . --script res://test/exploration_suite.gd
+          "$GODOT_BIN" --headless --path . --script res://test/postcard_suite.gd
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/web
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish the game
+        id: deployment
+        uses: actions/deploy-pages@v4
