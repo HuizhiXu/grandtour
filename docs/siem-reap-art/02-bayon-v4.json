@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-16",
+  "stop": 2,
+  "title": "巴戎寺",
+  "version": 4,
+  "approval": "approved_by_user_continue_to_next_stop",
+  "asset": "assets/game/scenes/siem-reap-02-bayon-v4.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "reference": "https://apsaraauthority.gov.kh/2021/07/20/bayon-temple-gallery/#pgcSgb-cl0-7_cl0",
+  "referenceMethod": "Two recent images: v1 illustration for style only; screenshot of enlarged official gallery photograph 8 / 61 for architecture and ruins.",
+  "userDirection": "Prefer v1 watercolor style; full panorama before partial views; retain actual ruined state, do not reconstruct missing architecture.",
+  "limitations": [
+    "Illustrated interpretation, not a measured survey. Generated carving and masonry detail may differ from source."
+  ],
+  "prompt": "Create a revised BAYON TEMPLE watercolor illustration. There are TWO references: the earlier full-frame watercolor illustration is STYLE ONLY; the latest browser screenshot's large central official APSARA photograph is the SOLE authority for architecture and composition.\nRender the real existing ruins seen in the photograph, not a reconstruction. Keep the camera, exact whole-complex silhouette, widths and relative heights of towers, all irregular gaps, broken tops, open roofless galleries, surviving isolated columns, damaged lintels, low stepped terraces, rubble and tree occlusions from the photo. Preserve where masonry is missing; empty gaps stay empty. Do NOT complete roofs, rebuild walls, straighten ruins, duplicate towers, symmetrize facades or enhance worn carvings into perfect faces. The photo's central tall sanctuary has a rough eroded tapered summit; keep it rough and do not add a monumental central Buddha face. Small distant face carvings remain subdued and worn. Do not borrow any tower arrangement, faces, doorways, symmetry or paved approach from the style reference.\nUse the user's preferred early watercolor illustration's finish: clear observed architectural details, natural warm grey-brown stone with lichen, convincing sunlight and spatial depth, gentle transparent watercolor pigments, subtle paper texture, fresh natural greens and pale blue sky. Refined illustrated travel watercolor, with legible masonry and carved details but no harsh comic outlines. Avoid the later over-soft blurry simplified watercolor treatment. Fidelity to ruined forms takes priority over making the temple grand or intact.\nFULL TEMPLE PANORAMA, landscape 16:9. Fit all of the photographed temple and its base with sky margin above the highest summit and both gallery ends in frame. Preserve the photograph's foreground grassy bank and seasonal shallow green water, and trees around the edges; no invented grand plaza or central stone avenue. Expand only sky and foreground if necessary to reach wide aspect. Translate the photograph into the preferred watercolor painting style, retaining its actual worn archaeological condition. Exclude browser controls, thumbnails, logo and watermark from the illustration. No text, UI, border or people."
+}

@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-16",
+  "stop": 5,
+  "title": "战象台",
+  "englishName": "Terrace of the Elephants",
+  "version": 1,
+  "approval": "approved_by_user_continue_to_next_stop",
+  "nextStop": "癞王台 / Terrace of the Leper King",
+  "asset": "assets/game/scenes/siem-reap-05-elephant-terrace-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialReference": "https://apsaraauthority.gov.kh/2021/08/02/elephant-terrace-gallery/#pgcSgb-cl0-10_cl0",
+  "referenceMethod": "Official gallery photo 11 / 18, enlarged and visually inspected, supplied as image reference. Approved Phimeanakas supplied as style only.",
+  "userDirection": "Full panorama before partial views, preserve actual ruined form and worn sculptures without conjectural reconstruction.",
+  "limitations": [
+    "Illustrative interpretation, not a measured survey. Individual relief and masonry detail may differ.",
+    "Reference is the condition photographed in the official 2021 gallery, not certification of current access or conservation status."
+  ],
+  "prompt": "Create scene FIVE: TERRACE OF THE ELEPHANTS / 战象台, Angkor Thom. Two recent references: the full-frame Phimeanakas watercolor is STYLE ONLY; the latest screenshot's large central official APSARA photograph of the Elephant Terrace is the sole authority for architecture, camera and composition. Use only that single large photo, ignoring browser controls, thumbnails and logo.\nPaint the photographed wide frontal panorama of the existing terrace: a LONG LOW HORIZONTAL weathered sandstone retaining platform spanning the frame, central projecting staircase arrangement and surviving stone guardians, worn relief bands along the wall, low broken balustrades and uneven ruined masonry on top, thick tall tropical trees immediately behind it, and the small dark surviving ruin partly hidden in the center background. Preserve every photographed height relation, recess, projecting stair and tree occlusion. The terrace must stay low and horizontal, NOT a pyramid temple, palace or giant elephant monument. Do not borrow Phimeanakas's pyramid, summit doorway, statues or water. The relief figures remain small worn carvings at the photographed scale; distinguish the actual human/bird/animal shapes that are visible rather than inventing a row of perfect elephants. Do not introduce giant protruding elephant heads just to illustrate the name. No imaginary roofs, pavilions, complete columns, rebuilt walls, added towers or newly perfect sculpture. Preserve missing stones, worn noses/heads, uneven steps and fragmented upper edge. Do not reconstruct missing architecture.\nKeep the same wide establishing viewpoint as the official photo, with the modern pale approach from the lower foreground toward the central steps, reddish earth at its edges, grass on both sides, and the crosswise path at the wall base. Keep unobtrusive conservation rope posts if visible. Fit the entire photographed terrace span, central stairs, forest canopy and broad foreground within 16:9 landscape; expand only surrounding trees and foreground to adjust aspect ratio. Do not crop into relief close-ups. Any small reference signage should stay an inconspicuous blank physical shape, no invented readable text.\nMatch the approved earlier watercolor illustrations: detailed but natural architectural travel watercolor, subtle paper grain, transparent washes, clear weathered masonry, rich warm grey-brown sandstone and fresh greens, believable afternoon sunlight, dappled shadows and spatial depth. Lighten photo underexposure gently so the existing relief remains legible, without redesigning it. Retain fine detail and structure; avoid overly blurry simplified watercolor or harsh black cartoon lines. No people, characters, UI, text, watermark or border. Beautiful observational watercolor of extant archaeological ruins in their actual photographed incomplete condition."
+}

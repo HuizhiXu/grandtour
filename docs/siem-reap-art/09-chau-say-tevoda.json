@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-16",
+  "stop": 9,
+  "title": "周萨神庙",
+  "englishName": "Chau Say Tevoda",
+  "version": 1,
+  "approval": "approved_by_user_continue_to_next_stop",
+  "nextStop": "托玛侬神庙 / Thommanon",
+  "asset": "assets/game/scenes/siem-reap-09-chau-say-tevoda-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialSources": [
+    "https://apsaraauthority.gov.kh/2021/08/02/chaussay-devata-and-thommanon-temple-gallery/#pgcSgb-cl1-4_cl1",
+    "https://apsaraauthority.gov.kh/2022/01/20/chaussay-devata-temple/"
+  ],
+  "referenceMethod": "Enlarged official combined gallery, second album photo 5 / 20, selected for Chau Say Tevoda's raised column-supported causeway and conserved building group. Approved Victory Gate illustration supplied as style only.",
+  "userDirection": "Panorama, detailed natural watercolor, preserve state photographed including actual official conservation work without conjectural completion.",
+  "limitations": [
+    "Official gallery combines two temples; selected view identified through plan and raised causeway.",
+    "Illustration is not measured survey; individual carving and masonry details may differ.",
+    "Reference shows the published gallery's condition, not certification of current conservation status."
+  ],
+  "prompt": "Create scene NINE, CHAU SAY TEVODA / 周萨神庙, Cambodia. Two recent references: the full-frame Victory Gate watercolor illustration is STYLE ONLY; the latest screenshot's large central official APSARA photograph of Chau Say Tevoda is the sole architecture and composition source. Use only that large photo, excluding gallery controls, thumbnails, dark margins and watermark.\nPaint the photographed broad temple-and-courtyard panorama faithfully. Preserve its camera angle, the main dark sandstone sanctuary mass left of center with its existing irregular truncated tower summit, elaborate but worn pediments and dark rectangular entrances, the attached lower chambers, separate smaller gate/building at right on a low platform, short steep stairs and the warm reddish replacement-stone block at the near corner. Preserve the distinctive low raised stone causeway/platform entering from the lower-left side with closely spaced round baluster-like supporting columns underneath, its actual height and partial crop at left. The foreground is a large quiet grassy court; tall mature leafy trees form the background. Keep all visible temple tops, all buildings, low platform, grass court and forest in frame. Do not crop into a doorway close-up.\nRetain the photographed architecture's ACTUAL state, including existing professional conservation work. Show the differences between pale/reddish new plain infill stones and grey/brown weathered original carved stones where visible. Do not artificially demolish already conserved parts, and do not conjecturally complete the remaining broken pediments, missing roof stones, eroded carvings or truncated tower summit. Keep irregularities and aged block courses. No invented perfect sculptures or added tower cap. Never substitute nearby Thommanon's plan or merge these separate temples. No Bayon faces, no Victory Gate faces or grand gate passage, no imaginary Khmer palace.\nTranslate into the approved detailed natural architectural watercolor style: delicate readable carvings and masonry, clear three-dimensional forms, transparent warm-grey/ochre sandstone washes, subtle cotton-paper texture, varied natural greens, gentle sunlight and leaf shadows, coherent depth. Lighten photographic underexposure enough for the existing facade to read while keeping real stone weathering; no wholesale redesign or polishing. Not blurry simplified watercolor, black comic outlines or noisy photo filter.\nLandscape 16:9 whole visible complex panorama. Widen only court and trees if needed, keeping source building geometry and scale relations. No people, vehicles, characters, signs, captions, text, UI, border or watermark. Beautiful observational watercolor preserving this official photographed archaeological condition."
+}

@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-16",
+  "stop": 2,
+  "title": "巴戎寺",
+  "version": 3,
+  "approval": "pending_user_review",
+  "asset": "assets/game/scenes/siem-reap-02-bayon-v3.png",
+  "integratedIntoGame": false,
+  "generator": "Built-in image_gen.imagegen",
+  "reference": "https://apsaraauthority.gov.kh/2021/07/20/bayon-temple-gallery/#pgcSgb-cl0-7_cl0",
+  "referenceMethod": "Enlarged official gallery photograph 8 / 61 supplied as screenshot reference. Whole temple panorama; surrounding browser UI excluded by prompt.",
+  "changes": "Complete temple panorama with softer transparent watercolor washes, reduced hard outlines and stone microtexture.",
+  "limitations": [
+    "Illustrated interpretation, not a measured architectural reconstruction."
+  ],
+  "prompt": "Use case: style-transfer. The reference screenshot contains an enlarged official photograph of BAYON TEMPLE in its center, approximately x181..1069 y59..652. Use ONLY that single large photograph as the architectural reference; exclude all browser/gallery controls, thumbnails, dark surround and logo. Paint a beautiful traditional transparent WATERCOLOR LANDSCAPE of this FULL TEMPLE PANORAMA. Keep the entire photographed temple from the left gallery to the right gallery, all of the central summit with sky above it, the low stepped platform below it, foreground seasonal shallow green water/grass and surrounding trees. Do not crop into a tower close-up. Preserve the exact irregular tower silhouette and proportions from the photo: central tapering sanctuary, densely overlapping smaller towers, low partly roofless galleries, asymmetry and worn ruins. Faces should be subtle, small, distant stone carvings in the correct places, never enormous Buddha heads. Same ground-level three-quarter camera viewpoint and whole-complex framing as this photo.\nThe STYLE MUST CHANGE strongly from the previous gritty hard-edged ink rendering: genuine airy wet-on-wet watercolor on softly textured white cotton paper, broad luminous transparent washes, delicate pigment blooms and granulation, soft lost-and-found edges, light reserved paper, gentle blue-grey shadows, warm subdued sandstone and fresh sage/olive greens, pale sky with flowing cloud washes. Elegant travel watercolor painting with confident fluid brushwork; simplify individual stone blocks and leaves into coherent color masses while keeping the architectural silhouette accurate. Enough fine brush detail for doorways and a few nearer carvings, but NO black outlines, NO dense hatching, NO gritty stippled noise, NO sharpened photographic stone texture, NO oil/acrylic/impasto, NO sepia ink drawing. Light and spacious, a painterly watercolor rather than a photo filter. Landscape full-bleed 16:9; fit the entire photographed complex within frame, expanding only sky and foreground if necessary. No new architecture. No text, watermark, logo, border or UI."
+}

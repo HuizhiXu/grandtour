@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-16",
+  "stop": 4,
+  "title": "空中宫殿",
+  "englishName": "Phimeanakas",
+  "version": 1,
+  "approval": "approved_by_user_continue_to_next_stop",
+  "nextStop": "战象台 / Terrace of the Elephants",
+  "asset": "assets/game/scenes/siem-reap-04-phimeanakas-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialSources": [
+    "https://apsaraauthority.gov.kh/2021/07/21/phimeanakas-temple-gallery/#pgcSgb-cl0-5_cl0",
+    "https://apsaraauthority.gov.kh/2021/08/09/phimeanakas/"
+  ],
+  "referenceMethod": "Enlarged official APSARA gallery photo 6 / 11 supplied as architectural image reference; approved Baphuon art supplied as style only.",
+  "userDirection": "Panorama, retain extant ruined state, do not reconstruct missing parts.",
+  "review": "Initial generation made stone animal remnants too complete. Targeted second pass reduced head and limb details to eroded remnants.",
+  "limitations": [
+    "Illustration is not a measured architectural survey. Individual masonry, weathering and sculpture details may differ.",
+    "Based on the condition shown in the 2021 official gallery, not certification of current conservation status."
+  ],
+  "prompts": [
+    "Create scene FOUR for The Grand Tour Siem Reap: PHIMEANAKAS / 空中宫殿. Two references have separate roles. The earlier full-frame watercolor BAPHUON painting is STYLE ONLY. The latest screenshot's large central official APSARA photograph of PHIMEANAKAS is the sole authority for architecture and composition. Ignore all screenshot controls, dark overlay, thumbnails and logo.\nPaint the actual ruin in that photograph, in a full 16:9 landscape establishing panorama. Preserve the complete photographed structure from base to surviving summit with sky margin: compact broad three-tier steep laterite temple pyramid in reddish-brown and warm grey, horizontal projecting bands on steep walls, left front corner visible, the narrow very steep stair ascending the front-right face, small worn surviving animal statues on stair-side ledges in their photographed positions, low ruined sandstone upper gallery with rectangular openings, and only the fragmented isolated upper doorway/masonry that survives at the top. KEEP the broken skyline and roofless upper gallery exactly as observed. Do not build a whole temple tower or palace over the summit. Missing roofs remain absent; worn sculptures remain worn; damaged walls stay damaged. No imagined restoration or idealized symmetry. Preserve temple proportions, projecting tier corners, staircase width/angle, statue placement, scattered dark rectangular stones in the grassy foreground, shallow standing water along the lower-left foot, moss, dark damp stone streaks and surrounding forest.\nMatch the approved BAPHUON painting's detailed natural watercolor illustration treatment: clear architectural detail and convincing volume, delicate brush description of weathered masonry, warm sunlight and leafy shadows, natural fresh greens, warm grey and russet stone, transparent watercolor washes and subtle paper texture. Maintain crisp significant details and rich spatial depth; avoid over-soft blurry watercolor, noisy filter effects or harsh black comic outlines. Blue-grey sky may be lightly washed while keeping original geometry. Do not transfer Baphuon's approach/causeway, tier arrangement, trees or doorways to this structure.\nKeep the ENTIRE photographed temple and its base within frame; widen only forest and near foreground to obtain 16:9. No cropped summit, no close-up, no added avenue/plaza. No Bayon face towers, no Angkor Wat spires, no golden or timber palace roofs, no invented colonnades or restored perfect sculptures. No people, characters, UI, text, watermark or decorative border. A faithful illustrated view of the existing ruin, not a reconstruction of its former glory.",
+    "Targeted correction to the MOST RECENT watercolor painting of Phimeanakas. The other reference is the official photograph inside the browser screenshot. Keep the watercolor painting's entire composition, colors, pyramid architecture, ruined summit, forest, steps, rubble and lighting unchanged. Change ONLY the small stone animal sculptures: they have been invented as clear complete little lions/dogs. In the official photo they are heavily weathered, broken, mostly indistinct stone remnants with missing head/face/limb features. Match that archaeological wear. Erode the overly crisp ears, eyes, muzzles, paws and complete heads; make each a worn asymmetrical fragment or rounded broken stone stump appropriate to its source-photo location. Do not add statues, restore a head or complete missing limbs. They should read as quiet eroded remnants, not intact ornamental animals. Preserve statue pedestals and all other painting details. Keep full 16:9 panorama. No text, UI or watermark."
+  ]
+}

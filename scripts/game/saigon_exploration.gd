@@ -212,7 +212,7 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	else:
 		background.texture = {"outdoor": OUTDOOR_BG, "indoor": INDOOR_BG, "palace_garden": PALACE_BG, "palace_hall": PALACE_HALL_BG}[scene_name]
 	background.position = WORLD_SIZE * 0.5
-	background.scale = Vector2(0.8, 0.8)
+	background.scale = WORLD_SIZE / Vector2(background.texture.get_size())
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_background_root.add_child(background)
 	_destination_marker = Line2D.new()
@@ -232,7 +232,8 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 		walk_rect = Rect2(70, 370, 1140, 338)
 		floor_outline = _tour_floor(scene_name)
 		obstacles.assign(TourWorld.layout(scene_name).obstacles)
-		_ui.set_location("路线 %d · %s" % [TourCatalog.route_for_stop(scene_name) + 1, TourCatalog.STOPS[scene_name].title])
+		var region := "暹粒" if scene_name.begins_with("angkor_") else "西贡"
+		_ui.set_location("%s · %s" % [region, TourCatalog.STOPS[scene_name].title])
 	elif scene_name == "outdoor":
 		walk_rect = Rect2(Vector2(18.0, 230.0), Vector2(1244.0, 478.0))
 		obstacles = _outdoor_obstacles()
@@ -292,7 +293,7 @@ func _build_tour_targets(id: String) -> void:
 	var layout: Dictionary = TourWorld.layout(id)
 	_add_target("tour_info", "tour_info", "景点介绍", layout.info, layout.info_stand, Vector2(100, 100))
 	_add_target("tour_activity", "tour_activity", stop.object, layout.activity, layout.activity_stand, Vector2(130, 104))
-	_add_target("tour_record", "tour_record", "记录这一站", Vector2(640, 690), Vector2(640, 615), Vector2(164, 50))
+	_add_target("tour_record", "tour_record", "记录这一站", layout.get("record", Vector2(640, 690)), layout.get("record_stand", Vector2(640, 615)), Vector2(150, 44))
 
 
 func _completed_stops() -> Dictionary:
@@ -342,10 +343,10 @@ func _travel_next() -> void:
 
 func _tour_hint() -> String:
 	var entry: Dictionary = _tour.state(_scene_id)
-	if not entry.read: return "走近左侧介绍牌，了解这一站的故事。"
-	if entry.choice < 0: return "走到右侧%s，%s。" % [TourCatalog.STOPS[_scene_id].object, TourCatalog.STOPS[_scene_id].activity]
+	if not entry.read: return "走近「景点介绍」，了解这一站的故事。"
+	if entry.choice < 0: return "走到「%s」，%s。" % [TourCatalog.STOPS[_scene_id].object, TourCatalog.STOPS[_scene_id].activity]
 	if not entry.recorded: return "走到前方「记录这一站」，留下你的旅行印象。"
-	return "这一站已记录。继续漫步，或点击「下一站」前往新的街角。"
+	return "这一站已记录。继续漫步，或点击「下一站」前往新的景点。"
 
 
 func _save_tour() -> void:
@@ -660,7 +661,7 @@ func _update_postcard_hud() -> void:
 	var count := 0
 	for completed: bool in _completed_stops().values():
 		if completed: count += 1
-	_ui.set_route_progress(count, not _next_stop_id().is_empty())
+	_ui.set_route_progress(count, not _next_stop_id().is_empty(), TourCatalog.STOPS.size())
 
 
 func _show_current_journey() -> void:
@@ -782,6 +783,8 @@ func _transition_to(next_scene: String) -> void:
 	fade_out.tween_property(_fade, "color:a", 0.96, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	await fade_out.finished
 	var spawn := Vector2(640, 620)
+	if TourCatalog.is_new_stop(next_scene):
+		spawn = TourWorld.layout(next_scene).get("spawn", spawn)
 	if not TourCatalog.is_new_stop(next_scene):
 		spawn = {"indoor": Vector2(640, 575), "outdoor": Vector2(608, 432), "palace_garden": Vector2(640, 640), "palace_hall": Vector2(640, 620)}[next_scene]
 	if next_scene == "palace_garden" and _scene_id == "palace_hall":

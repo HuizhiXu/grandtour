@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-16",
+  "status": "integrated_and_verified_locally",
+  "route": "暹粒 · 吴哥",
+  "playableStops": 11,
+  "totalGameStops": 23,
+  "catalog": "scripts/game/angkor_catalog.gd",
+  "navigation": "scripts/game/angkor_world.gd",
+  "runtimeArtMapping": "tools/prepare_angkor_art.py",
+  "features": ["free stop selection", "next stop", "walking with water/ruin boundaries", "introduction", "observation choice", "travel record", "saved progress"],
+  "verification": {
+    "tourChecks": 446,
+    "existingGameplayChecks": 278,
+    "exportedPack": "passed in isolated directory",
+    "nativeSceneCaptures": "all eleven scenes and route book inspected/captured",
+    "browser": "Web game loads; selects Angkor and Bayon; walking to introduction opens Chinese modal"
+  },
+  "publication": "GitHub Pages deployment is tracked by the repository workflow."
+}

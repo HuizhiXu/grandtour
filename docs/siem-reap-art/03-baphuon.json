@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-16",
+  "stop": 3,
+  "title": "巴方寺",
+  "englishName": "Baphuon Temple",
+  "version": 1,
+  "approval": "approved_by_user_continue_to_next_stop",
+  "nextStop": "空中宫殿 / Phimeanakas",
+  "asset": "assets/game/scenes/siem-reap-03-baphuon-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialReference": "https://apsaraauthority.gov.kh/2022/06/23/baphuon-temple-photos-gallery/#pgcSgb-cl0-11_cl0",
+  "referenceMethod": "Official APSARA gallery photo 12 / 23, enlarged and visually inspected; screenshot supplied as architectural reference. Approved Bayon v4 supplied as style reference only.",
+  "userDirection": "Full panorama first; retain archaeological condition, gaps and tree occlusions; no conjectural reconstruction.",
+  "limitations": [
+    "Illustration is not a measured architectural survey; individual stone details may differ."
+  ],
+  "prompt": "Create the NEXT scene, BAPHUON TEMPLE (巴方寺), Angkor Thom, Cambodia. Two reference images have distinct roles: the earlier full-frame watercolor Bayon illustration is STYLE ONLY; the latest browser screenshot's large central APSARA photograph of BAPHUON is the sole architectural and composition source.\nTranslate that BAPHUON photograph into the same detailed natural watercolor travel illustration style as the first reference: precise readable architectural features, warm weathered grey-brown sandstone, subtle paper grain and transparent pigment washes, natural greens, gentle sunlight and coherent depth, refined fine brushwork. Keep crisp meaningful details without cartoon outlines or a photographic filter. Do not imitate Bayon's architecture.\nFrame a FULL TEMPLE ESTABLISHING LANDSCAPE, 16:9. Preserve the photographed viewpoint along the long raised narrow stone causeway running from the lower-left foreground toward the front entrance just right of center, the adjacent lower narrow stone strip on its right, green grass either side, and broad multi-level steep stone temple-mountain terraces behind the entry. Preserve large mature trees at left and overhanging branches on the right which obscure parts of the temple. Keep their real occlusions rather than removing them to invent unseen architecture. Preserve the photographed flat layered courses, horizontal bands of small rectangular openings, tall bare surviving posts near the entry, rectangular broken doorway and exposed irregular summit masonry. Keep the top of the photographed ruin within frame, with sky margin; fit the whole visible temple and base as in the photo. Widen through surrounding foliage and foreground only, never invent extra temple wings.\nABSOLUTE REQUIREMENT: depict the extant archaeological condition from the official photo. Broken tops remain broken, missing roofs and walls remain absent, uneven stone and worn steps remain uneven, incomplete column lines remain incomplete. No guessed restoration, no complete sanctuary tower placed on the summit, no gold roofs, no added ornaments. No giant faces, no Bayon face towers, no Angkor Wat lotus spires, no symmetric invented palace, no water borrowed from the Bayon style reference. Keep Baphuon's own broad tiered mass and long stone approach. Do not add tourist furniture or signs. No characters, text, logos, browser frame, controls, thumbnails, border or watermark. A beautiful, observational watercolor of the actual ruins, with their existing age and incompleteness preserved."
+}

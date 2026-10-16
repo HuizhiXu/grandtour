@@ -129,14 +129,14 @@ func set_visit_progress(stage: int, hint: String) -> void:
 
 
 func set_stop_progress(title: String, stage: int, hint: String) -> void:
-	_quest_progress.text = "城市漫步  ·  %d / 3" % stage if stage < 3 else "城市漫步  ·  已记录 ✓"
+	_quest_progress.text = "景点漫步  ·  %d / 3" % stage if stage < 3 else "景点漫步  ·  已记录 ✓"
 	_quest_title.text = title
 	_quest_label.text = hint
 	_quest_button.text = "查看旅行记录"
 
 
-func set_route_progress(count: int, has_next: bool) -> void:
-	_route_button.text = "旅行路线  %d / 12" % count
+func set_route_progress(count: int, has_next: bool, total: int = 12) -> void:
+	_route_button.text = "旅行路线  %d / %d" % [count, total]
 	_next_button.text = "下一站 →" if has_next else "查看路线记录"
 
 
@@ -152,7 +152,8 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 	_modal_actions.add_child(tabs)
 	for index in range(routes.size()):
 		var selected := index
-		var button := _make_button("路线 %d · %s" % [index + 1, routes[index].title], index == selected_route)
+		var tab_title: String = routes[index].get("tab", "西贡 · 建筑" if index == 0 else "西贡 · 文化")
+		var button := _make_button(tab_title, index == selected_route)
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.pressed.connect(func() -> void: route_selected.emit(selected))
 		tabs.add_child(button)

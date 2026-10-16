@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-16",
+  "chapter": "Siem Reap / Angkor",
+  "workflow": "One illustration at a time; user confirms each before next stop",
+  "stop": 2,
+  "title": "巴戎寺",
+  "englishName": "Bayon Temple",
+  "nextStop": "巴方寺 / Baphuon",
+  "approval": "rejected_by_user_architectural_fidelity",
+  "generator": "Built-in image_gen.imagegen",
+  "asset": "assets/game/scenes/siem-reap-02-bayon-v1.png",
+  "sha256": "81fcaef75b94f997f361a72186469ea8c5ad44ed88e8bb7c400339a4551e44bd",
+  "integratedIntoGame": false,
+  "officialSources": [
+    {
+      "url": "https://apsaraauthority.gov.kh/2021/07/20/bayon-temple-gallery/",
+      "title": "APSARA National Authority — Bayon Temple Gallery",
+      "usedFor": "Official photographs visually inspected in browser: dense tower silhouette, low galleries, stairs, grass and stone approach. New illustration uses original composition; no photograph copied."
+    },
+    {
+      "url": "https://apsaraauthority.gov.kh/2024/08/31/the-bas-reliefs-at-bayon-temple/",
+      "title": "APSARA National Authority — The bas-reliefs at Bayon temple",
+      "usedFor": "Temple-mountain form, carved face towers, gallery bas-reliefs"
+    }
+  ],
+  "visualDecisions": [
+    "Match approved South Gate ink and watercolor style",
+    "Outside eastern approach, gently off-axis, temple summit fully framed",
+    "Dense varied face towers above low partly ruined galleries",
+    "Grey-brown worn masonry, central old stone path, grass and fallen blocks at edges",
+    "No fictional plaza, tourist lecterns, characters or UI"
+  ],
+  "limitations": [
+    "Interpretive illustration, not a measured architectural reconstruction",
+    "Illustration does not certify exact tower count or individual relief details",
+    "Not a claim about current scaffolding, restoration or visitor access"
+  ],
+  "prompt": "Use case: stylized-concept.\nCreate the SECOND approval illustration for The Grand Tour Siem Reap series: BAYON TEMPLE, Angkor Thom, Cambodia. One full-bleed 16:9 landscape, ideally 1600x900. Original ink-and-watercolor travel picture-book background matching the approved South Gate illustration: fine brown architectural ink lines, transparent muted watercolor washes, subtle ivory paper grain, natural green foliage, grey-brown sandstone, restrained ochre warmth, pale blue sky and soft morning daylight. No UI, captions, characters or border.\n\nArchitectural fidelity is the priority. Research and visual checking were made against APSARA National Authority's Bayon Temple official photo gallery (2021/07/20/bayon-temple-gallery) and its official article about Bayon bas-reliefs (2024/08/31/the-bas-reliefs-at-bayon-temple). Make a new coherent view, not a copy of any individual photograph, no aerial photograph imitation.\n\nViewpoint/composition: view from outside the EASTERN approach, slightly off-axis toward a front corner, eye-level to gently raised, not a drone view and not fantasy isometric. Show the whole temple silhouette including the complete central summit with clear sky margin. Bayon is a broad compact layered temple complex, with a DENSE irregular cluster of face towers, not a single isolated gate and not Angkor Wat's five-spire silhouette. The temple spans the middle of the picture, its grey masonry at believable scale. A worn stone approach and modest short entrance stair lead to the first gallery; grass and earth lie outside the stone platform at foreground sides. Keep an unobstructed central strip of old stone paving for a possible future walking character, but do not invent a broad modern plaza. Mature tropical trees frame the side edges and stand beyond the temple without growing through the towers. No moat or water reflection in the immediate foreground of this chosen approach.\n\nEssential form: several stone terrace levels, low outer galleries, rectangular doorways with horizontal stone lintels, partly roofless colonnaded galleries, dark interconnecting passage openings, broken pediments and irregular fallen blocks kept near side edges. Behind the lower gallery rise numerous variably spaced short-to-tall Bayon face towers. The central sanctuary rises highest toward the rear-middle, with an irregular tapering stone summit. Towers are articulated by real-looking block courses and weathered stepped stone crowns, NOT neat identical cones or sharp Gothic spires. Their serene faces are carved across the vertical tower surfaces, with soft closed or lowered eyes, broad noses and subtle lips, blended into the masonry. Each face belongs to one tower direction: show only the faces visible from the camera, some frontal and some in profile. Do not put a giant floating Buddha head on top of every tower, and do not turn the facade into a grid of identical smiling masks. Faces are readable on several nearer towers but small and subdued on distant towers, in proportion to the building. Preserve the irregular archaeological appearance.\n\nInclude restrained worn bas-relief texture on sections of the lower gallery walls, not a fabricated giant illustrated mural. Some colonnettes, small apertures and patches of lichen should remain legible. Stone is predominantly warm grey, charcoal grey and dull brown, with occasional moss in crevices and differentiated restored blocks. Keep the scene quietly sunlit with gentle dappled shadows, never polished or freshly reconstructed. Do not attempt to certify a precise tower count or current access/restoration layout from the illustration.\n\nAvoid: South Gate causeway deity rows, oversized naga fans across the foreground, a broad triumphal gate as the main subject, Angkor Wat lotus-spire arrangement, intact golden roofs, painted statues, invented cafes or information lecterns, decorative fountains, roads or cars, elephants, people, Archie, text, signage and watermarks. The result should feel like a carefully observed illustrated archaeological place, not an imaginary Khmer-themed palace."
+}

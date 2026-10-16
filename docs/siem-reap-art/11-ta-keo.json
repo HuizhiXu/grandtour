@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-16",
+  "stop": 11,
+  "title": "茶胶寺",
+  "englishName": "Ta Keo",
+  "version": 1,
+  "approval": "approved_for_game_integration_by_user",
+  "nextStop": "塔布茏寺 / Ta Prohm",
+  "asset": "assets/game/scenes/siem-reap-11-ta-keo-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialSources": [
+    "https://apsaraauthority.gov.kh/2021/07/29/ta-keo-temple-gallery/#pgcSgb-cl0-5_cl0",
+    "https://apsaraauthority.gov.kh/2021/08/12/ta-keo-temple/"
+  ],
+  "referenceMethod": "Official enlarged gallery photo 6 / 18, oblique whole temple view with foreground trees, supplied as architectural image reference; approved Thommanon illustration supplied as style only.",
+  "userDirection": "Panorama, retain actual state, no speculative reconstruction; keep Ta Keo's unfinished comparatively unornamented surfaces.",
+  "limitations": [
+    "Only towers visible from selected viewpoint depicted; hidden towers not added to show ideal plan.",
+    "Illustration is not a measured survey; masonry details may differ.",
+    "Based on condition shown in official gallery, not certification of current conservation status."
+  ],
+  "prompt": "Create scene ELEVEN: TA KEO TEMPLE / 茶胶寺, Angkor, Cambodia. Two reference images have distinct roles. The earlier full-frame Thommanon watercolor is STYLE ONLY. The latest screenshot's single large central APSARA Ta Keo photograph is the sole architectural and composition source; ignore screenshot controls, thumbnails, dark overlay and logo.\nPaint this whole temple-mountain establishing view faithfully: broad strongly layered massive sandstone/laterite terraces, steep central stair offset slightly left from the viewpoint, upper sanctuary tower cluster with only the towers actually visible from this angle, low partly ruined lower galleries with rectangular openings, existing broken side walls and scattered stone at the base. Preserve the photograph's low ground-level oblique perspective, terrace widths/heights, tower relative positions and silhouettes, exact overlap and missing portions. Keep the three clearly visible upper tower silhouettes at their photographed heights; do not invent additional visible towers to illustrate an ideal five-tower plan. The central sloped stair and simple heavy stone geometry are the defining forms. Include the slim foreground tree left of center, large tree trunk near right, overhanging canopy and dense foliage at the left; preserve their actual architectural occlusions. Foreground is shaded reddish earth with fallen leaves and tree shadows.\nTa Keo was never fully ornamented. Its unfinished plain stone surfaces are essential: depict mostly massive bare squared blocks, simple plain pilasters and horizontal moulding courses where observed, NOT Thommanon's intricate carved pediments, dense floral motifs, apsaras or other invented relief. Do not decorate the undecorated surfaces or finish the towers. Keep broken upper contours, plain openings, dark weathering, patchy moss/lichen and existing replacement stones. Preserve actual conservation seen in the photo but do not rebuild any further missing parts. No guessed roofs, pointed lotus caps, Bayon faces, giant statues, golden details or fantasy palace reconstruction.\nFull 16:9 landscape panorama with all photographed tower tops, terrace bases and modest sky margin included. Widen only forest and near foreground for aspect ratio, not temple architecture. Match approved detailed natural watercolor series: clear readable architectural masses, fine masonry brush detail, warm grey and muted ochre stone washes, subtle cotton-paper texture, natural greens, soft blue sky and warm dappled light, coherent scale and depth. Retain the real imperfect archaeological condition. Not a blurry loose watercolor, harsh black drawing or gritty photographic filter. Remove only incidental tiny construction equipment glimpsed far behind the right side, without changing masonry or adding structure. No people, tourist furniture, text, signage, watermark, UI or border."
+}

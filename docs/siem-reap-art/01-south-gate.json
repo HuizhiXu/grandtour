@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-16",
+  "chapter": "Siem Reap / Angkor",
+  "workflow": "One illustration at a time; user confirms each before next stop",
+  "stop": 1,
+  "title": "通王城南门",
+  "englishName": "South Gate of Angkor Thom / Tonle Om Gate",
+  "nextStop": "巴戎寺 / Bayon",
+  "approval": "approved_by_user",
+  "approvedDate": "2026-10-16",
+  "generator": "Built-in image_gen.imagegen",
+  "asset": "assets/game/scenes/siem-reap-01-angkor-thom-south-gate-v1.png",
+  "sha256": "7aa501834097b0231d541f98a02a699f53616a610eaaebd0dcf1ab8665e71102",
+  "integratedIntoGame": true,
+  "officialSources": [
+    {
+      "url": "https://apsaraauthority.gov.kh/2021/07/03/angkor-thom/",
+      "title": "APSARA National Authority — Angkor Thom",
+      "usedFor": "City wall and moat, four-faced gate, gods and demons holding naga on causeway"
+    },
+    {
+      "url": "https://apsaraauthority.gov.kh/2021/07/19/south-gate-of-angkor-thom-gallery/",
+      "title": "APSARA National Authority — South Gate of Angkor Thom Gallery",
+      "usedFor": "Official photos visually inspected: passage, masonry, road and statue row proportions, moat and forest",
+      "accessNote": "Official gallery successfully loaded and visually inspected in in-app browser despite web text fetch returning 403."
+    },
+    {
+      "url": "https://whc.unesco.org/en/list/668",
+      "title": "UNESCO World Heritage Centre — Angkor",
+      "usedFor": "Heritage context"
+    }
+  ],
+  "visualDecisions": [
+    "Original watercolor and ink in established game style",
+    "Causeway rather than fictional pedestrian plaza",
+    "Natural weathered grey-brown stone, no invented cafes or display stands",
+    "Background approval only, no characters or UI"
+  ],
+  "limitations": [
+    "Interpretive illustration, not measured reconstruction",
+    "Official gallery dated 2021; does not certify present-day conservation conditions",
+    "Exact count and individual restoration details of statues not certified"
+  ],
+  "prompt": "Use case: stylized-concept.\nAsset: FIRST approval illustration for The Grand Tour's Siem Reap chapter, one full-bleed 16:9 landscape background, ideally 1600x900. A single coherent scene, not a collage, no UI or text.\n\nPrimary subject: the REAL SOUTH GATE OF ANGKOR THOM (Tonle Om Gate), Cambodia. Approach from OUTSIDE the city, looking north along its straight causeway. Architectural and spatial fidelity take priority over making a generic pretty temple. Facts and visual checks come from APSARA National Authority's Angkor Thom description and official South Gate photo gallery.\n\nComposition: an eye-level to slightly raised viewpoint on the approach road, modestly off the central axis so the front and a side of the gate tower can be read. The COMPLETE gateway tower is framed in the upper-middle distance with generous sky above, not cropped. Its scale must be believable compared with the roadside stone figures: a tall gate with a comparatively narrow opening, not a gigantic cathedral or a broad palace. The long straight causeway leads from the bottom foreground toward the single gateway passage. Two orderly rows of stone guardian figures converge strongly in perspective, clearly separating the roadway from the water beyond. Include the moat in visible strips outside both balustrades and dense mature tropical woodland at the far bank. Let the foreground road be unobstructed for a future playable character. Do NOT widen the site into a plaza.\n\nGate architecture: weathered grey-brown sandstone gate tower in late Angkor/Bayon style; four large serene carved faces oriented to the cardinal directions, only the two or three physically visible from this viewpoint are shown, never four front-facing faces on one facade. An irregular tapering cluster of worn stone peaks crowns the faces. A single narrow, tall corbelled passage below has a pointed, inward-stepping upper opening: NOT a Roman semicircular voussoir arch. Low laterite-and-stone city walls continue into the forest at both sides. Subtle weathered elephant-related carving at the lower flanks is acceptable if discreet; do not add free-standing elephant statues.\n\nCauseway: believable present-day muted grey road surface, sandy stone-colored narrow shoulders and low stone plinth edges; no lane markings. On the viewer's left, a long row of calm deva stone figures, on the right a row of stern asura figures, gripping a continuous naga serpent body at waist level. Their seated/kneeling bodies, arms and crowns must remain visibly stone, not living people, not upright human tourists. Sculptures are individually worn, with some chipped or missing details and occasional differently weathered restored heads. Show repeated figures diminishing into distance without pretending to fit all of them at full size in this framing. The near ends of the balustrades have broad multiheaded naga fans consistent with Khmer sculpture, integrated with the rail ends. Do not invent Chinese dragons, living snakes or fantastical monsters.\n\nEstablished series style: detailed fine brown ink architectural drawing with restrained transparent watercolor washes, subtle warm ivory paper texture, realistic structural proportions, readable carved details, natural moss and lichen, muted forest greens, cool grey-brown stone and small warm ochre accents. Cozy thoughtful travel picture-book atmosphere matching the existing Saigon scenes, but less ornamental and with convincing archaeological weathering. Natural soft MORNING daylight, gently dappled tree shadows, pale blue sky. Keep forest and water grounded in reality; no epic fantasy lighting, no orange filter, no jungle roots wrapped around the entire gateway.\n\nNo people, no Archie, no vehicles, no modern tourist signboards, no imaginary cafes, no added display stands, no invented palaces behind the gate, no Angkor Wat five-tower silhouette, no gold roofs, no decorative frame, no writing, no watermark. This is an original illustration informed by the official site's architecture, not a claim of a survey-accurate reconstruction or of today's exact conservation condition."
+}

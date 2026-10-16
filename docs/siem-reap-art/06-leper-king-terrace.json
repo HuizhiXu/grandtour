@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-16",
+  "stop": 6,
+  "title": "癞王台",
+  "englishName": "Terrace of the Leper King",
+  "version": 1,
+  "approval": "approved_by_user_continue_to_next_stop",
+  "nextStop": "王宫遗址 / Royal Palace Compound",
+  "asset": "assets/game/scenes/siem-reap-06-leper-king-terrace-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialSources": [
+    "https://apsaraauthority.gov.kh/2021/08/02/terrace-of-the-leper-king-gallery/#pgcSgb-cl0-3_cl0",
+    "https://apsaraauthority.gov.kh/2021/08/13/terrace-of-the-leper-king/"
+  ],
+  "referenceMethod": "Official gallery enlarged photograph 4 / 20 supplied as architectural image reference. Approved Elephant Terrace watercolor supplied as style only.",
+  "userDirection": "Prefer panorama; retain actual ruined form, eroded relief and repair blocks; no conjectural reconstruction.",
+  "limitations": [
+    "Exterior wall panorama matches chosen source; left side continues outside source frame. No unseen summit statue inserted.",
+    "Illustrated interpretation, not measured survey. Individual relief and masonry details may differ.",
+    "Based on the official 2021 gallery photograph, not certification of current conservation status."
+  ],
+  "prompt": "Create scene SIX: TERRACE OF THE LEPER KING / 癞王台, Angkor Thom, Cambodia. Two references have separate roles: the earlier full-frame Elephant Terrace watercolor is STYLE ONLY; the latest browser screenshot's large central official APSARA photo is the sole architectural/composition reference for the Leper King Terrace. Exclude browser controls, thumbnails, dark surround and logo.\nTranslate this single large official photo into the approved detailed natural watercolor style. Preserve its broad exterior view: tall solid sandstone terrace wall, irregular redented/projecting and recessed bays with offset corners, many horizontal registers of small seated and standing worn relief figures, rough flat top with scattered broken masonry, grass at the base and dense mature forest directly behind. Preserve the photographed camera height and near-frontal slight oblique viewpoint, wall profile, approximate bay widths, coursing, repair blocks, eroded relief areas and dark staining with pale lichen. Keep visible boundary of wall at right, and let the left wall continue out of frame exactly as in the photograph rather than inventing an unseen endpoint. Do not change the wall into a complete symmetrical building. No new central staircase, no temple tower, no golden roof or pavilion, no doorway copied from the style reference. Do not borrow Elephant Terrace's guardians, road, central shrine, arrangement or relief motifs.\nThe existing carved figures are small, tightly arranged in horizontal bands and heavily weathered. Preserve their uneven and missing heads/limbs and indistinct faces; no restoration into perfect newly carved statues. Retain uncarved replacement stones where photographed, missing blocks, broken top edge and partial surviving carvings. Do not add a summit statue or invent its visibility; this chosen ground-level photo does not show it prominently. Do not merge a close-up statue or inner corridor into this view. No giant elephants or decorative fantasy sculpture.\nLandscape 16:9 exterior panorama, entire wall height from grassy base to upper broken edge, forest canopy above and modest grassy foreground. Expand only trees/grass to adjust aspect ratio; do not invent unseen architecture. Match approved travel watercolor illustration with clear stone and relief detail, transparent warm-grey/ochre-brown washes, subtle paper texture, natural varied greens, coherent depth and gentle dappled daylight. Rich detailed architectural painting with fine brushwork, neither blurry simplified watercolor nor a sharpened photo filter. Preserve age and imperfections while making the photographed relief legible. No people, text, logos, UI, watermark or border."
+}

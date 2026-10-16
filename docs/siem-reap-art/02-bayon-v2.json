@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-16",
+  "stop": 2,
+  "title": "巴戎寺",
+  "version": 2,
+  "approval": "rejected_by_user_style_and_partial_framing",
+  "asset": "assets/game/scenes/siem-reap-02-bayon-v2.png",
+  "integratedIntoGame": false,
+  "generator": "Built-in image_gen.imagegen, photo-based style transfer",
+  "replacesRejectedVersion": 1,
+  "officialReference": "https://apsaraauthority.gov.kh/2021/07/20/bayon-temple-gallery/",
+  "referenceAsset": "https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Bayon-Temple_Angkor-Temple_Siem-Reap.jpg-15-600x417.jpg",
+  "referenceNote": "Bundled gallery asset visually verified as close oblique view with conservation machinery. Source URL filename differs from thumbnail impression; verification based on actual bundled pixels.",
+  "changes": "Use photographed oblique tower cluster and doorway geometry rather than invented symmetric complete temple. Remove temporary modern conservation equipment. Preserve approved watercolor style.",
+  "limitations": [
+    "Illustrated interpretation; not a measured reconstruction.",
+    "Equipment removal requires inferred masonry in occluded areas."
+  ],
+  "prompt": "Use case: style-transfer. Edit Image 1, an actual APSARA National Authority photograph of Bayon Temple. Image 2 is ONLY a watercolor rendering-style reference; do not borrow any of its architecture. Create a faithful watercolor and fine ink translation of Image 1, preserving its exact camera viewpoint, asymmetric cropped composition, number and locations of visible towers, silhouette, every tower's relative height and width, face proportions and orientations, overlapping masonry, low rectangular doorways, stairs and broken lintels. In particular preserve the nearer profile-facing tower at about one third of the image width, the smaller right-of-center tower and receding right-hand towers. Do not replace this observed ruin with a symmetrical temple. Do not add a giant frontal face, new towers, complete roofs or invented ornate gates. Keep the leftmost architecture cropped as photographed. Match Image 2's delicate architectural ink, muted grey-brown sandstone, transparent watercolor washes and ivory paper grain, with natural green trees. Keep the same landscape 600:417 composition as Image 1; faithful geometry takes priority over stylistic prettification. Remove only the temporary construction machinery, crane, metal scaffolding, umbrellas and tiny modern workers from Image 1; use restrained existing stone texture behind these narrow areas without adding new structures. No text, logo, watermark, UI or border. This is a close observed architectural scene, not an imagined complete reconstruction."
+}

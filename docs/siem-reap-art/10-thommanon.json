@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-16",
+  "stop": 10,
+  "title": "托玛侬神庙",
+  "englishName": "Thommanon",
+  "version": 1,
+  "approval": "approved_by_user_continue_to_next_stop",
+  "nextStop": "茶胶寺 / Ta Keo",
+  "asset": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialReference": "https://apsaraauthority.gov.kh/2021/08/13/chaussay-devata-and-thommanon-temple/",
+  "referenceMethod": "Dedicated official Thommanon page, enlarged image 4 / 6, caption Apsara National Authority Thammanon (8). Chosen after rejecting ambiguous combined-gallery images. Screenshot supplied as architecture reference; approved Chau Say Tevoda illustration as style only.",
+  "userDirection": "Panorama, natural detailed watercolor, preserve photographed archaeological state and tree occlusions; no conjectural reconstruction.",
+  "limitations": [
+    "Whole visible group shown, with sanctuary partly hidden by leaves as in reference.",
+    "Illustration is not measured survey. Fine masonry, carving and foliage may differ.",
+    "Based on published official reference, not certification of current conservation status."
+  ],
+  "prompt": "Create scene TEN: THOMMANON TEMPLE / 托玛侬神庙, Angkor, Cambodia. Two references have separate roles. The earlier full-frame Chau Say Tevoda watercolor is STYLE ONLY. The latest browser screenshot's SINGLE large central photograph from APSARA's dedicated Thommanon page is the sole authority for architecture, actual condition and composition. Exclude website text, controls, dark surround and thumbnails.\nPaint the photographed wide three-quarter ground-level view of Thommanon's existing stone buildings: one larger temple occupying center and right, with its taller intricately tiered sanctuary to the left of the attached long low stone-vaulted hall, a strong carved triangular pediment over the right end and a dark rectangular side doorway; a separate smaller stone gateway stands to the left background. Preserve exact building arrangement, relative heights, wall thickness, low stepped plinths, roof contours, window/door positions and weathered relief. The tall sanctuary is partly occluded by real overhanging branches and leaves: KEEP the original occlusion, do not clear trees or invent an unseen tower top. In the foreground preserve the shaded earthen clearing with exposed roots, fallen leaves, a few mossy stones and a narrow naturally worn path at right. Retain the leaning tree framing the left and dense woodland behind. This is an establishing view of the entire visible building group, not a carving close-up.\nKeep the existing official-photograph condition: lichen and moss, dark stone, rounded worn reliefs, irregular and missing blocks, chipped pediments, ancient carved details mixed with actual plain replacement blocks if present. Preserve the portions that have already been professionally conserved; do not either demolish them or further reconstruct missing features. Do not create new carvings or restore missing faces/limbs. Do not copy Chau Say Tevoda's separate buildings, broad grass courtyard, reddish infill locations or raised column-supported causeway into Thommanon. No Bayon faces or Angkor Wat five-spire skyline, palace roofs or decorative invented statues.\nStyle matches the approved detailed natural watercolor illustration: clear architecture and spatial depth, fine observed brush detail, transparent warm grey/ochre sandstone washes with subtle green lichen, subtle cotton-paper grain, fresh nuanced forest greens and soft dappled light. Lift underexposure only enough to make the actual building readable while keeping a shaded forest mood. Avoid overly loose blurred watercolor, sharp comic outlines and photographic filter noise. Landscape 16:9; keep all of the visible temple group and its bases in frame, widen only surrounding woodland and foreground. No people, characters, tourist furniture, text, signs, watermark, UI or border."
+}

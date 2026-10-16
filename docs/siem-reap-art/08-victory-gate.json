@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-16",
+  "stop": 8,
+  "title": "胜利门",
+  "englishName": "Victory Gate",
+  "version": 1,
+  "approval": "approved_by_user_continue_to_next_stop",
+  "nextStop": "周萨神庙 / Chau Say Tevoda",
+  "asset": "assets/game/scenes/siem-reap-08-victory-gate-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialSources": [
+    "https://apsaraauthority.gov.kh/2021/07/19/east-gate-of-angkor-thom-gallery/#pgcSgb-cl0-9_cl0",
+    "https://apsaraauthority.gov.kh/2021/07/03/angkor-thom/"
+  ],
+  "referenceMethod": "Enlarged official Victory Gate gallery photograph 10 / 34 supplied as architectural reference. Approved Royal Palace watercolor supplied as style only.",
+  "userDirection": "Whole gate panorama, preserve actual archaeological condition, no imagined restoration.",
+  "limitations": [
+    "Based on condition shown in official 2021 gallery, not certification of current conservation status. Official reporting notes later work on causeway deity heads; this selected view does not depict those rows.",
+    "Illustration is not a measured survey; individual masonry and carving detail may differ."
+  ],
+  "prompt": "Create scene EIGHT, VICTORY GATE / 胜利门 of Angkor Thom, Cambodia. Two recent references: the earlier full-frame Royal Palace watercolor is STYLE ONLY. The latest screenshot's large central official APSARA Victory Gate photograph is the sole authority for composition and architecture. Use ONLY that single large photo; exclude controls, thumbnails, dark surround and logo.\nTranslate the photographed whole gate and forest approach into the approved detailed natural watercolor style. Keep the exact camera viewpoint: centered road receding through one tall narrow rectangular gate passage, the complete dark weathered stone gate tower with its entire summit visible, central tallest tapering irregular crown and lower side masses, modest low lateral vaulted stone wings, grassy rising banks on both sides, dense mature tropical woodland framing the tower, pale earthen road shoulders and scattered fallen stone blocks beside the approach. Keep the photographer's frontal whole-gate establishing composition. Preserve gateway width/height, crown proportions, irregular broken contours, left and right wing profiles, vegetation occlusion, scattered blocks and the actual overhead horizontal support visible inside the portal.\nFaces and elephant carvings must be ONLY those actually faintly visible in this photo, kept worn, shadowed and proportionate to masonry. Do not enlarge faces or add extra giant face heads, new towers, new elephant sculptures or perfect rows of deity statues. This chosen photographed approach does NOT show a grand naga statue-lined bridge or moat: do not import South Gate's causeway, repaired deva rows or fan-headed naga into this Victory Gate view. No pool, pond or palace wall from the style reference.\nABSOLUTE REQUIREMENT: retain the actual archaeological state depicted by the official reference. Keep missing and broken stone, rounded and eroded faces, irregular crowns, lichen, dark weathering, partially broken mouldings and fallen blocks. Do not restore absent features, rebuild intact roof details, straighten irregular ruins or brighten the sculpture into pristine faces. Lighten only photographic underexposure enough to read the existing forms, keeping believable cool shade on stone and warm dappled sunlight on the road.\nMatch approved watercolor illustrations: clearly observed architecture, fine brush detail, transparent warm grey-brown stone washes, natural vivid but nuanced forest greens, soft blue sky glimpses, subtle paper texture and convincing depth. Detailed and legible, not blurry simplified watercolor, harsh black outline or gritty photo filter. 16:9 landscape full-gate panorama, all summit and both wing bases included with sky/foliage margin. Widen only forest and foreground to adjust frame. No imaginary reconstruction, no tourist vehicles, people, characters, signs, text, watermark, UI or border."
+}

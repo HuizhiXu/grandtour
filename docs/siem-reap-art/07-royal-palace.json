@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-16",
+  "stop": 7,
+  "title": "王宫遗址",
+  "englishName": "Royal Palace Compound",
+  "version": 1,
+  "approval": "approved_by_user_continue_to_next_stop",
+  "nextStop": "胜利门 / Victory Gate",
+  "asset": "assets/game/scenes/siem-reap-07-royal-palace-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialReference": "https://apsaraauthority.gov.kh/2021/07/29/royal-palace-compound-gallery/#pgcSgb-cl0-11_cl0",
+  "referenceMethod": "Official gallery enlarged photograph 12 / 43 supplied as sole architectural reference; approved Leper King Terrace art supplied as style only.",
+  "userDirection": "Panorama preferred; preserve actual ruins and tree occlusions; no reconstructed former palace.",
+  "limitations": [
+    "Selected panorama depicts pond, enclosure wall and distant surviving gate, not the entire palace ground plan.",
+    "Illustration is not a measured survey; individual masonry details may differ.",
+    "Based on the official 2021 gallery photo, not certification of current conservation status."
+  ],
+  "prompt": "Create scene SEVEN for The Grand Tour Siem Reap watercolor series: ROYAL PALACE COMPOUND RUINS / 王宫遗址, Angkor Thom. There are two recent image references. The earlier full-frame Leper King Terrace watercolor is STYLE ONLY. The most recent screenshot's single large central official APSARA photograph is the sole reference for physical architecture, composition and site condition. Ignore its browser controls, thumbnails, dark surround and watermark.\nPaint this photographed broad view of the palace enclosure: a large quiet rectangular greenish pond dominating the foreground-left and middle, old low stone edging and shallow horizontal stepped banks, grass and earth along the near right bank with scattered dry leaves, one large mature tree trunk at the right foreground, dense tropical greenery overhead and behind, a long warm grey-ochre laterite enclosure wall across the far bank, and a SMALL distant surviving ruined stone entrance gate slightly right of the image center, largely obscured by trees. Preserve the exact spatial relationships, camera height, diagonals of the pond edges, wall height, gateway scale and real foliage occlusions. Gate remains small in the panorama, not enlarged into a grand palace centerpiece.\nKeep the gate's irregular collapsed summit and missing stone, dark rectangular portal, partial side apertures and time-worn blocks as photographed. Keep trees hiding the missing and surviving areas; do not clear foliage to invent architecture. The historic palace buildings are NOT to be reconstructed: no gold roof, no timber hall, no symmetrical palace wings, no newly complete tower, no floating historical reconstruction or interpretive overlays. Do not borrow the style image's sculpted terrace walls or figures: this scene has the comparatively plain enclosure wall visible in the photograph. Keep pond still and softly reflective, with natural muted olive water rather than a decorative turquoise pool. Preserve modest worn steps and imperfect edges. Remove only tiny modern tourists; do not redesign any archaeology.\nLandscape 16:9 whole-site establishing view. Fit the reference's full pond composition, far wall and gate, large foreground tree and canopy; widen only foliage and near bank when needed, never invent additional buildings. Match the approved detailed watercolor series: natural greens, luminous yet believable sunlight and shadows, weathered warm stone, delicate readable architectural brushwork, transparent watercolor washes and subtle paper texture, coherent depth and calm atmosphere. Neither oversimplified blurry watercolor nor harsh black outlines or photo-filter grit. Do not add characters, signage, text, logos, controls, border or watermark."
+}

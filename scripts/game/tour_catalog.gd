@@ -1,12 +1,16 @@
 extends RefCounted
 ## Authored stops and activities. The two original quests keep their owners.
 
+const Angkor := preload("res://scripts/game/angkor_catalog.gd")
 const ROUTES: Array[Dictionary] = [
 	{"title": "经典建筑与城市漫步", "subtitle": "独立宫 → 红教堂 → 中央邮局 → 书街 → 市政厅 → 歌剧院 → 阮惠步行街 → 咖啡公寓", "note": "沿城市中心慢慢走，从历史建筑走向当代街头。教堂、市政厅和歌剧院以外观欣赏为主。", "stops": ["palace", "cathedral", "post_office", "book_street", "city_hall", "opera", "nguyen_hue", "cafe_apartments"]},
 	{"title": "市场、艺术与历史", "subtitle": "滨城市场 → 美术馆 → 粉红教堂 → 战争遗迹博物馆", "note": "市场与美术馆相邻；粉红教堂较远，可乘车前往。可自由选站，也可把战争遗迹博物馆与独立宫一起参观，减少折返。", "stops": ["ben_thanh", "fine_arts", "pink_church", "war_museum"]},
+	Angkor.ROUTE,
 ]
 
-const STOPS: Dictionary = {
+static var STOPS: Dictionary = SAIGON_STOPS.merged(Angkor.STOPS)
+
+const SAIGON_STOPS: Dictionary = {
 	"palace": {"title": "独立宫", "scene": "palace_garden"},
 	"post_office": {"title": "中央邮局", "scene": "outdoor"},
 	"cathedral": {
@@ -89,7 +93,9 @@ static func stop_for_scene(scene_id: String) -> String:
 	return ""
 
 static func route_for_stop(id: String) -> int:
-	return 0 if id in ROUTES[0].stops else 1
+	for index in range(ROUTES.size()):
+		if id in ROUTES[index].stops: return index
+	return 0
 
 static func is_new_stop(id: String) -> bool:
 	return STOPS.has(id) and id not in ["palace", "post_office"]
