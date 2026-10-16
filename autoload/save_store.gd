@@ -22,6 +22,7 @@ func _default_data() -> Dictionary:
 		"leaderboard": [],
 		"postcard_quest": {},
 		"palace_visit": {},
+		"tour_progress": {},
 	}
 
 
@@ -53,6 +54,9 @@ func _load() -> void:
 	var palace: Variant = candidate.get("palace_visit", {})
 	if palace is Dictionary:
 		_data.palace_visit = palace.duplicate(true)
+	var tour: Variant = candidate.get("tour_progress", {})
+	if tour is Dictionary:
+		_data.tour_progress = tour.duplicate(true)
 	var clean_rows: Array = []
 	var rows: Variant = candidate.get("leaderboard", [])
 	if rows is Array:
@@ -120,6 +124,15 @@ func get_palace_progress() -> Dictionary:
 
 func set_palace_progress(progress: Dictionary) -> bool:
 	_data.palace_visit = progress.duplicate(true)
+	return save()
+
+
+func get_tour_progress() -> Dictionary:
+	return (_data.get("tour_progress", {}) as Dictionary).duplicate(true)
+
+
+func set_tour_progress(progress: Dictionary) -> bool:
+	_data.tour_progress = progress.duplicate(true)
 	return save()
 
 

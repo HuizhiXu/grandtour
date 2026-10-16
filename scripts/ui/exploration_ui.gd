@@ -8,6 +8,10 @@ signal return_to_start_requested
 signal licenses_requested
 signal postcard_requested
 signal postcard_choice(choice_index: int)
+signal routes_requested
+signal route_selected(index: int)
+signal stop_selected(id: String)
+signal next_stop_requested
 
 const ScreenFactory := preload("res://scripts/ui/screen_factory.gd")
 const PAPER := Color("f7f0e2")
@@ -39,6 +43,8 @@ var _quest_progress: Label
 var _quest_panel: PanelContainer
 var _quest_title: Label
 var _quest_button: Button
+var _route_button: Button
+var _next_button: Button
 
 
 func _ready() -> void:
@@ -93,7 +99,7 @@ func has_modal() -> bool:
 
 func is_pointer_over_panel() -> bool:
 	var pointer := get_global_mouse_position()
-	return _identity.get_global_rect().has_point(pointer) or _quest_panel.get_global_rect().has_point(pointer) or pointer.x > 1110.0 and pointer.y < 85.0
+	return _identity.get_global_rect().has_point(pointer) or _quest_panel.get_global_rect().has_point(pointer) or pointer.x > 920.0 and pointer.y < 85.0 or _next_button.get_global_rect().has_point(pointer)
 
 
 func show_information(title: String, body: String) -> void:
@@ -116,10 +122,55 @@ func set_quest_progress(stage: int, hint: String) -> void:
 
 
 func set_visit_progress(stage: int, hint: String) -> void:
-	_quest_progress.text = "第二站  ·  %d / 4" % stage if stage < 4 else "第二站  ·  已完成 ✓"
+	_quest_progress.text = "独立宫  ·  %d / 4" % stage if stage < 4 else "独立宫  ·  已完成 ✓"
 	_quest_title.text = "参观独立宫"
 	_quest_label.text = hint
 	_quest_button.text = "查看参观纪念"
+
+
+func set_stop_progress(title: String, stage: int, hint: String) -> void:
+	_quest_progress.text = "城市漫步  ·  %d / 3" % stage if stage < 3 else "城市漫步  ·  已记录 ✓"
+	_quest_title.text = title
+	_quest_label.text = hint
+	_quest_button.text = "查看旅行记录"
+
+
+func set_route_progress(count: int, has_next: bool) -> void:
+	_route_button.text = "旅行路线  %d / 12" % count
+	_next_button.text = "下一站 →" if has_next else "查看路线记录"
+
+
+func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: int, current_stop: String, completed: Dictionary) -> void:
+	var route: Dictionary = routes[selected_route]
+	var done := 0
+	for id: String in route.stops:
+		if completed.get(id, false): done += 1
+	_open_modal("旅行路线册 · %d / %d 已记录" % [done, route.stops.size()], route.subtitle + "\n\n" + route.note)
+	if done == route.stops.size():
+		_modal_title.text = "路线已完成 · " + str(route.title)
+	var tabs := HBoxContainer.new()
+	_modal_actions.add_child(tabs)
+	for index in range(routes.size()):
+		var selected := index
+		var button := _make_button("路线 %d · %s" % [index + 1, routes[index].title], index == selected_route)
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.pressed.connect(func() -> void: route_selected.emit(selected))
+		tabs.add_child(button)
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 8)
+	grid.add_theme_constant_override("v_separation", 6)
+	_modal_actions.add_child(grid)
+	for index in range(route.stops.size()):
+		var id: String = route.stops[index]
+		var suffix := "  ✓" if completed.get(id, false) else ""
+		if id == current_stop: suffix += "  · 当前"
+		var button := _make_button("%02d  %s%s" % [index + 1, stops[id].title, suffix], id == current_stop)
+		button.custom_minimum_size = Vector2(350, 40)
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.pressed.connect(func() -> void: stop_selected.emit(id))
+		grid.add_child(button)
+	_add_action_button("继续漫步", close_modal, false)
 
 
 func show_postcard(title: String, body: String, choices: Array[String] = []) -> void:
@@ -193,6 +244,16 @@ func _build_hud() -> void:
 	pause_button.custom_minimum_size = Vector2(132.0, 42.0)
 	pause_button.pressed.connect(func() -> void: pause_requested.emit())
 	add_child(pause_button)
+	_route_button = _make_button("旅行路线  0 / 12", false)
+	_route_button.position = Vector2(930, 26)
+	_route_button.custom_minimum_size = Vector2(176, 42)
+	_route_button.pressed.connect(func() -> void: routes_requested.emit())
+	add_child(_route_button)
+	_next_button = _make_button("下一站 →", true)
+	_next_button.position = Vector2(1080, 656)
+	_next_button.custom_minimum_size = Vector2(172, 44)
+	_next_button.pressed.connect(func() -> void: next_stop_requested.emit())
+	add_child(_next_button)
 
 	_hint_panel = _paper_panel(Vector2(500.0, 44.0), Vector2(24.0, 656.0))
 	_hint_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE

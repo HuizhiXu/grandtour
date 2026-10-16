@@ -1,5 +1,7 @@
 extends SceneTree
 
+const TourCatalog := preload("res://scripts/game/tour_catalog.gd")
+
 var _failures: Array[String] = []
 
 
@@ -32,6 +34,10 @@ func _verify() -> void:
 		_check(ResourceLoader.exists("res://assets/template/" + font_path), "shared font: " + font_path)
 	_check(not ResourceLoader.exists("res://assets/game/scenes/saigon-exterior.png"), "large source background excluded")
 	_check(not ResourceLoader.exists("res://assets/game/scenes/independence-palace.png"), "palace source background excluded")
+	for id: String in TourCatalog.STOPS:
+		if not TourCatalog.is_new_stop(id): continue
+		_check(ResourceLoader.exists(TourCatalog.background_path(id)), "exported tour background: " + id)
+		_check(not ResourceLoader.exists("res://assets/game/scenes/tour-%s.png" % id), "tour source background excluded: " + id)
 	_check(not ResourceLoader.exists("res://assets/game/characters/traveler-sheet.png"), "source character atlas excluded")
 	_check(not ResourceLoader.exists("res://test/exploration_suite.gd"), "test script excluded")
 	_check(not ResourceLoader.exists("res://tools/capture_native.gd"), "native capture tool excluded")
@@ -71,6 +77,10 @@ func _verify() -> void:
 		_check((main.get("_targets") as Dictionary).has("palace_door"), "pack builds palace garden")
 		main.call("_setup_scene", "palace_hall", Vector2(640, 620))
 		_check((main.get("_targets") as Dictionary).has("palace_souvenir"), "pack builds palace hall")
+		for id: String in TourCatalog.STOPS:
+			if not TourCatalog.is_new_stop(id): continue
+			main.call("_setup_scene", id, Vector2(640, 620))
+			_check((main.get("_targets") as Dictionary).has("tour_activity"), "pack builds playable tour stop: " + id)
 		_check(not main.has_method("_maybe_capture"), "capture routing removed from runtime")
 		_check(not main.has_method("_open_tuning"), "release tuning entry point excluded")
 		_check(not ResourceLoader.exists("res://scripts/ui/tuning_panel.gd"), "release tuning panel excluded")

@@ -37,7 +37,7 @@ func configure(id: String, kind: String, title: String, world_position: Vector2,
 	_label.add_theme_color_override("font_outline_color", Color("30493a"))
 	_label.add_theme_constant_override("outline_size", 6)
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_label_always_visible = id == "postcard_desk" or id.begins_with("palace_") or id == "post_office_return"
+	_label_always_visible = id == "postcard_desk" or id.begins_with("palace_") or id == "post_office_return" or id.begins_with("tour_")
 	_label.visible = _label_always_visible
 	if _label_always_visible:
 		_label.mouse_filter = Control.MOUSE_FILTER_STOP

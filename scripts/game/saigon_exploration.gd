@@ -7,6 +7,9 @@ const UIType := preload("res://scripts/ui/exploration_ui.gd")
 const OpenSourceLicenseHelper := preload("res://scripts/manus/open_source_licenses.gd")
 const Postcard := preload("res://scripts/game/postcard_quest.gd")
 const Palace := preload("res://scripts/game/palace_visit.gd")
+const TourCatalog := preload("res://scripts/game/tour_catalog.gd")
+const TourProgress := preload("res://scripts/game/tour_progress.gd")
+const TourWorld := preload("res://scripts/game/tour_world.gd")
 const PALACE_BG: Texture2D = preload("res://assets/game/runtime/independence-palace.jpg")
 const PALACE_HALL_BG: Texture2D = preload("res://assets/game/runtime/independence-palace-hall.jpg")
 const OUTDOOR_BG: Texture2D = preload("res://assets/game/runtime/saigon-exterior.jpg")
@@ -42,6 +45,8 @@ var _postcard_context := ""
 var _destination_marker: Line2D
 var _hovered_target: ExplorationTarget
 var _palace := Palace.new()
+var _tour := TourProgress.new()
+var _route_index := 0
 
 
 func _ready() -> void:
@@ -50,6 +55,7 @@ func _ready() -> void:
 	if save_store != null:
 		_postcard.restore(save_store.call("get_postcard_progress"))
 		_palace.restore(save_store.call("get_palace_progress"))
+		_tour.restore(save_store.call("get_tour_progress"))
 	var locale_service := get_node_or_null("/root/I18n")
 	if locale_service != null:
 		locale_service.call("set_locale", "zh-CN")
@@ -79,6 +85,8 @@ func _process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _transitioning:
+		return
 	if event.is_action_pressed("pause"):
 		if _ui.has_modal():
 			_ui.close_modal()
@@ -156,6 +164,13 @@ func _build_ui() -> void:
 	_ui.dialogue_choice.connect(_on_dialogue_choice)
 	_ui.postcard_requested.connect(_show_current_journey)
 	_ui.postcard_choice.connect(_on_postcard_choice)
+	_ui.routes_requested.connect(_show_routes)
+	_ui.route_selected.connect(func(index: int) -> void:
+		_route_index = index
+		_show_routes()
+	)
+	_ui.stop_selected.connect(_travel_to_stop)
+	_ui.next_stop_requested.connect(_travel_next)
 	_ui.modal_closed.connect(func() -> void: _postcard_context = "")
 
 
@@ -192,7 +207,10 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 
 	var background := Sprite2D.new()
 	background.name = "SceneIllustration"
-	background.texture = {"outdoor": OUTDOOR_BG, "indoor": INDOOR_BG, "palace_garden": PALACE_BG, "palace_hall": PALACE_HALL_BG}[scene_name]
+	if TourCatalog.is_new_stop(scene_name):
+		background.texture = load(TourCatalog.background_path(scene_name)) as Texture2D
+	else:
+		background.texture = {"outdoor": OUTDOOR_BG, "indoor": INDOOR_BG, "palace_garden": PALACE_BG, "palace_hall": PALACE_HALL_BG}[scene_name]
 	background.position = WORLD_SIZE * 0.5
 	background.scale = Vector2(0.8, 0.8)
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -210,7 +228,12 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	var obstacles: Array[Rect2]
 	var walls: Array[PackedVector2Array]
 	var floor_outline: PackedVector2Array
-	if scene_name == "outdoor":
+	if TourCatalog.is_new_stop(scene_name):
+		walk_rect = Rect2(70, 370, 1140, 338)
+		floor_outline = _tour_floor(scene_name)
+		obstacles.assign(TourWorld.layout(scene_name).obstacles)
+		_ui.set_location("路线 %d · %s" % [TourCatalog.route_for_stop(scene_name) + 1, TourCatalog.STOPS[scene_name].title])
+	elif scene_name == "outdoor":
 		walk_rect = Rect2(Vector2(18.0, 230.0), Vector2(1244.0, 478.0))
 		obstacles = _outdoor_obstacles()
 		walls = _outdoor_walls()
@@ -226,7 +249,7 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 		walk_rect = Rect2(60, 260, 1160, 448)
 		floor_outline = _palace_floor(scene_name)
 		walls = _palace_walls(scene_name)
-		_ui.set_location("第二站 · 独立宫 · " + ("庭院" if scene_name == "palace_garden" else "参观大厅"))
+		_ui.set_location("路线 1 · 独立宫 · " + ("庭院" if scene_name == "palace_garden" else "参观大厅"))
 	_pathfinder = Pathfinder.new()
 	_pathfinder.configure(walk_rect, obstacles, walls, floor_outline)
 	_add_floor_boundary(floor_outline)
@@ -242,7 +265,10 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 		body.add_child(collision)
 		_collision_root.add_child(body)
 
-	if scene_name == "outdoor":
+	if TourCatalog.is_new_stop(scene_name):
+		_build_tour_targets(scene_name)
+		_ui.set_npc_position(Vector2.ZERO, false)
+	elif scene_name == "outdoor":
 		_build_outdoor_targets()
 		_ui.set_npc_position(Vector2(938.0, 528.0), true)
 	elif scene_name == "indoor":
@@ -255,6 +281,106 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	_ui.clear_destination()
 	_ui.set_paused(false)
 	_update_postcard_hud()
+
+
+func _tour_floor(id: String) -> PackedVector2Array:
+	return TourWorld.layout(id).floor
+
+
+func _build_tour_targets(id: String) -> void:
+	var stop: Dictionary = TourCatalog.STOPS[id]
+	var layout: Dictionary = TourWorld.layout(id)
+	_add_target("tour_info", "tour_info", "景点介绍", layout.info, layout.info_stand, Vector2(100, 100))
+	_add_target("tour_activity", "tour_activity", stop.object, layout.activity, layout.activity_stand, Vector2(130, 104))
+	_add_target("tour_record", "tour_record", "记录这一站", Vector2(640, 690), Vector2(640, 615), Vector2(164, 50))
+
+
+func _completed_stops() -> Dictionary:
+	var completed := {"palace": _palace.stage() == 4, "post_office": _postcard.sent}
+	for id: String in TourCatalog.STOPS:
+		if TourCatalog.is_new_stop(id): completed[id] = _tour.stage(id) == 3
+	return completed
+
+
+func _show_routes() -> void:
+	if _paused or _transitioning: return
+	_traveler.cancel_path()
+	_pending_target = null
+	_clear_destination()
+	_postcard_context = "routes"
+	_ui.show_routes(TourCatalog.ROUTES, TourCatalog.STOPS, _route_index, TourCatalog.stop_for_scene(_scene_id), _completed_stops())
+
+
+func _travel_to_stop(id: String) -> void:
+	if _paused or _transitioning or not TourCatalog.STOPS.has(id): return
+	_route_index = TourCatalog.route_for_stop(id)
+	_ui.close_modal()
+	var scene: String = TourCatalog.STOPS[id].scene
+	if scene == _scene_id: return
+	var from_stop := TourCatalog.stop_for_scene(_scene_id)
+	await _transition_to(scene)
+	var by_car := id == "pink_church" or from_stop == "pink_church"
+	_ui.show_feedback(("乘车转场 · " if by_car else "沿路线前往 · ") + str(TourCatalog.STOPS[id].title))
+
+
+func _next_stop_id() -> String:
+	var current := TourCatalog.stop_for_scene(_scene_id)
+	var route: Dictionary = TourCatalog.ROUTES[TourCatalog.route_for_stop(current)]
+	var index: int = route.stops.find(current)
+	return str(route.stops[index + 1]) if index >= 0 and index + 1 < route.stops.size() else ""
+
+
+func _travel_next() -> void:
+	if _paused or _transitioning: return
+	var id := _next_stop_id()
+	if id.is_empty():
+		_route_index = TourCatalog.route_for_stop(TourCatalog.stop_for_scene(_scene_id))
+		_show_routes()
+	else:
+		_travel_to_stop(id)
+
+
+func _tour_hint() -> String:
+	var entry: Dictionary = _tour.state(_scene_id)
+	if not entry.read: return "走近左侧介绍牌，了解这一站的故事。"
+	if entry.choice < 0: return "走到右侧%s，%s。" % [TourCatalog.STOPS[_scene_id].object, TourCatalog.STOPS[_scene_id].activity]
+	if not entry.recorded: return "走到前方「记录这一站」，留下你的旅行印象。"
+	return "这一站已记录。继续漫步，或点击「下一站」前往新的街角。"
+
+
+func _save_tour() -> void:
+	_update_postcard_hud()
+	var store := get_node_or_null("/root/SaveStore")
+	if store != null and not store.call("set_tour_progress", _tour.serialize()):
+		_ui.show_feedback("暂时无法保存；本次旅行仍可继续。")
+
+
+func _show_tour_activity() -> void:
+	var stop: Dictionary = TourCatalog.STOPS[_scene_id]
+	if _tour.stage(_scene_id) == 3:
+		_show_tour_record()
+		return
+	_postcard_context = "tour_choice"
+	var choices: Array[String] = []
+	choices.assign(stop.choices)
+	_ui.show_postcard(stop.activity, stop.prompt, choices)
+
+
+func _show_tour_record() -> void:
+	if _paused or _transitioning: return
+	_traveler.cancel_path()
+	_pending_target = null
+	_clear_destination()
+	var stop: Dictionary = TourCatalog.STOPS[_scene_id]
+	var entry: Dictionary = _tour.state(_scene_id)
+	_postcard_context = "tour_status"
+	if entry.recorded:
+		_ui.show_postcard(stop.title + " · 旅行记录", "这一站已记录 ✓\n\n%s\n\n%s" % [stop.choices[entry.choice], stop.replies[entry.choice]])
+	elif _tour.stage(_scene_id) == 2 and _near_target("tour_record"):
+		_postcard_context = "tour_record"
+		_ui.show_postcard("留下这一站的印象", "%s\n\n%s" % [stop.title, stop.replies[entry.choice]], ["记入旅行手记"])
+	else:
+		_ui.show_postcard(stop.title + " · 旅行记录", _tour_hint())
 
 
 func _palace_floor(scene_name: String) -> PackedVector2Array:
@@ -388,7 +514,7 @@ func _build_outdoor_targets() -> void:
 	_add_target("old_mailbox", "mailbox", "旧邮筒", Vector2(334.0, 524.0), Vector2(400.0, 542.0), Vector2(86.0, 114.0), MAILBOX_TEXTURE)
 	_add_target("photographer", "npc", "旅行摄影师", Vector2(938.0, 528.0), Vector2(862.0, 540.0), Vector2(92.0, 126.0), PHOTOGRAPHER_TEXTURE)
 	_add_target("post_office_door", "enter", "进入邮局", Vector2(608.0, 330.0), Vector2(608.0, 416.0), Vector2(100.0, 96.0))
-	_add_target("palace_travel", "palace_travel", "下一站 · 独立宫 →", Vector2(966, 664), Vector2(938, 620), Vector2(175, 64))
+	_add_target("palace_travel", "palace_travel", "前往独立宫 →", Vector2(966, 664), Vector2(938, 620), Vector2(175, 64))
 
 
 func _add_target(id: String, kind: String, title: String, world_position: Vector2, stand: Vector2, hitbox: Vector2, texture: Texture2D = null) -> ExplorationTarget:
@@ -457,6 +583,14 @@ func _on_traveler_blocked() -> void:
 
 func _activate_target(target: ExplorationTarget) -> void:
 	match target.target_kind:
+		"tour_info":
+			_tour.read(_scene_id)
+			_save_tour()
+			_ui.show_information(TourCatalog.STOPS[_scene_id].title, TourCatalog.STOPS[_scene_id].info)
+		"tour_activity":
+			_show_tour_activity()
+		"tour_record":
+			_show_tour_record()
 		"palace_travel":
 			_ui.close_modal()
 			_transition_to("palace_garden")
@@ -514,17 +648,25 @@ func _near_target(id: String) -> bool:
 
 
 func _update_postcard_hud() -> void:
-	if _scene_id.begins_with("palace_"):
+	if TourCatalog.is_new_stop(_scene_id):
+		_ui.set_stop_progress(TourCatalog.STOPS[_scene_id].title, _tour.stage(_scene_id), _tour_hint())
+	elif _scene_id.begins_with("palace_"):
 		_ui.set_visit_progress(_palace.stage(), Palace.HINTS[_palace.stage()])
 	else:
 		var hint: String = Postcard.HINTS[_postcard.stage()]
 		if _postcard.sent:
-			hint = "第一张明信片已寄出。点击广场右下方「下一站 · 独立宫」继续旅程。"
+			hint = "第一张明信片已寄出。点击「下一站」前往阮文平书街，或打开路线册自由选站。"
 		_ui.set_quest_progress(_postcard.stage(), hint)
+	var count := 0
+	for completed: bool in _completed_stops().values():
+		if completed: count += 1
+	_ui.set_route_progress(count, not _next_stop_id().is_empty())
 
 
 func _show_current_journey() -> void:
-	if _scene_id.begins_with("palace_"):
+	if TourCatalog.is_new_stop(_scene_id):
+		_show_tour_record()
+	elif _scene_id.begins_with("palace_"):
 		_show_palace_visit()
 	else:
 		_show_postcard()
@@ -547,7 +689,7 @@ func _show_palace_visit() -> void:
 	_clear_destination()
 	_postcard_context = "palace_status"
 	if _palace.stage() == 4:
-		_ui.show_postcard("独立宫 · 旅行纪念", "第二站参观完成 ✓\n\n庭院里的水声、立面的光影，还有大厅里留存的历史，成为今天旅途的新一页。\n\nArchie 的西贡漫步 · 中央邮局 → 独立宫")
+		_ui.show_postcard("独立宫 · 旅行纪念", "独立宫参观完成 ✓\n\n庭院里的水声、立面的光影，还有大厅里留存的历史，成为今天旅途的新一页。\n\n打开旅行路线册，继续认识西贡。")
 	elif _palace.stage() == 3 and _near_target("palace_souvenir"):
 		_postcard_context = "palace_collect"
 		_ui.show_postcard("为这一站留下纪念", "建筑、庭院与历史，已经串成今天的参观路线。收下一枚独立宫旅行纪念，记住这段慢慢走过的时光。", ["收下旅行纪念"])
@@ -599,6 +741,17 @@ func _on_postcard_choice(index: int) -> void:
 		return
 	var changed := false
 	match _postcard_context:
+		"tour_choice":
+			if TourCatalog.is_new_stop(_scene_id) and _near_target("tour_activity") and _tour.choose(_scene_id, index):
+				_save_tour()
+				_postcard_context = "tour_status"
+				_ui.show_information(TourCatalog.STOPS[_scene_id].activity, TourCatalog.STOPS[_scene_id].replies[index] + "\n\n" + _tour_hint())
+			return
+		"tour_record":
+			if index == 0 and TourCatalog.is_new_stop(_scene_id) and _near_target("tour_record") and _tour.record(_scene_id):
+				_save_tour()
+				_show_tour_record()
+			return
 		"palace_collect":
 			if index == 0 and _scene_id == "palace_hall" and _near_target("palace_souvenir"):
 				_record_palace_stop("souvenir")
@@ -628,7 +781,9 @@ func _transition_to(next_scene: String) -> void:
 	var fade_out := create_tween()
 	fade_out.tween_property(_fade, "color:a", 0.96, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	await fade_out.finished
-	var spawn: Vector2 = {"indoor": Vector2(640, 575), "outdoor": Vector2(608, 432), "palace_garden": Vector2(640, 640), "palace_hall": Vector2(640, 620)}[next_scene]
+	var spawn := Vector2(640, 620)
+	if not TourCatalog.is_new_stop(next_scene):
+		spawn = {"indoor": Vector2(640, 575), "outdoor": Vector2(608, 432), "palace_garden": Vector2(640, 640), "palace_hall": Vector2(640, 620)}[next_scene]
 	if next_scene == "palace_garden" and _scene_id == "palace_hall":
 		spawn = Vector2(640, 352)
 	if next_scene == "outdoor" and _scene_id == "palace_garden":
@@ -642,6 +797,7 @@ func _transition_to(next_scene: String) -> void:
 
 
 func _toggle_pause() -> void:
+	if _transitioning: return
 	_set_paused(not _paused)
 
 
