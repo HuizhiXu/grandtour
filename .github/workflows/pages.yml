@@ -36,11 +36,21 @@ jobs:
         shell: bash
         run: |
           "$GODOT_BIN" --headless --path . --script res://test/exploration_suite.gd
+          "$GODOT_BIN" --headless --path . res://test/test_suite.tscn
           "$GODOT_BIN" --headless --path . --script res://test/postcard_suite.gd
           "$GODOT_BIN" --headless --path . --script res://test/walkable_ground_suite.gd
           "$GODOT_BIN" --headless --path . --script res://test/archie_animation_suite.gd
           "$GODOT_BIN" --headless --path . --script res://test/palace_suite.gd
           "$GODOT_BIN" --headless --path . --script res://test/tour_suite.gd
+      - name: Verify exported playable pack in isolation
+        shell: bash
+        run: |
+          pack_check="$RUNNER_TEMP/grandtour-pack-check"
+          mkdir -p "$pack_check"
+          cp tools/verify_exported_pack.gd "$pack_check/check.gd"
+          pack=$(find "$GITHUB_WORKSPACE/dist/web" -maxdepth 1 -name '*.pck' -print -quit)
+          test -n "$pack"
+          "$GODOT_BIN" --headless --path "$pack_check" --main-pack "$pack" --script "$pack_check/check.gd"
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist/web

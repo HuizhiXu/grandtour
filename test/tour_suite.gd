@@ -65,6 +65,11 @@ func _run() -> void:
 			var observation_only: bool = Catalog.STOPS[id].get("observation_only", false)
 			if not observation_only:
 				_check((_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(_traveler.position), "walkable arrival: " + id)
+				if Catalog.is_new_stop(id): await _verify_record_label(id)
+			var feedback := _ui.get("_feedback_label") as Label
+			var view_button := _ui.get("_view_button") as Button
+			if feedback.visible and view_button.visible:
+				_check(not feedback.get_global_rect().intersects(view_button.get_global_rect()), "arrival feedback never covers view selector: " + id)
 			_check((_ui.get("_exploration_button") as Button).visible == id.begins_with("angkor_"), "guided exploration only appears at unfinished Angkor stops: " + id)
 			if not Catalog.is_new_stop(id):
 				var legacy := "palace_door" if id == "palace" else "post_office_door"
@@ -141,6 +146,21 @@ func _run() -> void:
 
 func _progress() -> RefCounted:
 	return _main.get("_tour")
+
+func _verify_record_label(id: String) -> void:
+	await _layout()
+	var target := (_main.get("_targets") as Dictionary).get("tour_record") as ExplorationTarget
+	_check(target != null, "record target exists: " + id)
+	if target == null: return
+	var label := target.get("_label") as Label
+	var rect := label.get_global_rect()
+	_check(Rect2(0, 0, 1280, 720).encloses(rect), "record label fits viewport: " + id)
+	_check(label.mouse_filter == Control.MOUSE_FILTER_STOP, "record label remains directly clickable: " + id)
+	for key: String in ["_hint_panel", "_quest_panel", "_next_button"]:
+		_check(not rect.intersects((_ui.get(key) as Control).get_global_rect()), "record label clear of " + key + ": " + id)
+	if id in ["angkor_banteay_kdei", "angkor_wat", "angkor_thommanon", "angkor_ta_keo", "angkor_bayon", "angkor_leper_king", "angkor_ta_prohm"]:
+		var spawn: Vector2 = World.layout(id, int(_main.get("_view_index"))).spawn
+		_check(not rect.intersects(Rect2(spawn - Vector2(30, 70), Vector2(60, 70))), "record label clear of arrival actor: " + id)
 
 func _verify_next_stop(id: String, route_index: int) -> void:
 	var index: int = Catalog.ROUTES[route_index].stops.find(id)
@@ -358,6 +378,7 @@ func _verify_views(id: String) -> void:
 		button.pressed.emit()
 		await _scene(id)
 		_check(_main.get("_view_index") == index, "view button reaches selected painting")
+		if not panorama: await _verify_record_label(id)
 		_check(_progress().serialize() == saved, "perspectives share progress without granting or resetting it")
 		var finder := _main.get("_pathfinder") as IsoPathfinder
 		if _main.get("_panorama"):

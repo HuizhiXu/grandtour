@@ -39,6 +39,8 @@
 
 新增景点以外部空间为主；红教堂、市政厅和歌剧院不提供内部参观。绘本背景不代表现实中的即时修缮、商家和开放状态。转场表达站点之间的旅行，不是按比例连续的城市地图。新美术完整提示词与文件路径见 `docs/tour-art-prompts.json`，内容与地标参考见 `docs/tour-routes.md`。
 
+2026-10-19 全面回归：38 个景点的路线与互动、全部已接入视角、存档恢复与旧任务兼容已检查；修复转场提示遮挡视角按钮，以及部分记录标签与角色或底部提示重叠。七套测试共 2,551 项通过，Web 导出包在隔离目录验证。旧模板测试与原生截图工具已适配当前旅行游戏，CI 增加基础测试与导出包检查。
+
 ## 本地运行与验证
 
 使用 Godot 4.7.2 打开 `project.godot` 并运行主场景；也可以使用命令行：
@@ -52,6 +54,7 @@ godot --path .
 
 ```sh
 godot --headless --editor --import --path .
+godot --headless --path . res://test/test_suite.tscn
 godot --headless --path . --script res://test/exploration_suite.gd
 godot --headless --path . --script res://test/postcard_suite.gd
 godot --headless --path . --script res://test/walkable_ground_suite.gd
@@ -374,24 +377,17 @@ Use the runtime directory returned by init/attach and the installed Game workflo
 
 The original 2D reference's native capture uses the actual viewport and renderer; adapt its scene/state selectors for another game and run without `--editor`:
 ```bash
-GENERIC2D_CAPTURE_PATH=/absolute/path/title.png godot --path . --script tools/capture_native.gd
-GENERIC2D_CAPTURE_PATH=/absolute/path/game.png GENERIC2D_CAPTURE_GAME=1 godot --path . --script tools/capture_native.gd
-GENERIC2D_CAPTURE_PATH=/absolute/path/pause.png GENERIC2D_CAPTURE_PAUSE=1 godot --path . --script tools/capture_native.gd
+GRANDTOUR_CAPTURE_PATH=/absolute/path/post-office.png godot --path . --script tools/capture_native.gd
+GRANDTOUR_CAPTURE_PATH=/absolute/path/angkor.png GRANDTOUR_CAPTURE_STOP=angkor_wat GRANDTOUR_CAPTURE_VIEW=2 godot --path . --script tools/capture_native.gd
+GRANDTOUR_CAPTURE_PATH=/absolute/path/pause.png GRANDTOUR_CAPTURE_PAUSE=1 godot --path . --script tools/capture_native.gd
 ```
-`GENERIC2D_CAPTURE_ZH=1` selects Chinese; `GENERIC2D_CAPTURE_TUTORIAL=1` with the game flag captures onboarding. Use a real renderer; headless Dummy output is not visual evidence. Browser acceptance belongs to the user under the shared workflow.
+Use a real renderer; headless Dummy output is not visual evidence. Capture stop IDs come from the travel catalog; view indices start at zero. The old GENERIC2D_CAPTURE_PATH and GENERIC2D_CAPTURE_PAUSE names remain compatible.
 
 ## Controls and playable loop
-| Action | Keyboard | Gamepad | Pointer/touch |
-| --- | --- | --- | --- |
-| Move | WASD / arrows | Left stick / D-pad | Direction pad |
-| Pause/resume | Escape | Start | Pause / Resume |
-| Activate focused UI | Enter / Space | Primary action | Click / tap |
 
-Title → Start → Stage 1 → Stage 2 → Result → Retry / Title. Pause supports resume, confirmed stage restart and confirmed return to title. Local results persist through `SaveStore`. Developer tuning is rendered by the Addon outside the game. Both EN and zh-CN are bundled.
+Click reachable ground to walk; click a labelled target to approach and interact. Escape closes a dialogue or toggles pause. The route book selects destinations; Next Stop follows the active destination route. Observation-only stops use explicit reading, impression and record actions. Post office postcards, palace souvenirs and individual travel records save separately.
 
-Event-driven callouts teach movement, collection and power-ups; title arms replay. Preserve [shared skip/dismissal and developer-control separation](#tutorial-content-boundary).
-
-## Stage and score contracts
+## Retained template utilities: stage and score contracts
 `StageCatalog.STAGES` stores 21×17 layouts, palette, spawn positions and speed multipliers. Validation checks legal symbols, rectangular rows, exactly one player spawn, enemies, collectibles and connected walkable cells. Add stages through catalog data rather than duplicating the controller.
 
 | Symbol | Meaning | Score/event |
@@ -407,7 +403,7 @@ Event-driven callouts teach movement, collection and power-ups; title arms repla
 
 Clearing a stage awards `stage_clear`: 500. `RunScoreService.authored_collectible_maximum()` excludes repeatable sentinel disables. Score is bounded to 999,999,999; `finalize()` produces an immutable once-only result containing score, stage, outcome, duration, tutorial status and integrity marker.
 
-## Minimalist presentation
+## Retained template presentation reference
 `ScreenFactory` owns graphite panels, hairlines, cool blue focus states, neutral secondary buttons and the light primary action. Real Godot text renders every label. The HUD uses separate status and wrapping effect rows; power-up timers remain visible in portrait. World scaling fits below the HUD and leaves touch-control space. Actor sprites remain centered on their grid positions without vertical bobbing.
 
 The reference uses eleven separately generated original raster assets. Prompt/source/runtime mappings are recorded in `assets/template/provenance/IMAGEGEN.md`. Original generated outputs remain in generation history; shipped media is restored from permanent CDN mappings. No old picnic art or default sound assets are part of the current payload. Connected maze walls and path-facing borders remain code-native.
@@ -427,7 +423,7 @@ AudioDirector.register_cue("music.gameplay", "res://assets/template/audio/music.
 ```
 `register_stream()` accepts an existing AudioStream; `unregister_cue()` clears it. Empty/missing resources, wrong resource types, null streams and unknown IDs return `false` safely. A missing music route stops previous music. There are no synthetic fallback tones or automatic downloads. A real button/input gesture unlocks playback. Tests use an in-memory fixture, never a shipped placeholder file. See `assets/template/provenance/AUDIO.md`.
 
-## Local standings
+## Retained local standings utility
 Local top-ten standings persist scores and configuration provenance. No dormant global-leaderboard adapter or hidden network UI ships. Add global integration only when explicitly requested.
 
 ## Localization and fonts

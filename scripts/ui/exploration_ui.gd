@@ -226,7 +226,7 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 		button.pressed.connect(func() -> void: stop_selected.emit(id))
 		grid.add_child(button)
 		if id == current_stop: scroll.ensure_control_visible.call_deferred(button)
-	_add_action_button("继续漫步", close_modal, false)
+	_add_action_button("继续观景" if _observation_only else "继续漫步", close_modal, false)
 
 
 func show_postcard(title: String, body: String, choices: Array[String] = []) -> void:
@@ -334,7 +334,8 @@ func _build_hud() -> void:
 	_hint_panel.add_child(_hint_label)
 
 	_feedback_label = ScreenFactory.medium_label("", 14, Color("fff7e7"))
-	_feedback_label.position = Vector2(412.0, 22.0)
+	# Keep transient messages below the top-row view selector.
+	_feedback_label.position = Vector2(412.0, 82.0)
 	_feedback_label.custom_minimum_size = Vector2(456.0, 30.0)
 	_feedback_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_feedback_label.visible = false

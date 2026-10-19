@@ -317,6 +317,19 @@ func _build_tour_targets(id: String) -> void:
 		if id == "angkor_ta_prohm" and _view_index == 2:
 			var activity_label := (_targets["tour_activity"] as ExplorationTarget).get("_label") as Label
 			activity_label.global_position = Vector2(350, 540)
+	# Record labels are clickable independently of their physical arrival point.
+	# Keep them clear of the arrival actor and the fixed bottom HUD.
+	var record_positions := {
+		"angkor_banteay_kdei": Vector2(930, 565),
+		"angkor_wat": Vector2(970, 570),
+		"angkor_thommanon": Vector2(900, 610),
+		"angkor_ta_keo": Vector2(970, 600),
+		"angkor_bayon": Vector2(650, 550),
+		"angkor_leper_king": Vector2(930, 560),
+		"angkor_ta_prohm": Vector2(700, 560),
+	}
+	if record_positions.has(id):
+		((_targets["tour_record"] as ExplorationTarget).get("_label") as Label).global_position = record_positions[id]
 
 
 func _completed_stops() -> Dictionary:
