@@ -6,7 +6,7 @@
   "approval": "approved_for_game_integration_by_user",
   "integratedIntoGame": true,
   "integrationMode": "default wooden boardwalk ground view and non-walking sanctuary panorama; shared travel record",
-  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":17,"remainingDestinations":10,"extraViewTasks":["小吴哥日出"]},
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":17,"remainingDestinations":10,"extraViewTasks": []},
   "generator": "Built-in image_gen.imagegen",
   "referencePolicy": "Only APSARA National Authority original photographs define architecture and composition; approved paintings supply style only.",
   "officialGallery": "https://apsaraauthority.gov.kh/2022/07/19/neak-pean-temple-photos-gallery/",

@@ -6,7 +6,7 @@
   "approval": "approved_for_game_integration_by_user",
   "integratedIntoGame": true,
   "integrationMode": "right-hand earth path and observation-only elephant panorama; shared travel record",
-  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":19,"remainingDestinations":8,"extraViewTasks":["小吴哥日出"]},
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":19,"remainingDestinations":8,"extraViewTasks": []},
   "generator": "Built-in image_gen.imagegen",
   "referencePolicy": "APSARA National Authority official photographs define architecture and composition. Approved paintings supply style only.",
   "officialGallery": "https://apsaraauthority.gov.kh/2022/07/04/east-mebon-temple-photos-gallery/",

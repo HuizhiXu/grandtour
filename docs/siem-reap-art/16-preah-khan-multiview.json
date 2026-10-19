@@ -6,7 +6,7 @@
   "approval": "approved_for_game_integration_by_user",
   "integratedIntoGame": true,
   "integrationMode": "default causeway ground view and non-walking pond panorama; one shared travel record",
-  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":16,"remainingDestinations":11,"extraViewTasks":["小吴哥日出"]},
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":16,"remainingDestinations":11,"extraViewTasks": []},
   "generator": "Built-in image_gen.imagegen",
   "referencePolicy": "Only APSARA National Authority original photographs define architecture, composition and state. Approved paintings define style only.",
   "officialGallery": "https://apsaraauthority.gov.kh/2022/07/18/preah-khan-temple-photos-gallery/",

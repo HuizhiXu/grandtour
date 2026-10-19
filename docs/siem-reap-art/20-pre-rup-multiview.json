@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-19",
+  "stop": 20,
+  "title": "比粒寺 · 多视角",
+  "englishName": "Pre Rup",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "foreground grass and observation-only staircase panorama; shared travel record",
+  "coverageAfterIntegration": {"uniqueDestinations":26,"implementedDestinations":20,"remainingDestinations":6,"extraViewTasks":[],"cancelledByUser":["小吴哥日出视角","皇家浴池"]},
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "APSARA National Authority official photographs define architecture and composition. Approved paintings supply style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2022/08/01/pre-rup-temple-photos-gallery/",
+  "verification": "Gallery heading and original photograph hrefs verified in browser. Full-resolution originals visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "林荫塔群全景",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_pre_rup",
+      "asset": "assets/game/scenes/siem-reap-20-pre-rup-approach-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/08/Pre-Rup-Temple-1-scaled.jpg",
+      "referenceSha256": "ec853dbf9516d875b0f39c67da785ef5beaf5879f2eaf726ed1df61078cb4b12",
+      "prompt": "Use case: historical-scene. Create detailed natural 16:9 watercolor background draft for The Grand Tour scene 20 PRE RUP / 比粒寺, leafy exterior panorama. Reference 1 APSARA National Authority official photograph https://apsaraauthority.gov.kh/wp-content/uploads/2022/08/Pre-Rup-Temple-1-scaled.jpg is the SOLE evidence for architecture, layout, proportions, perspective and condition. Reference 2 approved Thommanon watercolor is STYLE ONLY, do not borrow its buildings. Faithfully paint photographed broad oblique panorama: tall irregular eroded reddish brick sanctuary towers rise above horizontal laterite platforms, central tallest tower and actual smaller visible towers at unequal spacings, steep narrow stone stairs climbing the tiered platforms, broken lower brick structures and doorway remains. Preserve actual missing roof parts, truncated tops, cracks, uneven outlines and exposed brick. Keep existing light conservation bracing in the left tower doorway and small protective posts on terrace where photographed, no imagined intact roofs, statues or symmetric reconstruction. Large mature leafy tree with textured trunk anchors left edge; leafy branch frames upper right; grass and quiet earth strip across broad foreground, green trees at right edge, distant forest, pale blue sky with gentle white cloud. Maintain actual tower count and near/far scale. Adapt 3:2 source to 16:9 with modest sky/foreground crop and slight lateral foliage or grass extension only; no stretching architecture, keep all temple tops visible and a clear foreground ground strip. Translate deep photographic shadows into readable nuanced grey ochre washes without removing weathering. Soft natural daytime light, warm rusty brick, ochre platform, nuanced greens, delicate readable masonry brushwork and leaf detail, layered translucent watercolor, subtle cotton-paper texture, excellent depth. Match detailed travel picture-book series, not blurry loose washes, hard black outlines, photorealism or a photo filter. No tourists, characters, signs, letters, logo, watermark, UI or border. Archived archaeological condition, never speculative reconstruction; no invented sunset.",
+      "proposedMode": "foreground grass only; temple platforms and stairs excluded, subject to calibration after approval"
+    },
+    {
+      "title": "正面台阶与砖塔",
+      "runtimeViewIndex": 1,
+      "runtimeArt": "angkor_pre_rup_terrace",
+      "asset": "assets/game/scenes/siem-reap-20-pre-rup-terrace-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/08/Pre-Rup-Temple-2-scaled.jpg",
+      "referenceSha256": "cc2e3bd35c2c5e06cb3889032a4f7a34e177820ee3c48b909fff5f8ae11755a5",
+      "prompt": "Use case: historical-scene. Create second detailed natural 16:9 watercolor background draft for The Grand Tour scene 20 PRE RUP / 比粒寺, frontal steep staircase and brick sanctuaries. Reference 1 APSARA National Authority official original https://apsaraauthority.gov.kh/wp-content/uploads/2022/08/Pre-Rup-Temple-2-scaled.jpg is SOLE source of architecture, layout, condition and perspective. Reference 2 approved Thommanon watercolor is STYLE ONLY, never borrow any buildings. Render photographed frontal composition precisely: three large eroded brick sanctuary towers seen from front across upper platform, retain actual unequal incomplete tower tops, brick textures, weathered sandstone door surrounds, dark rectangular openings, partially hidden small rear towers between them. Long steep central sandstone stairs rise from lower center to central doorway. Real low sculptural remains along upper terrace, ochre laterite terrace walls, small broken lower shrines flanking central stair, missing and collapsed masonry retained. Foreground includes actual low square open stone basin/platform aligned with stairs, partially cropped at bottom, and small irregular broken posts on stone-paved court. Do not add water to the empty square basin, invent intact roofs, complete statues, extra towers or ideal symmetry. Keep full main towers and accurately photographed stair steepness; adapt 3:2 to16:9 using modest crop of nearest basin and empty sky with minimal lateral existing wall/paving extension, no stretching towers. Natural cloudy blue-grey sky, gentle daylight, warm rust/ochre bricks and grey-brown stone, readable eroded detail and block joints, nuanced depth, delicate fine architectural watercolor brushwork, transparent layered washes, subtle cotton-paper texture. Match detailed approved travel picture-book art, not blurry loose washes, thick black outlines, photorealism or photo filter. Remove tourists and the small modern prohibition sign only; retain actual conservation details and ruined condition. No characters, lettering, sign, watermark, logo, UI or border. Archived condition as photographed, no speculative reconstruction.",
+      "proposedMode": "observation panorama; steep steps, basin and ruined masonry excluded from walking"
+    }
+  ],
+  "limitations": [
+    "Watercolor interpretations based on official photographs, not photographs published by APSARA.",
+    "User-approved paintings integrated with grass navigation; terrace wall, stairs and basin excluded from walking.",
+    "Archive condition is retained, not a claim about present conservation state.",
+    "Landscape adaptation changes framing; small masonry and foliage details can differ from originals."
+  ],
+  "nextStopAfterApproval": "豆蔻寺 / Prasat Kravan"
+}

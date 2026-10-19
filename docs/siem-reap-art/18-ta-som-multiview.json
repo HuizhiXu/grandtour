@@ -6,7 +6,7 @@
   "approval": "approved_for_game_integration_by_user",
   "integratedIntoGame": true,
   "integrationMode": "foreground ground view and observation-only root gateway panorama; shared travel record",
-  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":18,"remainingDestinations":9,"extraViewTasks":["小吴哥日出"]},
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":18,"remainingDestinations":9,"extraViewTasks": []},
   "generator": "Built-in image_gen.imagegen",
   "referencePolicy": "APSARA National Authority official photographs define architecture and composition. Approved paintings supply style only.",
   "officialGallery": "https://apsaraauthority.gov.kh/2021/08/02/ta-som-temple-gallery/",

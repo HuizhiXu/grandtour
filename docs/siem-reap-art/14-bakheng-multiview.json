@@ -6,7 +6,7 @@
   "approval": "approved_for_game_integration_by_user",
   "integratedIntoGame": true,
   "integrationMode": "observation_only; two panoramas with introduction, observation choice and explicit record confirmation",
-  "coverageAfterIntegration": {"uniqueDestinations": 27, "implementedDestinations": 14, "remainingDestinations": 13, "extraViewTasks": ["小吴哥日出"]},
+  "coverageAfterIntegration": {"uniqueDestinations": 27, "implementedDestinations": 14, "remainingDestinations": 13, "extraViewTasks": []},
   "generator": "Built-in image_gen.imagegen",
   "officialSources": [
     {
@@ -37,13 +37,11 @@
   ],
   "coverageAtDraft": {
     "source": "User-provided image: 吴哥窟三日包车行程单",
-    "countingRule": "Unique destinations; repeated Angkor Wat counted once. Sunrise is a separate unfinished view, not an extra destination.",
+    "countingRule": "Unique destinations; repeated Angkor Wat counted once. Sunrise was cancelled by the user on 2026-10-19 and is outside the remaining scope.",
     "uniqueDestinations": 27,
     "implementedDestinations": 13,
     "remainingDestinations": 14,
-    "extraViewTasks": [
-      "小吴哥日出"
-    ],
+    "extraViewTasks": [],
     "days": [
       {
         "day": 1,
@@ -81,9 +79,7 @@
           "皇家浴池",
           "豆蔻寺"
         ],
-        "extraViewTasks": [
-          "小吴哥日出"
-        ]
+        "extraViewTasks": []
       },
       {
         "day": 3,

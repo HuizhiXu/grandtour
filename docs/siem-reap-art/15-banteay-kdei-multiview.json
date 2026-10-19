@@ -6,7 +6,7 @@
   "approval": "approved_for_game_integration_by_user",
   "integratedIntoGame": true,
   "integrationMode": "two ground views; walking limited to foreground earth, with shared travel record and independent session positions",
-  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":15,"remainingDestinations":12,"extraViewTasks":["小吴哥日出"]},
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":15,"remainingDestinations":12,"extraViewTasks": []},
   "generator": "Built-in image_gen.imagegen",
   "officialSources": [
     {
