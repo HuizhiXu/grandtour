@@ -26,7 +26,7 @@ func _run() -> void:
 	_ui = _main.get("_ui")
 	_traveler = _main.get("_traveler")
 	_check(Catalog.ROUTES[0].stops.size() == 8 and Catalog.ROUTES[1].stops.size() == 4, "two routes contain eight and four stops")
-	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 14, "Angkor contains all fourteen reviewed stops")
+	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 15, "Angkor contains all fifteen reviewed stops")
 	var all_stops: Array[String] = []
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	var missing := ""
@@ -88,7 +88,8 @@ func _run() -> void:
 			await _approach("tour_info", id.begins_with("angkor_"))
 			_check(_ui.has_modal() and _progress().state(id).read, "reading requires physical arrival: " + id)
 			_ui.close_modal()
-			if not Catalog.views(id).is_empty(): await _verify_view_return(id)
+			if Catalog.views(id).size() == 4: await _verify_view_return(id)
+			elif not Catalog.views(id).is_empty(): await _verify_ground_view_return(id)
 			await _approach("tour_activity", id.begins_with("angkor_"))
 			_check(_ui.has_modal() and _progress().state(id).choice == -1, "activity requires a choice: " + id)
 			_main.call("_on_postcard_choice", -1)
@@ -213,6 +214,28 @@ func _verify_observation_stop(id: String) -> void:
 	await _capture(id + "-record")
 	_ui.close_modal()
 
+func _verify_ground_view_return(id: String) -> void:
+	var saved: Dictionary = _progress().serialize()
+	var original_position := _traveler.global_position
+	_main.call("_select_view", 1)
+	await _scene(id)
+	_check(not _main.get("_panorama") and _traveler.visible, "second gate view supports ground exploration")
+	_check(not (_ui.get("_ground_button") as Button).visible, "ground view has no panorama return button")
+	await _approach("tour_info")
+	_ui.close_modal()
+	var second_position := _traveler.global_position
+	_main.call("_select_view", 0)
+	await _scene(id)
+	_check(_traveler.global_position.distance_to(original_position) < 1, "first gate view restores its own position")
+	_main.call("_select_view", 1)
+	await _scene(id)
+	_check(_traveler.global_position.distance_to(second_position) < 1, "second gate view restores its own position")
+	_check(_progress().serialize() == saved and _progress().stage(id) == 1, "ground view round-trip preserves incomplete travel record")
+	_check(not (_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(Vector2(640, 540)), "gate passage and ruins remain outside ground navigation")
+	_main.call("_select_view", 0)
+	await _scene(id)
+
+
 func _verify_view_return(id: String) -> void:
 	var saved: Dictionary = _progress().serialize()
 	var original_position := _traveler.global_position
@@ -254,7 +277,7 @@ func _verify_view_return(id: String) -> void:
 
 func _verify_views(id: String) -> void:
 	var saved: Dictionary = _progress().serialize()
-	_check(Catalog.views(id).size() == 4, "four reviewed perspectives: " + id)
+	_check(Catalog.views(id).size() == (2 if id == "angkor_banteay_kdei" else 4), "all reviewed perspectives available: " + id)
 	for index in range(Catalog.views(id).size()):
 		_check(ResourceLoader.exists(Catalog.background_path(id, index)), "view art ships: %s/%d" % [id, index])
 		(_ui.get("_view_button") as Button).pressed.emit()

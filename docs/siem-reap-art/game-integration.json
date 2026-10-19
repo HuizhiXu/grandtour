@@ -2,8 +2,8 @@
   "date": "2026-10-19",
   "status": "integrated_and_verified_locally",
   "route": "暹粒 · 吴哥",
-  "playableStops": 14,
-  "totalGameStops": 26,
+  "playableStops": 15,
+  "totalGameStops": 27,
   "catalog": "scripts/game/angkor_catalog.gd",
   "navigation": "scripts/game/angkor_world.gd",
   "runtimeArtMapping": "tools/prepare_angkor_art.py",
@@ -40,6 +40,16 @@
     "coverage": ["both approved views included", "no invented walking floor or ground return", "explicit introduction and observation choice", "cancelled record does not grant completion", "confirmation saves record", "unfinished and completed progress shared across views", "legacy walking and panorama restrictions preserved"],
     "exportedPack": "Web release export passed in isolated directory",
     "nativeCaptures": "both Bakheng views and thumbnail menu rendered and reviewed"
+  },
+  "banteayKdeiVerification": {
+    "date": "2026-10-19",
+    "source": "APSARA official 2020–2021 conservation report, pages 22 and 69",
+    "mode": "two ground views, one saved record, independent session positions",
+    "tourChecks": 960,
+    "otherGameplayChecks": 278,
+    "coverage": ["two approved gate views", "all three targets physically reachable in both views", "ruined gateway excluded from navigation", "unfinished and completed progress shared across views", "positions restored independently"],
+    "nativeCaptures": "both gate views and preview menu rendered and reviewed",
+    "exportedPack": "Web release export passed in isolated directory"
   },
   "publication": "GitHub Pages deployment is tracked by the repository workflow."
 }

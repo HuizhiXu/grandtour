@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-19",
+  "stop": 15,
+  "title": "班黛喀蒂 · 多视角",
+  "englishName": "Banteay Kdei",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "two ground views; walking limited to foreground earth, with shared travel record and independent session positions",
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":15,"remainingDestinations":12,"extraViewTasks":["小吴哥日出"]},
+  "generator": "Built-in image_gen.imagegen",
+  "officialSources": [
+    {
+      "url": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/11/Angkor_En-Edited.pdf",
+      "pages": [
+        22,
+        69
+      ],
+      "description": "APSARA Activities for the Conservation and Sustainable Development of the World Heritage Site, 2020–2021; archival gate photographs",
+      "sha256": "3732e950a673d0ca935a0d77b656541ad942ec8dadc6ec4e9ce89025b090ff79"
+    },
+    {
+      "url": "https://apsaraauthority.gov.kh/2021/08/03/banteay-kdei-2/",
+      "description": "official monument overview"
+    }
+  ],
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "林间面塔门楼",
+      "asset": "assets/game/scenes/siem-reap-15-banteay-kdei-gateway-v1.png",
+      "referencePage": 69,
+      "prompt": "Use case: historical-scene. Asset: detailed natural watercolor game background, scene 15 BANTEAY KDEI / 班黛喀蒂, view A forest gateway. Reference 1 is APSARA's official conservation report page 69: use ONLY its large central photograph as the sole architecture, perspective and composition source. Ignore the white page margins, captions and blue footer. Reference 2 is the approved Thommanon watercolor: STYLE ONLY, never borrow its intact buildings. Paint a full 16:9 landscape establishing view of the photographed forest-enclosed stone gateway: one tall central face-tower, exactly the photographed face positions and overlap, weathered irregular upper tiers with missing stones, a tall dark rectangular passage with forest visible beyond, low ruined stepped wings either side, lichen and moss on grey-green sandstone, reddish laterite enclosure wall extending both ways into forest. Preserve the exact asymmetry, cracks, open joints, broken lintel/top of passage, low irregular remnants on left and right. Dense layered green forest rises behind; foreground is broad shaded reddish sandy earth with patches of grass. Keep the real metal/wood visitor footbridge entering the passage and thin support as in the photo; remove the two tiny signs only, not surrounding stone or bridge. No people. Compose with the entire photographed gate and both surviving wings readable, no cropped tower top; modest forest/ground widening only to fit 16:9. No imagined restored pediment, no extra face towers, no added symmetry, no new roofs, statues or palace wings. Preserve present-as-photographed archaeological ruins, not ancient reconstruction or certification of current condition. Match approved fine watercolor series: precise readable stone courses and erosion, delicate layered warm grey and pale ochre washes, nuanced natural leaf greens, subtle cotton-paper grain, diffuse daylight, strong spatial depth. Not loose blurred wash, harsh black outlines, photorealism or photo-filter effect. No text, signs, labels, logos, watermark, UI or frame."
+    },
+    {
+      "title": "西门残塔 · 档案视角",
+      "asset": "assets/game/scenes/siem-reap-15-banteay-kdei-west-gate-v1.png",
+      "referencePage": 22,
+      "prompt": "Use case: historical-scene. Asset: second detailed watercolor game background draft for The Grand Tour scene 15, BANTEAY KDEI / 班黛喀蒂, WEST GATE ARCHIVAL VIEW. Reference 1 is APSARA's official conservation report page 22. Use ONLY the large bottom-right photograph as the sole source of the architecture, viewpoint and composition; do not collage the two left detail photographs, and ignore all margins/captions. Reference 2, approved Thommanon watercolor, is STYLE ONLY. Paint the complete photographed low wide grey sandstone western gate from ground level, with its tall narrow dark rectangular passage at center, inward passage framing the tree trunks beyond, thin carved horizontal lintel, weathered broken triangular upper remnant with its actual black triangular hole, one cropped/collapsed face-tower above in the actual photographed state, incomplete stepped gopura wings left and right, rubble and displaced blocks along the foot of both wings. Preserve the photographed different front/side faces and their relative visible sizes, tree occlusions, asymmetric damaged tops and missing parts; do not restore its broken face or add new complete faces to show ideal symmetry. Keep the small wood entry bridge/steps leading into the opening. Dense natural trees at both sides and behind, quiet pale blue-grey sky partly hidden by leaves. Foreground broad pale reddish sandy earth with a few scattered stones and actual exposed root edges. Fit 16:9 landscape with modest forest/near-ground widening only; keep the complete main gateway visible, do not invent larger connected temple halls or extra towers. Render precisely readable sandstone courses, thin decorative bands only where actually visible, dark lichen, moss and soft cool stone shadows. Match the approved detailed travel watercolor: fine delicate brushwork, subtly translucent warm-grey/ochre washes, natural nuanced green foliage, cotton-paper grain and soft diffuse light. Not loose blurry watercolor, heavy black outline, photography or filter. This depicts the archaeological condition in the official archival source, not imagined restoration or current-condition certification. No people, signs, caption, text, logo, watermark, game UI or frame."
+    }
+  ],
+  "limitations": [
+    "User-approved paintings integrated as one stop, with two shared-progress ground views.",
+    "Both are distinct archival gateway views; neither depicts the complete temple complex or all interiors.",
+    "Reference conditions are from the 2020–2021 official report, not a claim about current conservation state.",
+    "Small stonework and carving details may differ from photographs; no speculative complete reconstruction intended."
+  ],
+  "nextStopAfterApproval": "圣剑寺 / Preah Khan"
+}
