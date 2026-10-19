@@ -1,9 +1,9 @@
 extends RefCounted
 ## Screen-space layouts calibrated against the final paintings at 1280 x 720.
 
-static func layout(id: String) -> Dictionary:
+static func layout(id: String, view_index: int = 0) -> Dictionary:
 	if id.begins_with("angkor_"):
-		return preload("res://scripts/game/angkor_world.gd").layout(id)
+		return preload("res://scripts/game/angkor_world.gd").layout(id, view_index)
 	var floor := PackedVector2Array([Vector2(130, 500), Vector2(1190, 500), Vector2(1220, 580), Vector2(1100, 704), Vector2(160, 704), Vector2(70, 580)])
 	var info := Vector2(345, 490)
 	var info_stand := Vector2(430, 570)

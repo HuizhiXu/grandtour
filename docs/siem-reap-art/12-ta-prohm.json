@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-16",
+  "stop": 12,
+  "title": "塔布茏寺",
+  "englishName": "Ta Prohm",
+  "version": 1,
+  "approval": "approved_by_user_continue",
+  "nextStop": "小吴哥 / Angkor Wat",
+  "asset": "assets/game/scenes/siem-reap-12-ta-prohm-v1.png",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialSources": [
+    "https://apsaraauthority.gov.kh/2021/08/12/ta-prohm/",
+    "https://apsaraauthority.gov.kh/2021/07/30/ta-prohm-temple-gallery/"
+  ],
+  "referenceMethod": "Official enlarged gallery photograph 4/99, wide interior courtyard view (image filename ends jpg-110-scaled-1.jpg). Approved Thommanon watercolor used only as style reference.",
+  "userDirection": "Detailed natural watercolor; use broad establishing views; preserve photographed ruins, roots, missing masonry, rubble, and existing visitor boardwalk without speculative reconstruction.",
+  "limitations": [
+    "Wide courtyard view, not a panorama of the entire temple complex.",
+    "Illustration is not a measured survey; small masonry details may differ.",
+    "Based on the condition shown in the official archive photograph, not certification of current conservation condition."
+  ],
+  "prompt": "Use case: historical-scene. Asset type: detailed watercolor background for The Grand Tour travel game, scene TWELVE: TA PROHM / 塔布茏寺, Angkor Cambodia, present archaeological condition.\nInput references: the previous full-frame Thommanon watercolor is STYLE ONLY. The latest browser screenshot contains one large central APSARA official photograph (gallery image 4/99); this central photograph is the SOLE architecture and composition reference. Ignore all screenshot UI, thumbnails, dark margins and watermark.\nCreate a 16:9 landscape WIDE COURTYARD ESTABLISHING VIEW faithfully based on this photograph. Match the original low wide-angle perspective, not an invented ideal temple elevation. Preserve the large ruined carved gatehouse left of center with its dark rectangular entrance and incomplete uneven upper silhouette; cropped gatehouse on right with its real tilted-looking perspective and missing crown; lower ruined gallery across back, small stepped tower back right; central leaning tree; massive pale roots over the masonry at far left; angular fallen sandstone rubble pile across right courtyard. Retain every photographed missing roof, cracked lintel, open joint, eroded carving, slumped stone, dark weathering and moss. Do not finish or straighten ruins. Do not reconstruct lost walls or add towers hidden from this view. No symmetric fantasy layout.\nKeep the existing wooden visitor boardwalk across foreground and narrow central branch toward the small rear stair, with its actual geometry. It is part of the photographed scene and safe walking context. Keep open sandy ground visible at right between boardwalk and rubble. Preserve the tall forest canopy and the way trees occlude buildings. Fit 16:9 by modest additional near foreground/foliage only, never invent additional temple architecture or stitch multiple views. Keep all main photographed architecture inside the image.\nStyle: match the detailed approved Thommanon watercolor reference: clear architectural volumes, fine masonry and carving detail rendered with delicate brushwork, softly layered natural green foliage, warm grey/ochre stone washes, muted forest light, subtle cotton paper texture, readable spatial depth. Light remains believable shaded forest daylight with modest sun flecks. Painterly but precise, not a photo filter, not loose blurry washes, not hard black outlines. Do NOT transfer Thommanon's intact roof or decorative motifs. No people, characters, labels, signs, text, logo, watermark, border or UI. Remove only the tiny red visitor sign, retain the boardwalk and archaeological masonry exactly."
+}

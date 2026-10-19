@@ -12,11 +12,13 @@ func _capture() -> void:
 	var directory := OS.get_environment("GRANDTOUR_CAPTURE_DIR")
 	DirAccess.make_dir_recursive_absolute(directory)
 	for id: String in Catalog.ROUTES[2].stops:
-		main.call("_setup_scene", id, World.layout(id).spawn)
-		await process_frame
-		await process_frame
-		await RenderingServer.frame_post_draw
-		root.get_texture().get_image().save_png(directory.path_join(id + ".png"))
+		if not OS.get_environment("GRANDTOUR_MULTIVIEW_ONLY").is_empty() and Catalog.views(id).is_empty(): continue
+		for view_index in range(maxi(1, Catalog.views(id).size())):
+			main.call("_setup_scene", id, World.layout(id, view_index).spawn, view_index)
+			await process_frame
+			await process_frame
+			await RenderingServer.frame_post_draw
+			root.get_texture().get_image().save_png(directory.path_join(id + "-view-%d.png" % view_index))
 	main.set("_route_index", 2)
 	main.call("_show_routes")
 	await process_frame

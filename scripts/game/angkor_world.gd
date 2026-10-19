@@ -1,6 +1,28 @@
 extends RefCounted
 ## Navigation in painting coordinates (1280 x 720); water and ruins stay outside.
-static func layout(id: String) -> Dictionary:
+static func layout(id: String, view_index: int = 0) -> Dictionary:
+	if id == "angkor_ta_prohm":
+		match view_index:
+			1: # The low-angle view leaves no safe walking space outside the ropes.
+				var panorama := _make([], Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
+				panorama["panorama"] = true
+				return panorama
+			2: # Boardwalk; keep roots, the fenced platform and ruins outside.
+				return _make([Vector2(120, 540), Vector2(270, 540), Vector2(500, 685), Vector2(120, 685)], Vector2(280, 635), Vector2(190, 600), Vector2(320, 635), Vector2(260, 650))
+			3: # Courtyard in front of the colonnade, right of the foreground tree.
+				return _make([Vector2(390, 620), Vector2(1150, 620), Vector2(1150, 708), Vector2(390, 708)], Vector2(760, 665), Vector2(530, 665), Vector2(1010, 665), Vector2(760, 680))
+		return _make([Vector2(100, 610), Vector2(490, 610), Vector2(490, 708), Vector2(100, 708)], Vector2(300, 660), Vector2(180, 660), Vector2(410, 660), Vector2(300, 680))
+	if id == "angkor_wat":
+		match view_index:
+			1: # Reflection panorama has no walkable foreground: it is all water.
+				var panorama := _make([], Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
+				panorama["panorama"] = true
+				return panorama
+			2:
+				return _make([Vector2(150, 620), Vector2(1130, 620), Vector2(1130, 708), Vector2(150, 708)], Vector2(640, 665), Vector2(410, 665), Vector2(930, 665), Vector2(650, 680))
+			3:
+				return _make([Vector2(380, 520), Vector2(680, 520), Vector2(990, 708), Vector2(230, 708)], Vector2(600, 635), Vector2(430, 620), Vector2(790, 680), Vector2(610, 680))
+		return _make([Vector2(530, 540), Vector2(730, 540), Vector2(1010, 708), Vector2(240, 708)], Vector2(630, 645), Vector2(490, 625), Vector2(820, 675), Vector2(640, 680))
 	match id:
 		"angkor_south_gate":
 			return _make([Vector2(520, 480), Vector2(760, 480), Vector2(1110, 708), Vector2(230, 708)], Vector2(640, 650), Vector2(530, 605), Vector2(800, 655), Vector2(640, 675))

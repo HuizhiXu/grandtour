@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-16",
+  "stop": 13,
+  "title": "小吴哥 · 多视角",
+  "englishName": "Angkor Wat",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "nextStop": "巴肯山 / Phnom Bakheng",
+  "generator": "Built-in image_gen.imagegen",
+  "officialSources": [
+    "https://apsaraauthority.gov.kh/2021/06/14/angkor-wat/",
+    "https://apsaraauthority.gov.kh/2023/02/27/angkor-wat-temple-photos-gallery-2/"
+  ],
+  "userDirection": "Follow approved detailed watercolor style, multiple real viewpoints, panorama prioritized, preserve observed ruins without imagined reconstruction.",
+  "views": [
+    {
+      "asset": "assets/game/scenes/siem-reap-13-angkor-wat-reflection-v1.png",
+      "reference": "https://apsaraauthority.gov.kh/wp-content/uploads/2023/02/Angkor-Wat-temples-18-2.jpg",
+      "prompt": "Detailed fine natural watercolor illustration for The Grand Tour travel game, Angkor Wat / 小吴哥, present archaeological condition. Latest screenshot's central APSARA official photograph is the sole architecture, perspective and composition reference; ignore black margins and watermark. Match the approved series: precise readable masonry, delicate detailed brushwork, translucent warm grey and ochre stone washes, nuanced natural greens, subtle cotton paper texture, natural light and spatial depth. Not loose blurry washes, hard black ink or a photo filter. Retain all photographed missing, broken, worn or consolidated masonry exactly as seen; no speculative restoration, no added towers or invented symmetric layout. 16:9 landscape wide establishing view, no text, logo, watermark, border, UI or characters. View A: broad frontal temple ensemble across the reflective pond. Match the exact photographed tower silhouettes and their overlaps, central tallest lotus tower with flanking towers only as visible, broad low gallery, palms along the shore, trees to each side. Keep entire reflected skyline in water with gentle small ripples and patchy aquatic plants, pale blue sky, warm late daylight illuminating stone. Preserve the very broad open-water foreground and distant scale of architecture, do not enlarge temple into closeup. Fit 16:9 with modest sky/water adjustment only. This is the photographed sunny reflection view, do not invent sunrise disc or sunset."
+    },
+    {
+      "asset": "assets/game/scenes/siem-reap-13-angkor-wat-approach-v1.png",
+      "reference": "https://apsaraauthority.gov.kh/wp-content/uploads/2023/02/Angkor-Wat-temples-15-2.jpg",
+      "prompt": "Detailed fine natural watercolor illustration for The Grand Tour travel game, Angkor Wat / 小吴哥, present archaeological condition. Latest screenshot's central APSARA official photograph is the sole architecture, perspective and composition reference; ignore black margins and watermark. Match the approved series: precise readable masonry, delicate detailed brushwork, translucent warm grey and ochre stone washes, nuanced natural greens, subtle cotton paper texture, natural light and spatial depth. Not loose blurry washes, hard black ink or a photo filter. Retain all photographed missing, broken, worn or consolidated masonry exactly as seen; no speculative restoration, no added towers or invented symmetric layout. 16:9 landscape wide establishing view, no text, logo, watermark, border, UI or characters. View B: approach along the broad worn stone walkway toward the temple's western entrance, exactly as latest official photo. Prior generated watercolor is STYLE ONLY. Keep strong vanishing point along real irregular paving slabs, surviving low naga balustrade at sides with eroded ends, palms in front of entrance, dark low galleries on both wings, only the tower silhouettes visible in this photograph (some upper sanctuaries are hidden by palms/others). Do not add extra towers to display an ideal five-tower plan. Preserve short damaged side towers, all photographed broken edges and weathering. Keep side pond at right and grass at left, expansive blue sky with soft clouds, warm late sunlight from the same direction. Remove incidental tourists only; no new architecture. Whole foreground-to-temple panorama."
+    },
+    {
+      "asset": "assets/game/scenes/siem-reap-13-angkor-wat-oblique-v1.png",
+      "reference": "https://apsaraauthority.gov.kh/wp-content/uploads/2023/02/Angkor-Wat-temples-1-2.jpg",
+      "prompt": "Detailed fine natural watercolor illustration for The Grand Tour travel game, Angkor Wat / 小吴哥, present archaeological condition. Latest screenshot's central APSARA official photograph is the sole architecture, perspective and composition reference; ignore black margins and watermark. Match the approved series: precise readable masonry, delicate detailed brushwork, translucent warm grey and ochre stone washes, nuanced natural greens, subtle cotton paper texture, natural light and spatial depth. Not loose blurry washes, hard black ink or a photo filter. Retain all photographed missing, broken, worn or consolidated masonry exactly as seen; no speculative restoration, no added towers or invented symmetric layout. 16:9 landscape wide establishing view, no text, logo, watermark, border, UI or characters. View C: ground-level oblique whole architectural ensemble seen from the grass at the corner of the outer gallery, exactly as the latest official photo. Previous generated image is STYLE ONLY. Central near corner pavilion with dark tall rectangular portico above stepped plinth, two long low colonnaded wings receding left/right, actual surviving gallery roofs and projecting end pavilions. Three main upper lotus-tower silhouettes are visible from this angle; retain their photographed positions and overlap, do NOT invent two extra visible towers. Preserve broken corner upper stonework and dark eroded facades; existing steps, bright grass with broad tree shadow across foreground, spacious blue sky and soft clouds. Preserve near-far proportions and photo viewpoint, no reflection pond, no imagined restored roofs. Remove only freestanding modern information board, leave surrounding masonry untouched."
+    },
+    {
+      "asset": "assets/game/scenes/siem-reap-13-angkor-wat-courtyard-v1.png",
+      "reference": "https://apsaraauthority.gov.kh/wp-content/uploads/2023/02/Angkor-Wat-temples-7-2.jpg",
+      "prompt": "Detailed fine natural watercolor illustration for The Grand Tour travel game, Angkor Wat / 小吴哥, present archaeological condition. Latest screenshot's central APSARA official photograph is the sole architecture, perspective and composition reference; ignore black margins and watermark. Match the approved series: precise readable masonry, delicate detailed brushwork, translucent warm grey and ochre stone washes, nuanced natural greens, subtle cotton paper texture, natural light and spatial depth. Not loose blurry washes, hard black ink or a photo filter. Retain all photographed missing, broken, worn or consolidated masonry exactly as seen; no speculative restoration, no added towers or invented symmetric layout. 16:9 landscape wide establishing view, no text, logo, watermark, border, UI or characters. View D: wide inside courtyard, accurately based on latest photo. Previous generated image is STYLE ONLY. Low viewpoint across broad cracked irregular sandstone paving with tiny shallow damp patches. Long near gallery wall fills right edge and recedes strongly toward back center, with actual repeated rectangular windows and lathe-turned stone balusters, one photographed dark open window. Low rear gallery crosses courtyard with ruined central doorway pavilion and unfinished broken upper silhouette. A short weathered ruined tower rises just right of center. Preserve all actual incomplete top contours, cracks, erosion and missing stones. Heavy cropped stone pavilion at far left casts shade over paving. Broad blue sky and simple fine wispy clouds. Preserve sunlight and shadows, relative architectural scale, and exact visible roof coverage. Do not add Angkor's iconic lotus towers into this courtyard where they do not appear in photograph; no invented statues, trees, pools or complete roofs. Landscape 16:9, fit by modest near paving/sky only. No people or signs."
+    }
+  ],
+  "limitations": [
+    "Illustrations, not measured surveys; small masonry details may differ.",
+    "Reflect the condition photographed in the official archive, not a certification of current site condition.",
+    "Each image uses a distinct photographed viewpoint; no claim of a surveyed seamless spatial reconstruction."
+  ]
+}

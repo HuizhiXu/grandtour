@@ -25,7 +25,7 @@ func _run() -> void:
 	_ui = _main.get("_ui")
 	_traveler = _main.get("_traveler")
 	_check(Catalog.ROUTES[0].stops.size() == 8 and Catalog.ROUTES[1].stops.size() == 4, "two routes contain eight and four stops")
-	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 11, "Angkor contains all eleven reviewed stops")
+	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 13, "Angkor contains all thirteen reviewed stops")
 	var all_stops: Array[String] = []
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	var missing := ""
@@ -80,6 +80,7 @@ func _run() -> void:
 			await _approach("tour_info")
 			_check(_ui.has_modal() and _progress().state(id).read, "reading requires physical arrival: " + id)
 			_ui.close_modal()
+			if not Catalog.views(id).is_empty(): await _verify_view_return(id)
 			await _approach("tour_activity")
 			_check(_ui.has_modal() and _progress().state(id).choice == -1, "activity requires a choice: " + id)
 			_main.call("_on_postcard_choice", -1)
@@ -102,6 +103,7 @@ func _run() -> void:
 			await _layout()
 			await _capture(id + "-record")
 			_ui.close_modal()
+			if not Catalog.views(id).is_empty(): await _verify_views(id)
 			var index: int = Catalog.ROUTES[route_index].stops.find(id)
 			(_ui.get("_next_button") as Button).pressed.emit()
 			if index + 1 < Catalog.ROUTES[route_index].stops.size():
@@ -132,6 +134,75 @@ func _run() -> void:
 
 func _progress() -> RefCounted:
 	return _main.get("_tour")
+
+func _verify_view_return(id: String) -> void:
+	var saved: Dictionary = _progress().serialize()
+	var original_position := _traveler.global_position
+	_main.call("_select_view", 2)
+	await _scene(id)
+	await _approach("tour_info")
+	_ui.close_modal()
+	var ground_position := _traveler.global_position
+	_check(ground_position.distance_to(original_position) > 20, "ground views have independent positions: " + id)
+	_main.call("_select_view", 1)
+	await _scene(id)
+	var return_button := _ui.get("_ground_button") as Button
+	_check(return_button.is_visible_in_tree(), "panorama offers direct ground return: " + id)
+	await _layout()
+	_check(Rect2(0, 0, 1280, 720).encloses((_ui.get("_quest_panel") as Control).get_global_rect()), "panorama return panel fits viewport: " + id)
+	_check(not _traveler.visible and not _traveler.is_walking(), "panorama leaves no moving actor: " + id)
+	_main.call("_set_paused", true)
+	return_button.pressed.emit()
+	_check(not _main.get("_transitioning"), "ground return respects pause: " + id)
+	_main.call("_set_paused", false)
+	return_button.pressed.emit()
+	return_button.pressed.emit()
+	await _scene(id)
+	_check(_main.get("_view_index") == 2, "ground return selects previous ground view: " + id)
+	_check(_traveler.visible and not return_button.visible, "ground return restores walking HUD: " + id)
+	_check(_traveler.global_position.distance_to(ground_position) < 1, "ground return restores last walking position: " + id)
+	_check(_progress().serialize() == saved and _progress().stage(id) == 1, "unfinished record survives panorama without completion: " + id)
+	_main.call("_select_view", 0)
+	await _scene(id)
+	_check(_traveler.global_position.distance_to(original_position) < 1, "other ground view retains its own position: " + id)
+	_check((_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(_traveler.global_position), "restored position is walkable: " + id)
+	await _approach("tour_info")
+	_check(_ui.has_modal(), "restored view still supports physical interaction: " + id)
+	_ui.close_modal()
+
+
+func _verify_views(id: String) -> void:
+	var saved: Dictionary = _progress().serialize()
+	_check(Catalog.views(id).size() == 4, "four reviewed perspectives: " + id)
+	for index in range(Catalog.views(id).size()):
+		_check(ResourceLoader.exists(Catalog.background_path(id, index)), "view art ships: %s/%d" % [id, index])
+		(_ui.get("_view_button") as Button).pressed.emit()
+		await _layout()
+		_check(_ui.has_modal(), "view menu opens")
+		_check(Rect2(0, 0, 1280, 720).encloses((_ui.get("_modal_panel") as Control).get_global_rect()), "view menu fits viewport")
+		((_ui.get("_modal_actions") as VBoxContainer).get_child(index) as Button).pressed.emit()
+		await _scene(id)
+		_check(_main.get("_view_index") == index, "view button reaches selected painting")
+		_check(_progress().serialize() == saved, "perspectives share progress without granting or resetting it")
+		var finder := _main.get("_pathfinder") as IsoPathfinder
+		if _main.get("_panorama"):
+			_check(not _traveler.visible and (_main.get("_targets") as Dictionary).is_empty(), "reflection panorama has no actor or walking targets")
+			_check(not finder.is_world_walkable(Vector2(400, 660)), "reflection water is not walkable")
+			_main.call("_request_walk", Vector2(640, 660))
+			_check(not _traveler.is_walking(), "panorama clicks cannot move onto water")
+		else:
+			_check(_traveler.visible and finder.is_world_walkable(_traveler.position), "walkable view arrival")
+			for target_id: String in ["tour_info", "tour_activity", "tour_record"]:
+				await _approach(target_id)
+				_check(_ui.has_modal(), "view target can be reached: " + target_id)
+				_ui.close_modal()
+		await _capture(id + "-view-%d" % index)
+	_main.call("_select_view", -1)
+	_main.call("_select_view", 99)
+	_check(not _main.get("_transitioning"), "invalid views rejected")
+	_main.call("_select_view", 0)
+	await _scene(id)
+	_check(_progress().serialize() == saved, "returning to main view preserves completed record")
 
 func _stop_button(parent: Node, title: String) -> Button:
 	for child in parent.get_children():

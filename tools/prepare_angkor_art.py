@@ -1,4 +1,4 @@
-"""Encode only the eleven reviewed Angkor paintings for the playable game."""
+"""Encode the reviewed Angkor paintings and their distinct viewpoints."""
 from pathlib import Path
 from PIL import Image
 
@@ -14,7 +14,15 @@ PAINTINGS = {
     "angkor_victory_gate": "siem-reap-08-victory-gate-v1.png",
     "angkor_chau_say": "siem-reap-09-chau-say-tevoda-v1.png",
     "angkor_thommanon": "siem-reap-10-thommanon-v1.png",
-    "angkor_ta_keo": "siem-reap-11-ta-keo-v1.png"
+    "angkor_ta_keo": "siem-reap-11-ta-keo-v1.png",
+    "angkor_ta_prohm": "siem-reap-12-ta-prohm-v1.png",
+    "angkor_ta_prohm_roots_gate": "siem-reap-12-ta-prohm-roots-gate-v1.png",
+    "angkor_ta_prohm_roots_gallery": "siem-reap-12-ta-prohm-roots-gallery-v1.png",
+    "angkor_ta_prohm_colonnade": "siem-reap-12-ta-prohm-colonnade-v1.png",
+    "angkor_wat": "siem-reap-13-angkor-wat-approach-v1.png",
+    "angkor_wat_reflection": "siem-reap-13-angkor-wat-reflection-v1.png",
+    "angkor_wat_oblique": "siem-reap-13-angkor-wat-oblique-v1.png",
+    "angkor_wat_courtyard": "siem-reap-13-angkor-wat-courtyard-v1.png"
 }
 
 if __name__ == "__main__":

@@ -81,6 +81,10 @@ func _verify() -> void:
 			if not TourCatalog.is_new_stop(id): continue
 			main.call("_setup_scene", id, Vector2(640, 620))
 			_check((main.get("_targets") as Dictionary).has("tour_activity"), "pack builds playable tour stop: " + id)
+			for view_index in range(TourCatalog.views(id).size()):
+				_check(ResourceLoader.exists(TourCatalog.background_path(id, view_index)), "pack includes view: %s/%d" % [id, view_index])
+				main.call("_setup_scene", id, Vector2(640, 620), view_index)
+				_check(main.get("_view_index") == view_index, "pack switches view: %s/%d" % [id, view_index])
 		_check(not main.has_method("_maybe_capture"), "capture routing removed from runtime")
 		_check(not main.has_method("_open_tuning"), "release tuning entry point excluded")
 		_check(not ResourceLoader.exists("res://scripts/ui/tuning_panel.gd"), "release tuning panel excluded")

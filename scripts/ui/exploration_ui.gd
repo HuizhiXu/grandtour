@@ -12,6 +12,9 @@ signal routes_requested
 signal route_selected(index: int)
 signal stop_selected(id: String)
 signal next_stop_requested
+signal views_requested
+signal view_selected(index: int)
+signal ground_view_requested
 
 const ScreenFactory := preload("res://scripts/ui/screen_factory.gd")
 const PAPER := Color("f7f0e2")
@@ -45,6 +48,8 @@ var _quest_title: Label
 var _quest_button: Button
 var _route_button: Button
 var _next_button: Button
+var _view_button: Button
+var _ground_button: Button
 
 
 func _ready() -> void:
@@ -99,7 +104,22 @@ func has_modal() -> bool:
 
 func is_pointer_over_panel() -> bool:
 	var pointer := get_global_mouse_position()
-	return _identity.get_global_rect().has_point(pointer) or _quest_panel.get_global_rect().has_point(pointer) or pointer.x > 920.0 and pointer.y < 85.0 or _next_button.get_global_rect().has_point(pointer)
+	return _identity.get_global_rect().has_point(pointer) or _quest_panel.get_global_rect().has_point(pointer) or pointer.x > 920.0 and pointer.y < 85.0 or _next_button.get_global_rect().has_point(pointer) or _view_button.visible and _view_button.get_global_rect().has_point(pointer)
+
+
+func set_views(count: int, selected: int, panorama: bool) -> void:
+	_view_button.visible = count > 1
+	_view_button.text = "切换视角  %d / %d" % [selected + 1, count]
+	_ground_button.visible = panorama
+	_hint_label.text = "观景视角 · 点击「返回地面漫步」回到刚才的位置" if panorama else "点击空地带 Archie 漫步 · 点击人物或物件后，她会先走近再互动"
+
+
+func show_views(title: String, views: Array, selected: int) -> void:
+	_open_modal(title + " · 切换视角", "从不同位置看看这座寺院。各视角共享这一站的旅行记录。")
+	for index in range(views.size()):
+		var choice := index
+		_add_action_button(str(views[index].title) + (" · 当前" if index == selected else ""), func() -> void: view_selected.emit(choice), index == selected)
+	_add_action_button("返回当前视角", close_modal, false)
 
 
 func show_information(title: String, body: String) -> void:
@@ -235,6 +255,10 @@ func _build_hud() -> void:
 	_quest_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_quest_label.custom_minimum_size.x = 333.0
 	quest_content.add_child(_quest_label)
+	_ground_button = _make_button("返回地面漫步", true)
+	_ground_button.visible = false
+	_ground_button.pressed.connect(func() -> void: ground_view_requested.emit())
+	quest_content.add_child(_ground_button)
 	_quest_button = _make_button("查看明信片", false)
 	_quest_button.custom_minimum_size = Vector2(0, 32)
 	_quest_button.pressed.connect(func() -> void: postcard_requested.emit())
@@ -250,6 +274,12 @@ func _build_hud() -> void:
 	_route_button.custom_minimum_size = Vector2(176, 42)
 	_route_button.pressed.connect(func() -> void: routes_requested.emit())
 	add_child(_route_button)
+	_view_button = _make_button("切换视角", false)
+	_view_button.position = Vector2(730, 26)
+	_view_button.custom_minimum_size = Vector2(184, 42)
+	_view_button.visible = false
+	_view_button.pressed.connect(func() -> void: views_requested.emit())
+	add_child(_view_button)
 	_next_button = _make_button("下一站 →", true)
 	_next_button.position = Vector2(1080, 656)
 	_next_button.custom_minimum_size = Vector2(172, 44)

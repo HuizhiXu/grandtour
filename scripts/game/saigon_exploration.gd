@@ -47,6 +47,10 @@ var _hovered_target: ExplorationTarget
 var _palace := Palace.new()
 var _tour := TourProgress.new()
 var _route_index := 0
+var _view_index := 0
+var _panorama := false
+var _view_positions: Dictionary = {}
+var _ground_views: Dictionary = {}
 
 
 func _ready() -> void:
@@ -171,6 +175,9 @@ func _build_ui() -> void:
 	)
 	_ui.stop_selected.connect(_travel_to_stop)
 	_ui.next_stop_requested.connect(_travel_next)
+	_ui.views_requested.connect(_show_views)
+	_ui.view_selected.connect(_select_view)
+	_ui.ground_view_requested.connect(_return_to_ground)
 	_ui.modal_closed.connect(func() -> void: _postcard_context = "")
 
 
@@ -188,8 +195,11 @@ func _build_traveler() -> void:
 	_traveler.add_child(shadow)
 
 
-func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
+func _setup_scene(scene_name: String, player_spawn: Vector2, view_index: int = 0) -> void:
 	_scene_id = scene_name
+	_view_index = view_index
+	_panorama = TourWorld.layout(scene_name, view_index).get("panorama", false) if TourCatalog.is_new_stop(scene_name) else false
+	_traveler.visible = not _panorama
 	_hovered_target = null
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	_pending_target = null
@@ -208,7 +218,7 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	var background := Sprite2D.new()
 	background.name = "SceneIllustration"
 	if TourCatalog.is_new_stop(scene_name):
-		background.texture = load(TourCatalog.background_path(scene_name)) as Texture2D
+		background.texture = load(TourCatalog.background_path(scene_name, _view_index)) as Texture2D
 	else:
 		background.texture = {"outdoor": OUTDOOR_BG, "indoor": INDOOR_BG, "palace_garden": PALACE_BG, "palace_hall": PALACE_HALL_BG}[scene_name]
 	background.position = WORLD_SIZE * 0.5
@@ -231,9 +241,12 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 	if TourCatalog.is_new_stop(scene_name):
 		walk_rect = Rect2(70, 370, 1140, 338)
 		floor_outline = _tour_floor(scene_name)
-		obstacles.assign(TourWorld.layout(scene_name).obstacles)
+		obstacles.assign(TourWorld.layout(scene_name, _view_index).obstacles)
+		if _panorama: walk_rect = Rect2()
 		var region := "暹粒" if scene_name.begins_with("angkor_") else "西贡"
 		_ui.set_location("%s · %s" % [region, TourCatalog.STOPS[scene_name].title])
+		if not TourCatalog.views(scene_name).is_empty():
+			_ui.set_location("%s · %s" % [TourCatalog.STOPS[scene_name].title, TourCatalog.views(scene_name)[_view_index].title])
 	elif scene_name == "outdoor":
 		walk_rect = Rect2(Vector2(18.0, 230.0), Vector2(1244.0, 478.0))
 		obstacles = _outdoor_obstacles()
@@ -253,7 +266,7 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 		_ui.set_location("路线 1 · 独立宫 · " + ("庭院" if scene_name == "palace_garden" else "参观大厅"))
 	_pathfinder = Pathfinder.new()
 	_pathfinder.configure(walk_rect, obstacles, walls, floor_outline)
-	_add_floor_boundary(floor_outline)
+	if not _panorama: _add_floor_boundary(floor_outline)
 	for index in range(obstacles.size()):
 		_add_physical_obstacle(obstacles[index], index)
 	for index in range(walls.size()):
@@ -267,7 +280,7 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 		_collision_root.add_child(body)
 
 	if TourCatalog.is_new_stop(scene_name):
-		_build_tour_targets(scene_name)
+		if not _panorama: _build_tour_targets(scene_name)
 		_ui.set_npc_position(Vector2.ZERO, false)
 	elif scene_name == "outdoor":
 		_build_outdoor_targets()
@@ -285,15 +298,22 @@ func _setup_scene(scene_name: String, player_spawn: Vector2) -> void:
 
 
 func _tour_floor(id: String) -> PackedVector2Array:
-	return TourWorld.layout(id).floor
+	return TourWorld.layout(id, _view_index).floor
 
 
 func _build_tour_targets(id: String) -> void:
 	var stop: Dictionary = TourCatalog.STOPS[id]
-	var layout: Dictionary = TourWorld.layout(id)
+	var layout: Dictionary = TourWorld.layout(id, _view_index)
 	_add_target("tour_info", "tour_info", "景点介绍", layout.info, layout.info_stand, Vector2(100, 100))
 	_add_target("tour_activity", "tour_activity", stop.object, layout.activity, layout.activity_stand, Vector2(130, 104))
 	_add_target("tour_record", "tour_record", "记录这一站", layout.get("record", Vector2(640, 690)), layout.get("record_stand", Vector2(640, 615)), Vector2(150, 44))
+	if not TourCatalog.views(id).is_empty():
+		# Keep the record label above the bottom hint panel and away from Archie.
+		var label := (_targets["tour_record"] as ExplorationTarget).get("_label") as Label
+		label.global_position = Vector2(530, 600)
+		if id == "angkor_ta_prohm" and _view_index == 2:
+			var activity_label := (_targets["tour_activity"] as ExplorationTarget).get("_label") as Label
+			activity_label.global_position = Vector2(350, 540)
 
 
 func _completed_stops() -> Dictionary:
@@ -312,12 +332,31 @@ func _show_routes() -> void:
 	_ui.show_routes(TourCatalog.ROUTES, TourCatalog.STOPS, _route_index, TourCatalog.stop_for_scene(_scene_id), _completed_stops())
 
 
+func _show_views() -> void:
+	if _paused or _transitioning or TourCatalog.views(_scene_id).is_empty(): return
+	_traveler.cancel_path()
+	_pending_target = null
+	_clear_destination()
+	_ui.show_views(TourCatalog.STOPS[_scene_id].title, TourCatalog.views(_scene_id), _view_index)
+
+
+func _select_view(index: int) -> void:
+	if _paused or _transitioning or index < 0 or index >= TourCatalog.views(_scene_id).size(): return
+	_ui.close_modal()
+	if index != _view_index: await _transition_to(_scene_id, index)
+
+
+func _return_to_ground() -> void:
+	if not _panorama or _paused or _transitioning: return
+	await _select_view(int(_ground_views.get(_scene_id, 0)))
+
+
 func _travel_to_stop(id: String) -> void:
 	if _paused or _transitioning or not TourCatalog.STOPS.has(id): return
 	_route_index = TourCatalog.route_for_stop(id)
 	_ui.close_modal()
 	var scene: String = TourCatalog.STOPS[id].scene
-	if scene == _scene_id: return
+	if scene == _scene_id and _view_index == 0: return
 	var from_stop := TourCatalog.stop_for_scene(_scene_id)
 	await _transition_to(scene)
 	var by_car := id == "pink_church" or from_stop == "pink_church"
@@ -342,6 +381,7 @@ func _travel_next() -> void:
 
 
 func _tour_hint() -> String:
+	if _panorama: return "静静欣赏眼前的风景。点击「返回地面漫步」，可继续探索与记录。"
 	var entry: Dictionary = _tour.state(_scene_id)
 	if not entry.read: return "走近「景点介绍」，了解这一站的故事。"
 	if entry.choice < 0: return "走到「%s」，%s。" % [TourCatalog.STOPS[_scene_id].object, TourCatalog.STOPS[_scene_id].activity]
@@ -545,6 +585,7 @@ func _add_target(id: String, kind: String, title: String, world_position: Vector
 
 
 func _request_walk(destination: Vector2) -> void:
+	if _panorama: return
 	var route := _pathfinder.find_path(_traveler.global_position, destination)
 	if route.is_empty():
 		_pending_target = null
@@ -662,6 +703,7 @@ func _update_postcard_hud() -> void:
 	for completed: bool in _completed_stops().values():
 		if completed: count += 1
 	_ui.set_route_progress(count, not _next_stop_id().is_empty(), TourCatalog.STOPS.size())
+	_ui.set_views(TourCatalog.views(_scene_id).size(), _view_index, _panorama)
 
 
 func _show_current_journey() -> void:
@@ -772,10 +814,15 @@ func _on_postcard_choice(index: int) -> void:
 		_show_postcard()
 
 
-func _transition_to(next_scene: String) -> void:
+func _transition_to(next_scene: String, view_index: int = 0) -> void:
 	if _transitioning:
 		return
 	_transitioning = true
+	# Remember each ground viewpoint independently for this play session.
+	# Panoramas must never replace a safe ground position with Vector2.ZERO.
+	if not _panorama and not TourCatalog.views(_scene_id).is_empty():
+		_view_positions["%s/%d" % [_scene_id, _view_index]] = _traveler.global_position
+		_ground_views[_scene_id] = _view_index
 	_traveler.cancel_path()
 	_pending_target = null
 	_clear_destination()
@@ -784,14 +831,15 @@ func _transition_to(next_scene: String) -> void:
 	await fade_out.finished
 	var spawn := Vector2(640, 620)
 	if TourCatalog.is_new_stop(next_scene):
-		spawn = TourWorld.layout(next_scene).get("spawn", spawn)
+		spawn = TourWorld.layout(next_scene, view_index).get("spawn", spawn)
+		spawn = _view_positions.get("%s/%d" % [next_scene, view_index], spawn)
 	if not TourCatalog.is_new_stop(next_scene):
 		spawn = {"indoor": Vector2(640, 575), "outdoor": Vector2(608, 432), "palace_garden": Vector2(640, 640), "palace_hall": Vector2(640, 620)}[next_scene]
 	if next_scene == "palace_garden" and _scene_id == "palace_hall":
 		spawn = Vector2(640, 352)
 	if next_scene == "outdoor" and _scene_id == "palace_garden":
 		spawn = Vector2(938, 620)
-	_setup_scene(next_scene, spawn)
+	_setup_scene(next_scene, spawn, view_index)
 	await get_tree().process_frame
 	var fade_in := create_tween()
 	fade_in.tween_property(_fade, "color:a", 0.0, 0.22).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

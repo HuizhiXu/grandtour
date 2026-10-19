@@ -100,5 +100,11 @@ static func route_for_stop(id: String) -> int:
 static func is_new_stop(id: String) -> bool:
 	return STOPS.has(id) and id not in ["palace", "post_office"]
 
-static func background_path(id: String) -> String:
+static func views(id: String) -> Array:
+	return STOPS.get(id, {}).get("views", [])
+
+static func background_path(id: String, view_index: int = 0) -> String:
+	var perspectives := views(id)
+	if not perspectives.is_empty():
+		return "res://assets/game/runtime/tour-%s.jpg" % perspectives[clampi(view_index, 0, perspectives.size() - 1)].art
 	return "res://assets/game/runtime/tour-%s.jpg" % id
