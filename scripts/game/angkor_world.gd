@@ -1,6 +1,14 @@
 extends RefCounted
 ## Navigation in painting coordinates (1280 x 720); water and ruins stay outside.
 static func layout(id: String, view_index: int = 0) -> Dictionary:
+	if id == "angkor_bakong":
+		if view_index == 1:
+			# Shallow foreground, stepped terraces and roofless side building are observation only.
+			var panorama := _make([], Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
+			panorama["panorama"] = true
+			return panorama
+		# Foreground approach road only, clear of trees, balustrade and distant ruins.
+		return _make([Vector2(440, 540), Vector2(820, 540), Vector2(1100, 708), Vector2(240, 708)], Vector2(640, 645), Vector2(500, 620), Vector2(840, 660), Vector2(640, 680))
 	if id == "angkor_preah_ko":
 		if view_index == 1:
 			# Foreground below the courtyard sculptures, clear of bases and shrine steps.

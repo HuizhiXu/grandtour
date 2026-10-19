@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-19",
+  "stop": 25,
+  "title": "巴空寺 · 多视角",
+  "englishName": "Bakong",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "APSARA National Authority official photographs define architecture, composition and conservation state. Approved paintings supply style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2022/07/04/bakong-temple-photos-gallery/",
+  "verification": "Gallery title and original image hrefs verified in browser; full originals downloaded and visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "层台与残殿全景",
+      "asset": "assets/game/scenes/siem-reap-25-bakong-platform-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Bakong-Temple-1.jpg",
+      "referenceSha256": "4158c096dc6920aa659370baf0eddc1c2986cc812bd07d536cd81620a9692d36",
+      "prompt": "Use case: historical-scene. Create detailed natural16:9 watercolor game-background preview for The Grand Tour scene25 BAKONG / 巴空寺, oblique stepped temple and roofless side building. Reference1 APSARA official original https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Bakong-Temple-1.jpg is the SOLE architectural, viewpoint and conservation source. Reference2 approved Thommanon painting is STYLE ONLY, never borrow buildings. Faithfully render this photographed broad oblique composition: tall weathered sandstone sanctuary tower rises left of center above massive horizontal stepped pyramid terraces; retain exact photographed tower taper, tier count, irregular worn carved silhouette, dark rectangular door and existing summit. Actual small surviving and truncated shrines line upper terrace as photographed, keep relative heights and positions, no multiplication into ideal symmetry. Roofless long low stone building fills RIGHT foreground, real heavy broken dark masonry wall recedes diagonally left, a rectangular doorway with carved jambs faces lower right, irregular partial pediment and missing upper roof stones. Foreground quiet grass with low scattered foundation blocks at left. Preserve actual conservation scaffold/netted structure visible at far RIGHT behind ruin, do not erase or turn it into another ancient tower. Pale blue sky with thin soft clouds, natural warm side daylight and deep but readable shadows. Adapt3:2 photo to16:9 by modest sky/near grass crop and minimal earth extension only, keep full main tower and low side building, no stretching architecture, no reconstruction of missing roofs or carvings. Muted grey ochre sandstone with dark weathering and subtle moss, nuanced grassy greens, delicate fine masonry and carving brushwork, layered translucent watercolor, fine cotton-paper texture, excellent depth. Match approved detailed travel picture-book series, not loose blurry washes, harsh outlines, photorealism or photo filter. No people, game characters, text, signs, logo, watermark, UI or border. Archived archaeological condition preserved.",
+      "proposedMode": "observation panorama; near ruins and shallow foreground not yet calibrated for walking",
+      "runtimeViewIndex": 1,
+      "runtimeArt": "angkor_bakong_platform"
+    },
+    {
+      "title": "林荫入口石道",
+      "asset": "assets/game/scenes/siem-reap-25-bakong-approach-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Bakong-Temple-3.jpg",
+      "referenceSha256": "dc909096e9695644eb4f5a7766546f0e838fab52d185d1e2806baa362f76c6a3",
+      "prompt": "Use case: historical-scene. Create second detailed natural16:9 watercolor game background preview for The Grand Tour scene25 BAKONG / 巴空寺, forest-shaded approach road. Reference1 APSARA official original https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Bakong-Temple-3.jpg is SOLE architecture, composition, road geometry and conservation source. Reference2 approved Thommanon watercolor is STYLE ONLY, no transferred structures. Faithfully paint photographed broad straight gravel/earth approach from bottom foreground narrowing toward small distant Bakong stepped pyramid and sanctuary tower near center. Preserve distant temple scale, actual tiered platform silhouette, central narrow staircase and tall weathered sanctuary, only photographed small side remnants, all irregular worn stone details remain. Huge dark leafy trees and trunks frame both sides and overhead like a green canopy tunnel, especially dense right trees; fine sunlit leaf edges and pale sky opening above distant tower. Low existing worn stone balustrade/foundation elements run along road sides as photographed, modest grassy verge at left, scattered little leaves on grey-brown gravel. Do not enlarge distant temple to foreground, invent new towers, gates, complete balustrades or ornamental trees, no invented water. Translate photographic deep shade into nuanced readable natural greens while retaining the bright distance and shaded foreground, no sunrise/sunset disc. Adapt3:2 to16:9 by modest nearest road and peripheral upper leaves crop with minimal lateral trees/earth extension, preserve road vanishing point and architecture proportions, no stretching. Soft natural daylight, muted grey ochre sandstone and gravel, fine readable masonry, bark and leaf brushwork, layered transparent detailed watercolor washes, subtle cotton-paper grain and excellent depth. Match approved detailed travel picture-book series, not loose blurry washes, harsh black outlines, photorealism or a photo filter. No people, vehicles, game characters, text, signs, logo, watermark, UI or frame. Documented archived archaeological condition, no speculative reconstruction.",
+      "proposedMode": "foreground approach only, subject to navigation calibration after approval",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_bakong"
+    }
+  ],
+  "suggestedDefaultView": "林荫入口石道",
+  "limitations": [
+    "Watercolor interpretations of official photographs, not photographs published by APSARA.",
+    "Archived conservation scaffolding and ruined masonry retained; not evidence of current construction state.",
+    "Fine masonry and landscape details can differ from official originals."
+  ],
+  "scope": {
+    "targetDestinations": 26,
+    "cancelledByUser": [
+      "小吴哥日出视角",
+      "皇家浴池"
+    ]
+  },
+  "nextStopAfterApproval": "洞里萨湖 / Tonle Sap",
+  "integrationMode": "ground approach and observation-only platform panorama; road foreground only",
+  "coverageAfterIntegration": {
+    "implementedDestinations": 25,
+    "extraViewTasks": [],
+    "remainingDestinations": 1,
+    "cancelledByUser": [
+      "小吴哥日出视角",
+      "皇家浴池"
+    ],
+    "uniqueDestinations": 26
+  }
+}
