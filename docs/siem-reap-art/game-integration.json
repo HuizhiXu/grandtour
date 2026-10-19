@@ -24,5 +24,13 @@
     "nativeSceneCaptures": "eight new perspectives captured; reviewed walking areas, panorama presentation and route book",
     "browser": "Web game loads; Angkor route contains thirteen stops; Ta Prohm and perspective menu open correctly"
   },
+  "guidedExplorationVerification": {
+    "date": "2026-10-19",
+    "scope": "all thirteen Angkor stops",
+    "tourChecks": 850,
+    "otherGameplayChecks": 278,
+    "nativeSceneCaptures": "all thirteen stops, eight multi-view scenes and both menus rendered; walking and panorama HUDs reviewed",
+    "coverage": ["guided walking to next unfinished interaction", "no teleportation or remote progress", "pause and modal guards", "view menu cancels guided walking", "walking guidance hidden in panoramas and completed stops"]
+  },
   "publication": "GitHub Pages deployment is tracked by the repository workflow."
 }

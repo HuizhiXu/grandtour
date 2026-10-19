@@ -178,6 +178,7 @@ func _build_ui() -> void:
 	_ui.views_requested.connect(_show_views)
 	_ui.view_selected.connect(_select_view)
 	_ui.ground_view_requested.connect(_return_to_ground)
+	_ui.exploration_action_requested.connect(_guide_next_angkor_target)
 	_ui.modal_closed.connect(func() -> void: _postcard_context = "")
 
 
@@ -382,6 +383,21 @@ func _travel_next() -> void:
 		_show_routes()
 	else:
 		_travel_to_stop(id)
+
+
+func _next_angkor_target() -> String:
+	if not _scene_id.begins_with("angkor_") or _panorama: return ""
+	var entry: Dictionary = _tour.state(_scene_id)
+	if entry.recorded: return ""
+	if not entry.read: return "tour_info"
+	if entry.choice < 0: return "tour_activity"
+	return "tour_record"
+
+
+func _guide_next_angkor_target() -> void:
+	if _paused or _transitioning or _ui.has_modal(): return
+	var target := _targets.get(_next_angkor_target()) as ExplorationTarget
+	if is_instance_valid(target): _on_target_selected(target)
 
 
 func _tour_hint() -> String:
@@ -708,6 +724,8 @@ func _update_postcard_hud() -> void:
 		if completed: count += 1
 	_ui.set_route_progress(count, not _next_stop_id().is_empty(), TourCatalog.STOPS.size())
 	_ui.set_views(TourCatalog.views(_scene_id).size(), _view_index, _panorama)
+	var next_target := _targets.get(_next_angkor_target()) as ExplorationTarget
+	_ui.set_exploration_action(next_target.display_name if is_instance_valid(next_target) else "")
 
 
 func _show_current_journey() -> void:

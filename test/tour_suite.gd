@@ -59,6 +59,7 @@ func _run() -> void:
 			await _scene(str(Catalog.STOPS[id].scene))
 			_check(Catalog.stop_for_scene(str(_main.get("_scene_id"))) == id, "route button reaches scene: " + id)
 			_check((_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(_traveler.position), "walkable arrival: " + id)
+			_check((_ui.get("_exploration_button") as Button).visible == id.begins_with("angkor_"), "guided exploration only appears at unfinished Angkor stops: " + id)
 			if not Catalog.is_new_stop(id):
 				var legacy := "palace_door" if id == "palace" else "post_office_door"
 				_check((_main.get("_targets") as Dictionary).has(legacy), "original scene keeps interactions: " + id)
@@ -78,11 +79,11 @@ func _run() -> void:
 			await _approach("tour_record")
 			_check(_progress().stage(id) == 0, "stamp cannot bypass activity: " + id)
 			_ui.close_modal()
-			await _approach("tour_info")
+			await _approach("tour_info", id.begins_with("angkor_"))
 			_check(_ui.has_modal() and _progress().state(id).read, "reading requires physical arrival: " + id)
 			_ui.close_modal()
 			if not Catalog.views(id).is_empty(): await _verify_view_return(id)
-			await _approach("tour_activity")
+			await _approach("tour_activity", id.begins_with("angkor_"))
 			_check(_ui.has_modal() and _progress().state(id).choice == -1, "activity requires a choice: " + id)
 			_main.call("_on_postcard_choice", -1)
 			_check(_progress().state(id).choice == -1, "invalid activity choice is rejected: " + id)
@@ -97,10 +98,11 @@ func _run() -> void:
 			await _layout()
 			_check(Rect2(0, 0, 1280, 720).encloses((_ui.get("_modal_panel") as Control).get_global_rect()), "activity modal fits: " + id)
 			_ui.close_modal()
-			await _approach("tour_record")
+			await _approach("tour_record", id.begins_with("angkor_"))
 			_check(_main.get("_postcard_context") == "tour_record", "stamp confirmation at record point: " + id)
 			((_ui.get("_modal_actions") as VBoxContainer).get_child(0) as Button).pressed.emit()
 			_check(_progress().stage(id) == 3, "stop fully completed: " + id)
+			_check(not (_ui.get("_exploration_button") as Button).visible, "completed stops hide next-action guidance: " + id)
 			await _layout()
 			await _capture(id + "-record")
 			_ui.close_modal()
@@ -149,6 +151,9 @@ func _verify_view_return(id: String) -> void:
 	await _scene(id)
 	var return_button := _ui.get("_ground_button") as Button
 	_check(return_button.is_visible_in_tree(), "panorama offers direct ground return: " + id)
+	_check(not (_ui.get("_exploration_button") as Button).visible, "panorama hides walking guidance: " + id)
+	_main.call("_guide_next_angkor_target")
+	_check(not _traveler.is_walking() and _progress().serialize() == saved, "panorama guidance cannot walk or grant progress: " + id)
 	await _layout()
 	_check(Rect2(0, 0, 1280, 720).encloses((_ui.get("_quest_panel") as Control).get_global_rect()), "panorama return panel fits viewport: " + id)
 	_check(not _traveler.visible and not _traveler.is_walking(), "panorama leaves no moving actor: " + id)
@@ -223,13 +228,34 @@ func _stop_button(parent: Node, title: String) -> Button:
 		if found != null: return found
 	return null
 
-func _approach(id: String) -> void:
+func _approach(id: String, guided: bool = false) -> void:
 	await physics_frame
 	var target := (_main.get("_targets") as Dictionary)[id] as ExplorationTarget
-	var click := InputEventMouseButton.new()
-	click.button_index = MOUSE_BUTTON_LEFT
-	click.pressed = true
-	target.call("_on_input_event", root, click, 0)
+	if guided:
+		var button := _ui.get("_exploration_button") as Button
+		_check(button.is_visible_in_tree() and target.display_name in button.text, "guidance names next required target: " + id)
+		var before := _traveler.global_position
+		var progress_before: Dictionary = _progress().serialize()
+		_main.call("_set_paused", true)
+		button.pressed.emit()
+		_check(not _traveler.is_walking() and not _ui.has_modal(), "guidance respects pause: " + id)
+		_main.call("_set_paused", false)
+		button.pressed.emit()
+		_check(_traveler.global_position == before, "guidance never teleports the traveler: " + id)
+		if before.distance_to(target.stand_position) > 26:
+			_check(_progress().serialize() == progress_before and not _ui.has_modal(), "guidance waits for physical arrival: " + id)
+		if _main.get("_scene_id") == "angkor_ta_prohm" and id == "tour_info":
+			_main.call("_show_views")
+			_check(not _traveler.is_walking() and _main.get("_pending_target") == null, "view menu cancels guided walking")
+			button.pressed.emit()
+			_check(not _traveler.is_walking(), "guidance cannot run through an open modal")
+			_ui.close_modal()
+			button.pressed.emit()
+	else:
+		var click := InputEventMouseButton.new()
+		click.button_index = MOUSE_BUTTON_LEFT
+		click.pressed = true
+		target.call("_on_input_event", root, click, 0)
 	for frame in range(900):
 		await physics_frame
 		if not _traveler.is_walking(): break

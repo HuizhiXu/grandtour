@@ -15,6 +15,7 @@ signal next_stop_requested
 signal views_requested
 signal view_selected(index: int)
 signal ground_view_requested
+signal exploration_action_requested
 
 const ScreenFactory := preload("res://scripts/ui/screen_factory.gd")
 const PAPER := Color("f7f0e2")
@@ -50,6 +51,7 @@ var _route_button: Button
 var _next_button: Button
 var _view_button: Button
 var _ground_button: Button
+var _exploration_button: Button
 
 
 func _ready() -> void:
@@ -112,6 +114,11 @@ func set_views(count: int, selected: int, panorama: bool) -> void:
 	_view_button.text = "切换视角  %d / %d" % [selected + 1, count]
 	_ground_button.visible = panorama
 	_hint_label.text = "观景视角 · 点击「返回地面漫步」回到刚才的位置" if panorama else "点击空地带 Archie 漫步 · 点击人物或物件后，她会先走近再互动"
+
+
+func set_exploration_action(title: String) -> void:
+	_exploration_button.visible = not title.is_empty()
+	_exploration_button.text = "走近：" + title
 
 
 func show_views(title: String, views: Array, selected: int) -> void:
@@ -270,6 +277,10 @@ func _build_hud() -> void:
 	_ground_button.visible = false
 	_ground_button.pressed.connect(func() -> void: ground_view_requested.emit())
 	quest_content.add_child(_ground_button)
+	_exploration_button = _make_button("", true)
+	_exploration_button.visible = false
+	_exploration_button.pressed.connect(func() -> void: exploration_action_requested.emit())
+	quest_content.add_child(_exploration_button)
 	_quest_button = _make_button("查看明信片", false)
 	_quest_button.custom_minimum_size = Vector2(0, 32)
 	_quest_button.pressed.connect(func() -> void: postcard_requested.emit())

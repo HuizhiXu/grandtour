@@ -81,10 +81,14 @@ func _verify() -> void:
 			if not TourCatalog.is_new_stop(id): continue
 			main.call("_setup_scene", id, Vector2(640, 620))
 			_check((main.get("_targets") as Dictionary).has("tour_activity"), "pack builds playable tour stop: " + id)
+			var guidance := (main.get("_ui") as Control).get("_exploration_button") as Button
+			_check(guidance != null and guidance.visible == id.begins_with("angkor_"), "pack includes Angkor walking guidance: " + id)
 			for view_index in range(TourCatalog.views(id).size()):
 				_check(ResourceLoader.exists(TourCatalog.background_path(id, view_index)), "pack includes view: %s/%d" % [id, view_index])
 				main.call("_setup_scene", id, Vector2(640, 620), view_index)
 				_check(main.get("_view_index") == view_index, "pack switches view: %s/%d" % [id, view_index])
+				if main.get("_panorama"):
+					_check(not guidance.visible, "pack hides walking guidance in panoramas: " + id)
 			if not TourCatalog.views(id).is_empty():
 				main.call("_show_views")
 				var ui := main.get("_ui") as Control
