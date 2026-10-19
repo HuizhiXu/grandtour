@@ -2,8 +2,8 @@
   "date": "2026-10-19",
   "status": "integrated_and_verified_locally",
   "route": "暹粒 · 吴哥",
-  "playableStops": 15,
-  "totalGameStops": 27,
+  "playableStops": 16,
+  "totalGameStops": 28,
   "catalog": "scripts/game/angkor_catalog.gd",
   "navigation": "scripts/game/angkor_world.gd",
   "runtimeArtMapping": "tools/prepare_angkor_art.py",
@@ -49,6 +49,16 @@
     "otherGameplayChecks": 278,
     "coverage": ["two approved gate views", "all three targets physically reachable in both views", "ruined gateway excluded from navigation", "unfinished and completed progress shared across views", "positions restored independently"],
     "nativeCaptures": "both gate views and preview menu rendered and reviewed",
+    "exportedPack": "Web release export passed in isolated directory"
+  },
+  "preahKhanVerification": {
+    "date": "2026-10-19",
+    "source": "APSARA official Preah Khan gallery, original photos 1 and 2-1",
+    "mode": "ground causeway and non-walking pond panorama",
+    "tourChecks": 1036,
+    "otherGameplayChecks": 278,
+    "coverage": ["all causeway targets physically reachable", "pond water remains non-walkable", "panorama grants no remote progress", "return restores causeway view and position", "unfinished and completed travel record shared"],
+    "nativeCaptures": "causeway, pond panorama and view menu rendered and reviewed; record label moved clear of traveler",
     "exportedPack": "Web release export passed in isolated directory"
   },
   "publication": "GitHub Pages deployment is tracked by the repository workflow."

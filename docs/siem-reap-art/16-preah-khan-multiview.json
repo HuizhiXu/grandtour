@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-19",
+  "stop": 16,
+  "title": "圣剑寺 · 多视角",
+  "englishName": "Preah Khan",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "default causeway ground view and non-walking pond panorama; one shared travel record",
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":16,"remainingDestinations":11,"extraViewTasks":["小吴哥日出"]},
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "Only APSARA National Authority original photographs define architecture, composition and state. Approved paintings define style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2022/07/18/preah-khan-temple-photos-gallery/",
+  "verification": "Official gallery heading and each original image href verified in browser, full-resolution originals downloaded and visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "临水柱廊全景",
+      "runtimeViewIndex": 1,
+      "asset": "assets/game/scenes/siem-reap-16-preah-khan-colonnade-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Preah-Khan-Temple-1.jpg",
+      "referenceSha256": "996e61d7a8e9e4be9cb31a961275ae1a0c03ccbe0c5e501b35fb291d44573857",
+      "prompt": "Use case: historical-scene. Asset: 16:9 detailed watercolor travel-game background draft for The Grand Tour, scene 16 PREAH KHAN / 圣剑寺, view A pond and columned building. Image 1 is the SOLE architectural, perspective, landscape and lighting reference: APSARA National Authority official gallery photograph https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Preah-Khan-Temple-1.jpg. Image 2 is approved Thommanon watercolor, STYLE ONLY; do not borrow any of its architecture or carved roof motifs. Paint the same wide oblique establishing view: the actual unusual two-storey ruined sandstone building sits center-right across a broad green pond, lower storey supported on the photographed series of cylindrical stone columns, upper storey retaining rectangular openings and sparse horizontal lintels with irregular broken upper contours. Keep exactly the visible column rhythm, height ratios, incomplete lintels and roofless portions, low laterite retaining structures to either side, real steps/ruins on far right. Do not restore a roof, connect disconnected remnants or multiply columns beyond the photographed building. Foreground is green algae-covered pond water with subtle reflections and overhanging tree shadows, NOT walkable grass or paving. Preserve the wide water foreground, thin grassy far bank, big forked tree trunk at right foreground, slender pale trunk left of building and forest wall on left. Match their architectural occlusions. Preserve natural slightly hazy daylight and shadows, grey/ochre eroded sandstone and nuanced moss greens. Fit 16:9 through modest crop of water/sky while keeping the photographed temple and right foreground tree intact. Fine natural watercolor with readable masonry and delicate layered brushwork, translucent washes, subtle cotton paper grain, real spatial depth, clear architecture. Not loose blurry washes, hard black outlines, photorealism or a photo filter. Do not add imaginary temples, lotiform towers, intact pediments, guardian statues, boats, people, characters, text, watermark, logos, border or game UI. Respect missing masonry exactly as seen. This is an illustration based on the archival photograph, not a survey or ancient reconstruction.",
+      "proposedMode": "panorama; algae-covered foreground is water"
+    },
+    {
+      "title": "林荫入口石道",
+      "runtimeViewIndex": 0,
+      "asset": "assets/game/scenes/siem-reap-16-preah-khan-approach-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Preah-Khan-Temple-2-1.jpg",
+      "referenceSha256": "81f64fa6ca6106e3e0b67bc4c7ca210f6e3ef641d6667a86d5cb0540c9d708f5",
+      "prompt": "Use case: historical-scene. Asset: second 16:9 detailed natural watercolor travel-game background draft, The Grand Tour scene 16 PREAH KHAN / 圣剑寺, view B shaded entrance causeway. Image 1 is the sole architecture, perspective, geometry and lighting reference, APSARA official original https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Preah-Khan-Temple-2-1.jpg. Image 2 is approved Thommanon watercolor STYLE ONLY, not an architectural reference. Match this exact frontal view along the long broad sandy stone causeway framed by dark green trees, converging weathered stone balustrades to both sides, and the low ruined central gatehouse far ahead with a tall dark rectangular doorway and layered truncated middle tower; preserve the smaller photographed side remnants, right remnant obscured by foliage, actual irregular heights and damaged open top. Do not complete lost roofs, add new towers, put in Bayon face carvings, add lotus caps or impose perfect restored symmetry. The repetitive stones on both sides are worn, many missing their original upper detail; preserve their actual broken rounded and uneven silhouettes, do not reconstruct ideal complete guardian heads. Keep low irregular real paving steps crossing the route before the doorway, stones visible through the deep successive door frames, warm earth with a few leaves in foreground. Preserve the photograph's natural cool forest haze and a few shafts of soft sunlight, dark foliage arch at top and sides, distant mossy sandstone, subtle gold edging on the right balustrade. Render architecture clearly despite haze. Fit 16:9 by modest foreground/foliage crop only, retaining full gatehouse and both converging balustrades; do not stitch multiple views. Clear detailed watercolor picture-book style, fine readable stone courses and erosion, delicate translucent grey/ochre washes, nuanced natural leaf greens, subtle cotton-paper texture, real depth. No harsh black outlines, loose blurred watercolor, photorealism or photographic filter. No people, characters, vehicles, furniture, lettering, signage, logos, watermark, border or UI. Preserve the archaeological condition seen in this official photograph, no speculative reconstruction.",
+      "proposedMode": "foreground causeway; walking footprint to be calibrated after approval"
+    }
+  ],
+  "limitations": [
+    "Watercolor reinterpretations of the cited official photographs, not photographs published by APSARA.",
+    "User-approved illustrations integrated with independent navigation modes; water panorama cannot grant remote activity progress.",
+    "Original photographs show archived conditions, not verified current conservation state.",
+    "Individual small masonry and carving details may differ; compare with official originals before approval."
+  ],
+  "nextStopAfterApproval": "龙蟠水池 / Neak Pean"
+}

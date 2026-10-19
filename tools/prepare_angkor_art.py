@@ -26,7 +26,9 @@ PAINTINGS = {
     "angkor_bakheng": "siem-reap-14-bakheng-sunset-v1.png",
     "angkor_bakheng_terrace": "siem-reap-14-bakheng-terrace-v1.png",
     "angkor_banteay_kdei": "siem-reap-15-banteay-kdei-gateway-v1.png",
-    "angkor_banteay_kdei_west_gate": "siem-reap-15-banteay-kdei-west-gate-v1.png"
+    "angkor_banteay_kdei_west_gate": "siem-reap-15-banteay-kdei-west-gate-v1.png",
+    "angkor_preah_khan": "siem-reap-16-preah-khan-approach-v1.png",
+    "angkor_preah_khan_pond": "siem-reap-16-preah-khan-colonnade-v1.png"
 }
 
 if __name__ == "__main__":

@@ -26,7 +26,7 @@ func _run() -> void:
 	_ui = _main.get("_ui")
 	_traveler = _main.get("_traveler")
 	_check(Catalog.ROUTES[0].stops.size() == 8 and Catalog.ROUTES[1].stops.size() == 4, "two routes contain eight and four stops")
-	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 15, "Angkor contains all fifteen reviewed stops")
+	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 16, "Angkor contains all sixteen reviewed stops")
 	var all_stops: Array[String] = []
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	var missing := ""
@@ -89,6 +89,7 @@ func _run() -> void:
 			_check(_ui.has_modal() and _progress().state(id).read, "reading requires physical arrival: " + id)
 			_ui.close_modal()
 			if Catalog.views(id).size() == 4: await _verify_view_return(id)
+			elif id == "angkor_preah_khan": await _verify_single_ground_return(id)
 			elif not Catalog.views(id).is_empty(): await _verify_ground_view_return(id)
 			await _approach("tour_activity", id.begins_with("angkor_"))
 			_check(_ui.has_modal() and _progress().state(id).choice == -1, "activity requires a choice: " + id)
@@ -214,6 +215,30 @@ func _verify_observation_stop(id: String) -> void:
 	await _capture(id + "-record")
 	_ui.close_modal()
 
+func _verify_single_ground_return(id: String) -> void:
+	var saved: Dictionary = _progress().serialize()
+	var position := _traveler.global_position
+	_main.call("_select_view", 1)
+	await _scene(id)
+	_check(_main.get("_panorama") and not _traveler.visible, "pond view shows no walking actor")
+	_check((_main.get("_targets") as Dictionary).is_empty(), "pond view has no walking interactions")
+	_check(not (_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(Vector2(640, 660)), "green pond water is never walkable")
+	_check(not (_ui.get("_exploration_button") as Button).visible, "pond view cannot bypass ground activities")
+	_main.call("_guide_next_angkor_target")
+	_main.call("_request_walk", Vector2(640, 660))
+	_check(not _traveler.is_walking() and _progress().serialize() == saved, "pond actions grant no remote progress")
+	var button := _ui.get("_ground_button") as Button
+	_check(button.visible, "pond view provides direct causeway return")
+	button.pressed.emit()
+	await _scene(id)
+	_check(_main.get("_view_index") == 0 and _traveler.visible, "pond return restores causeway view")
+	_check(_traveler.global_position.distance_to(position) < 1, "pond return restores last causeway position")
+	_check(_progress().serialize() == saved and _progress().stage(id) == 1, "pond round-trip preserves unfinished record")
+	await _approach("tour_info")
+	_check(_ui.has_modal(), "causeway interactions still work after pond return")
+	_ui.close_modal()
+
+
 func _verify_ground_view_return(id: String) -> void:
 	var saved: Dictionary = _progress().serialize()
 	var original_position := _traveler.global_position
@@ -277,7 +302,7 @@ func _verify_view_return(id: String) -> void:
 
 func _verify_views(id: String) -> void:
 	var saved: Dictionary = _progress().serialize()
-	_check(Catalog.views(id).size() == (2 if id == "angkor_banteay_kdei" else 4), "all reviewed perspectives available: " + id)
+	_check(Catalog.views(id).size() == (2 if id in ["angkor_banteay_kdei", "angkor_preah_khan"] else 4), "all reviewed perspectives available: " + id)
 	for index in range(Catalog.views(id).size()):
 		_check(ResourceLoader.exists(Catalog.background_path(id, index)), "view art ships: %s/%d" % [id, index])
 		(_ui.get("_view_button") as Button).pressed.emit()
