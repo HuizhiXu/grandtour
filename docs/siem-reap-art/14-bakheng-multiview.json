@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-19",
+  "stop": 14,
+  "title": "巴肯山 · 多视角",
+  "englishName": "Phnom Bakheng",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "observation_only; two panoramas with introduction, observation choice and explicit record confirmation",
+  "coverageAfterIntegration": {"uniqueDestinations": 27, "implementedDestinations": 14, "remainingDestinations": 13, "extraViewTasks": ["小吴哥日出"]},
+  "generator": "Built-in image_gen.imagegen",
+  "officialSources": [
+    {
+      "url": "https://apsaraauthority.gov.kh/wp-content/uploads/2025/06/Angkor_fourth_Intergovernmental_Conference_for_the_Safeguarding.pdf",
+      "page": 54,
+      "description": "Phnom Bakheng Temple at sunset; exact elevated architectural composition reference"
+    },
+    {
+      "url": "https://www.wmf.org/our-work",
+      "image": "https://wmf.imgix.net/images/01_khm-phnmbkhng-during-cons-2018_10-2-1.jpg",
+      "description": "Phnom Bakheng during conservation in 2018; close terrace-shrine reference"
+    }
+  ],
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "夕照平台全景",
+      "asset": "assets/game/scenes/siem-reap-14-bakheng-sunset-v1.png",
+      "prompt": "Use case: historical-scene. Asset: standalone 16:9 landscape watercolor background draft for The Grand Tour, scene 14 PHNOM BAKHENG, sunset terrace panorama. Image 1 is the SOLE architectural, viewpoint and lighting reference: APSARA conference report page 54. Image 2 is STYLE ONLY, an approved Thommanon watercolor; do not transfer its intact buildings or tower shapes. Paint the same elevated oblique broad view of the actual Phnom Bakheng upper terraces in the first reference. Preserve precisely the photographed large roofless rectangular central sanctuary right of center, its broken open flat top, dark rectangular doors, the surviving small stepped shrines and truncated shrines in their exact staggered positions, the layered sandstone terrace retaining walls and stairs, and dense forest beyond. Keep the asymmetric overlaps and the actual incomplete silhouettes. Warm late sunlight from the left hits the sandstone, forest remains deep natural green with subtle gold light. Sunset here means the photographed late warm illumination, NOT an invented visible sun disc, horizon or orange sky behind this downward-looking view. Render clearly readable stone courses, weathered carvings, worn paving, dark joints, muted moss, subtle paper texture and delicate fine brushwork. Keep geometry accurate and nuanced; painterly watercolor, not loose blurry washes, hard black ink, photorealism or a photo filter. Fit 16:9 by cropping peripheral forest and near stone only, preserve every main photographed architectural element, do not invent new wings. Remove incidental tourist crowds, and the report's caption box, text, page margins and guide lines. Reveal simple existing paving where people stood without adding architecture. Do not complete lost roofs, rebuild missing sanctuary superstructures, multiply towers into ideal symmetry, or add Angkor Wat lotus towers, Bayon faces, statues, guardrails, sunset sun, tourists, characters, UI, watermarks or lettering. Architectural remains as photographed, not speculative reconstruction. Wide establishing image, no text.",
+      "proposedMode": "panorama; elevated reference is not an accessible camera position for walking"
+    },
+    {
+      "title": "残塔近景",
+      "asset": "assets/game/scenes/siem-reap-14-bakheng-terrace-v1.png",
+      "prompt": "Use case: historical-scene. Asset: second 16:9 landscape detailed watercolor background draft for The Grand Tour, scene 14 PHNOM BAKHENG, close ground-level view of surviving terrace shrines. Image 1, WMF's actual 2018 conservation photograph, is the sole source for viewpoint, composition and architecture. Image 2, approved Thommanon watercolor, is STYLE ONLY: never transfer its intact towers or roofs. Match this specific photographed Bakheng terrace view: massive dark sandstone retaining wall runs in from the left foreground; straight-ahead small weathered stepped shrine with a deep black rectangular door in the center; multiple partly cropped incomplete shrines behind it, and low roofless shrine to the right; worn pale paving across foreground, overcast blue-grey sky and small glimpse of forest far right. Preserve exactly the visible ruined forms, their relative widths, stepped outlines, cropped upper portions, stone joints and missing superstructures. Do not extrapolate complete tower tops beyond the reference crop; fit 16:9 by cropping only the near foreground rather than inventing extra buildings. Remove the conservation workers, tools, cables and loose modern supplies from foreground. Where workers obscure surfaces, continue only simple flat existing paving, never invent a new shrine, sculpture or carving. Keep the upper-left green protective screen and existing temporary support elements as evidence of the photographed conservation state; do not claim a completed restoration. This is an architectural observation view, not a proposal to walk through a conservation worksite. Render fine delicate stone brushwork, subtle grey/ochre washes and moss, crisp readable weathering, natural subdued greens, subtle cotton-paper grain, excellent spatial depth. Match the approved series' detailed watercolor style, not broad blurry washes, hard black ink, photography or a photo filter. Preserve diffuse daylight as photographed, do not change to invented orange sunset or put in a sun. No people, characters, labels, lettering, logo, watermark, border, UI or imagined reconstruction. 16:9 landscape, detailed travel picture-book painting.",
+      "proposedMode": "observation panorama; conservation worksite reference is not a walking-area survey"
+    }
+  ],
+  "coverageAtDraft": {
+    "source": "User-provided image: 吴哥窟三日包车行程单",
+    "countingRule": "Unique destinations; repeated Angkor Wat counted once. Sunrise is a separate unfinished view, not an extra destination.",
+    "uniqueDestinations": 27,
+    "implementedDestinations": 13,
+    "remainingDestinations": 14,
+    "extraViewTasks": [
+      "小吴哥日出"
+    ],
+    "days": [
+      {
+        "day": 1,
+        "implemented": [
+          "通王城南门",
+          "巴戎寺",
+          "巴方寺",
+          "空中宫殿",
+          "战象台",
+          "癞王台",
+          "王宫遗址",
+          "胜利门",
+          "周萨神庙",
+          "托玛侬神庙",
+          "茶胶寺",
+          "小吴哥"
+        ],
+        "remaining": [
+          "班黛喀蒂",
+          "巴肯山"
+        ]
+      },
+      {
+        "day": 2,
+        "implemented": [
+          "小吴哥（白天视角）",
+          "塔布茏寺"
+        ],
+        "remaining": [
+          "圣剑寺",
+          "龙蟠水池",
+          "塔逊庙",
+          "东梅棚",
+          "比粒寺",
+          "皇家浴池",
+          "豆蔻寺"
+        ],
+        "extraViewTasks": [
+          "小吴哥日出"
+        ]
+      },
+      {
+        "day": 3,
+        "implemented": [],
+        "remaining": [
+          "女王宫",
+          "崩密列",
+          "神牛寺",
+          "巴空寺",
+          "洞里萨湖"
+        ]
+      }
+    ],
+    "aliases": {
+      "塔布隆寺": "塔布茏寺"
+    }
+  },
+  "limitations": [
+    "Approved illustrations integrated as one observation stop; both views share a single travel record.",
+    "Source photographs show archival conditions, not certified present-day conservation state.",
+    "People were removed; formerly occluded plain paving is illustrative.",
+    "Illustrations are not measured surveys; individual masonry details may differ from references.",
+    "Sunset draft depicts photographed late light on the temple, not an invented sun-facing horizon view."
+  ],
+  "nextStopAfterApproval": "班黛喀蒂 / Banteay Kdei"
+}

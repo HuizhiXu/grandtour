@@ -26,7 +26,7 @@ func _run() -> void:
 	_ui = _main.get("_ui")
 	_traveler = _main.get("_traveler")
 	_check(Catalog.ROUTES[0].stops.size() == 8 and Catalog.ROUTES[1].stops.size() == 4, "two routes contain eight and four stops")
-	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 13, "Angkor contains all thirteen reviewed stops")
+	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 14, "Angkor contains all fourteen reviewed stops")
 	var all_stops: Array[String] = []
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	var missing := ""
@@ -58,7 +58,9 @@ func _run() -> void:
 			button.pressed.emit()
 			await _scene(str(Catalog.STOPS[id].scene))
 			_check(Catalog.stop_for_scene(str(_main.get("_scene_id"))) == id, "route button reaches scene: " + id)
-			_check((_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(_traveler.position), "walkable arrival: " + id)
+			var observation_only: bool = Catalog.STOPS[id].get("observation_only", false)
+			if not observation_only:
+				_check((_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(_traveler.position), "walkable arrival: " + id)
 			_check((_ui.get("_exploration_button") as Button).visible == id.begins_with("angkor_"), "guided exploration only appears at unfinished Angkor stops: " + id)
 			if not Catalog.is_new_stop(id):
 				var legacy := "palace_door" if id == "palace" else "post_office_door"
@@ -69,6 +71,10 @@ func _run() -> void:
 				_check(_main.get("_scene_id") == expected, "original stop follows new route order: " + id)
 				continue
 			await _capture(id + "-scene")
+			if observation_only:
+				await _verify_observation_stop(id)
+				await _verify_next_stop(id, route_index)
+				continue
 			_check(not (_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(Vector2(640, 240)), "building is not walkable: " + id)
 			if id in ["angkor_bayon", "angkor_royal_palace"]:
 				_check(not (_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(Vector2(400, 660)), "pond water cannot be walked on: " + id)
@@ -107,15 +113,7 @@ func _run() -> void:
 			await _capture(id + "-record")
 			_ui.close_modal()
 			if not Catalog.views(id).is_empty(): await _verify_views(id)
-			var index: int = Catalog.ROUTES[route_index].stops.find(id)
-			(_ui.get("_next_button") as Button).pressed.emit()
-			if index + 1 < Catalog.ROUTES[route_index].stops.size():
-				var next: String = Catalog.ROUTES[route_index].stops[index + 1]
-				await _scene(str(Catalog.STOPS[next].scene))
-				_check(Catalog.stop_for_scene(str(_main.get("_scene_id"))) == next, "next button follows route order: " + id)
-			else:
-				_check(_ui.has_modal(), "last stop opens route summary: " + id)
-				_ui.close_modal()
+			await _verify_next_stop(id, route_index)
 	store.call("_load")
 	var restored := Progress.new()
 	restored.restore(store.get_tour_progress())
@@ -137,6 +135,83 @@ func _run() -> void:
 
 func _progress() -> RefCounted:
 	return _main.get("_tour")
+
+func _verify_next_stop(id: String, route_index: int) -> void:
+	var index: int = Catalog.ROUTES[route_index].stops.find(id)
+	(_ui.get("_next_button") as Button).pressed.emit()
+	if index + 1 < Catalog.ROUTES[route_index].stops.size():
+		var next: String = Catalog.ROUTES[route_index].stops[index + 1]
+		await _scene(str(Catalog.STOPS[next].scene))
+		_check(Catalog.stop_for_scene(str(_main.get("_scene_id"))) == next, "next button follows route order: " + id)
+	else:
+		_check(_ui.has_modal(), "last stop opens route summary: " + id)
+		_ui.close_modal()
+
+
+func _verify_observation_stop(id: String) -> void:
+	var button := _ui.get("_exploration_button") as Button
+	_check(Catalog.views(id).size() == 2, "Bakheng has both approved observation views")
+	_check(_progress().stage(id) == 0, "observation stop arrival grants no progress")
+	_check(_main.get("_panorama") and not _traveler.visible and (_main.get("_targets") as Dictionary).is_empty(), "observation stop has no walking actor or targets")
+	_check(not (_ui.get("_ground_button") as Button).visible, "observation stop has no nonexistent ground return")
+	_check("景点介绍" in button.text and "走近" not in button.text, "observation stop offers explicit reading action")
+	_main.call("_show_current_journey")
+	button.pressed.emit()
+	_main.call("_on_postcard_choice", 0)
+	_check(_progress().stage(id) == 0, "open status modal cannot advance observation progress")
+	_ui.close_modal()
+	_main.call("_set_paused", true)
+	button.pressed.emit()
+	_check(_progress().stage(id) == 0 and not _ui.has_modal(), "observation action respects pause")
+	_main.call("_set_paused", false)
+	button.pressed.emit()
+	_check(_ui.has_modal() and _progress().stage(id) == 1, "reading observation introduction advances exactly one step")
+	_ui.close_modal()
+	for view_index in [1, 0]:
+		var saved: Dictionary = _progress().serialize()
+		_main.call("_show_views")
+		await _layout()
+		var actions := _ui.get("_modal_actions") as VBoxContainer
+		_check(actions.get_child_count() == 3, "observation view menu has both previews and return")
+		if actions.get_child_count() != 3:
+			_ui.close_modal()
+			return
+		var preview := actions.get_child(view_index) as Button
+		_check(preview.icon != null and "观景记录" in preview.text and "返回地面" not in preview.text, "observation preview describes actual mode")
+		preview.pressed.emit()
+		await _scene(id)
+		_check(_main.get("_view_index") == view_index and _progress().serialize() == saved, "observation view switch preserves unfinished record")
+		_check(not (_ui.get("_ground_button") as Button).visible, "both observation views hide ground return")
+		_main.call("_return_to_ground")
+		_main.call("_request_walk", Vector2(640, 660))
+		_check(not _main.get("_transitioning") and not _traveler.is_walking(), "observation controls never create a walking transition")
+		_check(not (_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(Vector2(640, 660)), "observation ground stays non-walkable")
+		if view_index == 1:
+			button.pressed.emit()
+			_check(_ui.has_modal() and _progress().state(id).choice == -1, "observation choice waits for user selection")
+			_main.call("_on_postcard_choice", -1)
+			_main.call("_on_postcard_choice", 99)
+			_check(_progress().state(id).choice == -1, "invalid observation choices rejected")
+			((_ui.get("_modal_actions") as VBoxContainer).get_child(1) as Button).pressed.emit()
+			_check(_progress().stage(id) == 2 and _progress().state(id).choice == 1, "observation selection saves a real impression")
+			_ui.close_modal()
+		await _capture(id + "-view-%d" % view_index)
+	button.pressed.emit()
+	_check(_main.get("_postcard_context") == "tour_record" and _progress().stage(id) == 2, "observation record requires confirmation")
+	_ui.close_modal()
+	_check(_progress().stage(id) == 2, "cancelling observation record preserves unfinished state")
+	button.pressed.emit()
+	((_ui.get("_modal_actions") as VBoxContainer).get_child(0) as Button).pressed.emit()
+	_check(_progress().stage(id) == 3 and not button.visible, "observation stop completes after explicit confirmation")
+	_ui.close_modal()
+	var completed: Dictionary = _progress().serialize()
+	_main.call("_select_view", 1)
+	await _scene(id)
+	_check(_progress().serialize() == completed and not button.visible, "completed observation record shared across views")
+	_main.call("_show_current_journey")
+	_check(_ui.has_modal(), "completed observation record remains readable")
+	await _capture(id + "-record")
+	_ui.close_modal()
 
 func _verify_view_return(id: String) -> void:
 	var saved: Dictionary = _progress().serialize()

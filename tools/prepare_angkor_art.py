@@ -22,7 +22,9 @@ PAINTINGS = {
     "angkor_wat": "siem-reap-13-angkor-wat-approach-v1.png",
     "angkor_wat_reflection": "siem-reap-13-angkor-wat-reflection-v1.png",
     "angkor_wat_oblique": "siem-reap-13-angkor-wat-oblique-v1.png",
-    "angkor_wat_courtyard": "siem-reap-13-angkor-wat-courtyard-v1.png"
+    "angkor_wat_courtyard": "siem-reap-13-angkor-wat-courtyard-v1.png",
+    "angkor_bakheng": "siem-reap-14-bakheng-sunset-v1.png",
+    "angkor_bakheng_terrace": "siem-reap-14-bakheng-terrace-v1.png"
 }
 
 if __name__ == "__main__":

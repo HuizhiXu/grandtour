@@ -1,6 +1,11 @@
 extends RefCounted
 ## Navigation in painting coordinates (1280 x 720); water and ruins stay outside.
 static func layout(id: String, view_index: int = 0) -> Dictionary:
+	if id == "angkor_bakheng":
+		# Both approved images are observation views, not surveyed walking areas.
+		var panorama := _make([], Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
+		panorama["panorama"] = true
+		return panorama
 	if id == "angkor_ta_prohm":
 		match view_index:
 			1: # The low-angle view leaves no safe walking space outside the ropes.

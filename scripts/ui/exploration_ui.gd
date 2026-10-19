@@ -52,6 +52,7 @@ var _next_button: Button
 var _view_button: Button
 var _ground_button: Button
 var _exploration_button: Button
+var _observation_only := false
 
 
 func _ready() -> void:
@@ -109,23 +110,30 @@ func is_pointer_over_panel() -> bool:
 	return _identity.get_global_rect().has_point(pointer) or _quest_panel.get_global_rect().has_point(pointer) or pointer.x > 920.0 and pointer.y < 85.0 or _next_button.get_global_rect().has_point(pointer) or _view_button.visible and _view_button.get_global_rect().has_point(pointer)
 
 
-func set_views(count: int, selected: int, panorama: bool) -> void:
+func set_views(count: int, selected: int, panorama: bool, observation_only: bool = false) -> void:
+	_observation_only = observation_only
 	_view_button.visible = count > 1
 	_view_button.text = "切换视角  %d / %d" % [selected + 1, count]
-	_ground_button.visible = panorama
-	_hint_label.text = "观景视角 · 点击「返回地面漫步」回到刚才的位置" if panorama else "点击空地带 Archie 漫步 · 点击人物或物件后，她会先走近再互动"
+	_ground_button.visible = panorama and not observation_only
+	if observation_only:
+		_hint_label.text = "观景站 · 阅读介绍、选择观察印象，再记入旅行手记"
+	else:
+		_hint_label.text = "观景视角 · 点击「返回地面漫步」回到刚才的位置" if panorama else "点击空地带 Archie 漫步 · 点击人物或物件后，她会先走近再互动"
 
 
-func set_exploration_action(title: String) -> void:
+func set_exploration_action(title: String, walking: bool = true) -> void:
 	_exploration_button.visible = not title.is_empty()
-	_exploration_button.text = "走近：" + title
+	_exploration_button.text = ("走近：" if walking else "") + title
 
 
 func show_views(title: String, views: Array, selected: int) -> void:
-	_open_modal(title + " · 切换视角", "选一幅风景继续探索。地面视角可漫步与互动，观景视角可静静欣赏。\n各视角共享这一站的旅行记录，切回地面时记住本次游玩的位置。")
+	var observation_only: bool = not views.is_empty() and views[0].get("observation_only", false)
+	var body := "两个视角共享这一站的旅行记录。返回画面后，可阅读介绍、选择观察印象并记录这一站。" if observation_only else "选一幅风景继续探索。地面视角可漫步与互动，观景视角可静静欣赏。\n各视角共享这一站的旅行记录，切回地面时记住本次游玩的位置。"
+	_open_modal(title + " · 切换视角", body)
 	for index in range(views.size()):
 		var choice := index
 		var mode := "静静观景 · 可一键返回地面" if views[index].panorama else "地面漫步 · 可观察与记录"
+		if observation_only: mode = "观景记录 · 阅读介绍与留下印象"
 		var button := _make_button(str(views[index].title) + (" · 当前" if index == selected else "") + "\n" + mode, index == selected)
 		button.icon = load(views[index].background) as Texture2D
 		button.expand_icon = true
@@ -142,7 +150,7 @@ func show_views(title: String, views: Array, selected: int) -> void:
 
 func show_information(title: String, body: String) -> void:
 	_open_modal(title, body)
-	_add_action_button("继续漫步", func() -> void: close_modal(), true)
+	_add_action_button("继续观景" if _observation_only else "继续漫步", func() -> void: close_modal(), true)
 
 
 func show_dialogue(first_line: String) -> void:
@@ -166,8 +174,9 @@ func set_visit_progress(stage: int, hint: String) -> void:
 	_quest_button.text = "查看参观纪念"
 
 
-func set_stop_progress(title: String, stage: int, hint: String) -> void:
-	_quest_progress.text = "景点漫步  ·  %d / 3" % stage if stage < 3 else "景点漫步  ·  已记录 ✓"
+func set_stop_progress(title: String, stage: int, hint: String, observation_only: bool = false) -> void:
+	var mode := "观景记录" if observation_only else "景点漫步"
+	_quest_progress.text = mode + ("  ·  %d / 3" % stage if stage < 3 else "  ·  已记录 ✓")
 	_quest_title.text = title
 	_quest_label.text = hint
 	_quest_button.text = "查看旅行记录"
@@ -217,7 +226,8 @@ func show_postcard(title: String, body: String, choices: Array[String] = []) -> 
 	for index in range(choices.size()):
 		var selected := index
 		_add_action_button(choices[index], func() -> void: postcard_choice.emit(selected), index == 0)
-	_add_action_button("继续漫步" if choices.is_empty() else "稍后再说", close_modal, false)
+	var return_label := "继续观景" if _observation_only else "继续漫步"
+	_add_action_button(return_label if choices.is_empty() else "稍后再说", close_modal, false)
 
 
 func show_dialogue_reply(text: String) -> void:

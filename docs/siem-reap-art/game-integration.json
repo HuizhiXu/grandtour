@@ -1,9 +1,9 @@
 {
-  "date": "2026-10-16",
+  "date": "2026-10-19",
   "status": "integrated_and_verified_locally",
   "route": "暹粒 · 吴哥",
-  "playableStops": 13,
-  "totalGameStops": 25,
+  "playableStops": 14,
+  "totalGameStops": 26,
   "catalog": "scripts/game/angkor_catalog.gd",
   "navigation": "scripts/game/angkor_world.gd",
   "runtimeArtMapping": "tools/prepare_angkor_art.py",
@@ -31,6 +31,15 @@
     "otherGameplayChecks": 278,
     "nativeSceneCaptures": "all thirteen stops, eight multi-view scenes and both menus rendered; walking and panorama HUDs reviewed",
     "coverage": ["guided walking to next unfinished interaction", "no teleportation or remote progress", "pause and modal guards", "view menu cancels guided walking", "walking guidance hidden in panoramas and completed stops"]
+  },
+  "bakhengVerification": {
+    "date": "2026-10-19",
+    "mode": "two observation-only views, one saved travel record",
+    "tourChecks": 884,
+    "otherGameplayChecks": 278,
+    "coverage": ["both approved views included", "no invented walking floor or ground return", "explicit introduction and observation choice", "cancelled record does not grant completion", "confirmation saves record", "unfinished and completed progress shared across views", "legacy walking and panorama restrictions preserved"],
+    "exportedPack": "Web release export passed in isolated directory",
+    "nativeCaptures": "both Bakheng views and thumbnail menu rendered and reviewed"
   },
   "publication": "GitHub Pages deployment is tracked by the repository workflow."
 }

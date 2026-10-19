@@ -342,6 +342,7 @@ func _show_views() -> void:
 	for index in range(perspectives.size()):
 		perspectives[index]["background"] = TourCatalog.background_path(_scene_id, index)
 		perspectives[index]["panorama"] = TourWorld.layout(_scene_id, index).get("panorama", false)
+		perspectives[index]["observation_only"] = _is_observation_stop()
 	_ui.show_views(TourCatalog.STOPS[_scene_id].title, perspectives, _view_index)
 
 
@@ -352,7 +353,7 @@ func _select_view(index: int) -> void:
 
 
 func _return_to_ground() -> void:
-	if not _panorama or _paused or _transitioning: return
+	if not _panorama or _is_observation_stop() or _paused or _transitioning: return
 	await _select_view(int(_ground_views.get(_scene_id, 0)))
 
 
@@ -385,8 +386,16 @@ func _travel_next() -> void:
 		_travel_to_stop(id)
 
 
+func _is_observation_stop() -> bool:
+	return _panorama and TourCatalog.STOPS.get(_scene_id, {}).get("observation_only", false)
+
+
+func _can_tour_interact(target_id: String) -> bool:
+	return _is_observation_stop() or _near_target(target_id)
+
+
 func _next_angkor_target() -> String:
-	if not _scene_id.begins_with("angkor_") or _panorama: return ""
+	if not _scene_id.begins_with("angkor_") or _panorama and not _is_observation_stop(): return ""
 	var entry: Dictionary = _tour.state(_scene_id)
 	if entry.recorded: return ""
 	if not entry.read: return "tour_info"
@@ -396,11 +405,26 @@ func _next_angkor_target() -> String:
 
 func _guide_next_angkor_target() -> void:
 	if _paused or _transitioning or _ui.has_modal(): return
+	if _is_observation_stop():
+		match _next_angkor_target():
+			"tour_info":
+				_tour.read(_scene_id)
+				_save_tour()
+				_ui.show_information(TourCatalog.STOPS[_scene_id].title, TourCatalog.STOPS[_scene_id].info)
+			"tour_activity": _show_tour_activity()
+			"tour_record": _show_tour_record()
+		return
 	var target := _targets.get(_next_angkor_target()) as ExplorationTarget
 	if is_instance_valid(target): _on_target_selected(target)
 
 
 func _tour_hint() -> String:
+	if _is_observation_stop():
+		var entry: Dictionary = _tour.state(_scene_id)
+		if not entry.read: return "读一读「景点介绍」，再从两个视角观察这座山寺。"
+		if entry.choice < 0: return "点击「山寺观察」，选一种印象写进手记。"
+		if not entry.recorded: return "点击「记录这一站」，确认留下你的旅行印象。"
+		return "这一站已记录。可以切换视角继续观景，或打开旅行路线册。"
 	if _panorama: return "静静欣赏眼前的风景。点击「返回地面漫步」，可继续探索与记录。"
 	var entry: Dictionary = _tour.state(_scene_id)
 	if not entry.read: return "走近「景点介绍」，了解这一站的故事。"
@@ -437,7 +461,7 @@ func _show_tour_record() -> void:
 	_postcard_context = "tour_status"
 	if entry.recorded:
 		_ui.show_postcard(stop.title + " · 旅行记录", "这一站已记录 ✓\n\n%s\n\n%s" % [stop.choices[entry.choice], stop.replies[entry.choice]])
-	elif _tour.stage(_scene_id) == 2 and _near_target("tour_record"):
+	elif _tour.stage(_scene_id) == 2 and _can_tour_interact("tour_record"):
 		_postcard_context = "tour_record"
 		_ui.show_postcard("留下这一站的印象", "%s\n\n%s" % [stop.title, stop.replies[entry.choice]], ["记入旅行手记"])
 	else:
@@ -711,7 +735,7 @@ func _near_target(id: String) -> bool:
 
 func _update_postcard_hud() -> void:
 	if TourCatalog.is_new_stop(_scene_id):
-		_ui.set_stop_progress(TourCatalog.STOPS[_scene_id].title, _tour.stage(_scene_id), _tour_hint())
+		_ui.set_stop_progress(TourCatalog.STOPS[_scene_id].title, _tour.stage(_scene_id), _tour_hint(), _is_observation_stop())
 	elif _scene_id.begins_with("palace_"):
 		_ui.set_visit_progress(_palace.stage(), Palace.HINTS[_palace.stage()])
 	else:
@@ -723,9 +747,12 @@ func _update_postcard_hud() -> void:
 	for completed: bool in _completed_stops().values():
 		if completed: count += 1
 	_ui.set_route_progress(count, not _next_stop_id().is_empty(), TourCatalog.STOPS.size())
-	_ui.set_views(TourCatalog.views(_scene_id).size(), _view_index, _panorama)
+	_ui.set_views(TourCatalog.views(_scene_id).size(), _view_index, _panorama, _is_observation_stop())
 	var next_target := _targets.get(_next_angkor_target()) as ExplorationTarget
-	_ui.set_exploration_action(next_target.display_name if is_instance_valid(next_target) else "")
+	if _is_observation_stop():
+		_ui.set_exploration_action({"tour_info":"景点介绍", "tour_activity":TourCatalog.STOPS[_scene_id].object, "tour_record":"记录这一站"}.get(_next_angkor_target(), ""), false)
+	else:
+		_ui.set_exploration_action(next_target.display_name if is_instance_valid(next_target) else "")
 
 
 func _show_current_journey() -> void:
@@ -807,13 +834,13 @@ func _on_postcard_choice(index: int) -> void:
 	var changed := false
 	match _postcard_context:
 		"tour_choice":
-			if TourCatalog.is_new_stop(_scene_id) and _near_target("tour_activity") and _tour.choose(_scene_id, index):
+			if TourCatalog.is_new_stop(_scene_id) and _can_tour_interact("tour_activity") and _tour.choose(_scene_id, index):
 				_save_tour()
 				_postcard_context = "tour_status"
 				_ui.show_information(TourCatalog.STOPS[_scene_id].activity, TourCatalog.STOPS[_scene_id].replies[index] + "\n\n" + _tour_hint())
 			return
 		"tour_record":
-			if index == 0 and TourCatalog.is_new_stop(_scene_id) and _near_target("tour_record") and _tour.record(_scene_id):
+			if index == 0 and TourCatalog.is_new_stop(_scene_id) and _can_tour_interact("tour_record") and _tour.record(_scene_id):
 				_save_tour()
 				_show_tour_record()
 			return
