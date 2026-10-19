@@ -337,7 +337,11 @@ func _show_views() -> void:
 	_traveler.cancel_path()
 	_pending_target = null
 	_clear_destination()
-	_ui.show_views(TourCatalog.STOPS[_scene_id].title, TourCatalog.views(_scene_id), _view_index)
+	var perspectives := TourCatalog.views(_scene_id).duplicate(true)
+	for index in range(perspectives.size()):
+		perspectives[index]["background"] = TourCatalog.background_path(_scene_id, index)
+		perspectives[index]["panorama"] = TourWorld.layout(_scene_id, index).get("panorama", false)
+	_ui.show_views(TourCatalog.STOPS[_scene_id].title, perspectives, _view_index)
 
 
 func _select_view(index: int) -> void:

@@ -19,6 +19,13 @@ func _capture() -> void:
 			await process_frame
 			await RenderingServer.frame_post_draw
 			root.get_texture().get_image().save_png(directory.path_join(id + "-view-%d.png" % view_index))
+		if not Catalog.views(id).is_empty():
+			main.call("_show_views")
+			await process_frame
+			await process_frame
+			await RenderingServer.frame_post_draw
+			root.get_texture().get_image().save_png(directory.path_join(id + "-view-menu.png"))
+			main.get("_ui").close_modal()
 	main.set("_route_index", 2)
 	main.call("_show_routes")
 	await process_frame

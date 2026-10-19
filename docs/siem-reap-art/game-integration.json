@@ -10,11 +10,11 @@
   "features": ["free stop selection", "next stop", "walking with water/ruin boundaries", "introduction", "observation choice", "travel record", "saved progress", "four perspectives each for Ta Prohm and Angkor Wat", "shared stop progress across views", "non-walking panoramas for roots gate and reflection", "one-click return to previous ground perspective", "independent ground positions remembered during the current session"],
   "groundReturnVerification": {
     "date": "2026-10-19",
-    "tourChecks": 608,
+    "tourChecks": 640,
     "groundChecks": 46,
     "exportedPack": "passed in isolated directory after Web release export",
-    "nativeSceneCaptures": "eight perspectives rendered; panorama return button reviewed",
-    "coverage": ["return to previous ground view and position", "independent positions for each view", "pause and repeated clicks", "unfinished and completed travel progress preserved"],
+    "nativeSceneCaptures": "eight perspectives and both thumbnail menus rendered and reviewed",
+    "coverage": ["return to previous ground view and position", "independent positions for each view", "pause and repeated clicks", "unfinished and completed travel progress preserved", "thumbnail previews match destination paintings", "walking and panorama labels match navigation", "all view choices fit viewport"],
     "positionLifetime": "current play session; travel records remain saved separately"
   },
   "verification": {

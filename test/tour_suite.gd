@@ -3,6 +3,7 @@ extends SceneTree
 const MAIN := preload("res://scenes/main.tscn")
 const Catalog := preload("res://scripts/game/tour_catalog.gd")
 const Progress := preload("res://scripts/game/tour_progress.gd")
+const World := preload("res://scripts/game/tour_world.gd")
 var _main: Node
 var _ui: ExplorationUI
 var _traveler: Traveler
@@ -180,7 +181,18 @@ func _verify_views(id: String) -> void:
 		await _layout()
 		_check(_ui.has_modal(), "view menu opens")
 		_check(Rect2(0, 0, 1280, 720).encloses((_ui.get("_modal_panel") as Control).get_global_rect()), "view menu fits viewport")
-		((_ui.get("_modal_actions") as VBoxContainer).get_child(index) as Button).pressed.emit()
+		var actions := _ui.get("_modal_actions") as VBoxContainer
+		_check(actions.get_child_count() == Catalog.views(id).size() + 1, "all view choices and return action are available")
+		if actions.get_child_count() != Catalog.views(id).size() + 1:
+			_ui.close_modal()
+			return
+		var button := actions.get_child(index) as Button
+		_check(button.icon != null and button.icon.resource_path == Catalog.background_path(id, index), "view preview matches destination painting")
+		var panorama: bool = World.layout(id, index).get("panorama", false)
+		_check(("静静观景" if panorama else "地面漫步") in button.text, "view choice describes actual navigation mode")
+		_check(Rect2(0, 0, 1280, 720).encloses(button.get_global_rect()), "view choice remains on screen")
+		await _capture(id + "-view-menu-%d" % index)
+		button.pressed.emit()
 		await _scene(id)
 		_check(_main.get("_view_index") == index, "view button reaches selected painting")
 		_check(_progress().serialize() == saved, "perspectives share progress without granting or resetting it")

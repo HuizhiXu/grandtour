@@ -115,10 +115,21 @@ func set_views(count: int, selected: int, panorama: bool) -> void:
 
 
 func show_views(title: String, views: Array, selected: int) -> void:
-	_open_modal(title + " · 切换视角", "从不同位置看看这座寺院。各视角共享这一站的旅行记录。")
+	_open_modal(title + " · 切换视角", "选一幅风景继续探索。地面视角可漫步与互动，观景视角可静静欣赏。\n各视角共享这一站的旅行记录，切回地面时记住本次游玩的位置。")
 	for index in range(views.size()):
 		var choice := index
-		_add_action_button(str(views[index].title) + (" · 当前" if index == selected else ""), func() -> void: view_selected.emit(choice), index == selected)
+		var mode := "静静观景 · 可一键返回地面" if views[index].panorama else "地面漫步 · 可观察与记录"
+		var button := _make_button(str(views[index].title) + (" · 当前" if index == selected else "") + "\n" + mode, index == selected)
+		button.icon = load(views[index].background) as Texture2D
+		button.expand_icon = true
+		button.add_theme_constant_override("icon_max_width", 144)
+		button.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.add_theme_constant_override("h_separation", 18)
+		button.custom_minimum_size.y = 100
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.pressed.connect(func() -> void: view_selected.emit(choice))
+		_modal_actions.add_child(button)
 	_add_action_button("返回当前视角", close_modal, false)
 
 

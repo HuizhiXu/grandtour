@@ -85,6 +85,15 @@ func _verify() -> void:
 				_check(ResourceLoader.exists(TourCatalog.background_path(id, view_index)), "pack includes view: %s/%d" % [id, view_index])
 				main.call("_setup_scene", id, Vector2(640, 620), view_index)
 				_check(main.get("_view_index") == view_index, "pack switches view: %s/%d" % [id, view_index])
+			if not TourCatalog.views(id).is_empty():
+				main.call("_show_views")
+				var ui := main.get("_ui") as Control
+				var actions := ui.get("_modal_actions") as VBoxContainer
+				_check(actions.get_child_count() == TourCatalog.views(id).size() + 1, "pack builds all view preview choices: " + id)
+				for index in range(mini(TourCatalog.views(id).size(), actions.get_child_count())):
+					var button := actions.get_child(index) as Button
+					_check(button != null and button.icon != null, "pack loads view preview: %s/%d" % [id, index])
+				ui.call("close_modal")
 		_check(not main.has_method("_maybe_capture"), "capture routing removed from runtime")
 		_check(not main.has_method("_open_tuning"), "release tuning entry point excluded")
 		_check(not ResourceLoader.exists("res://scripts/ui/tuning_panel.gd"), "release tuning panel excluded")
