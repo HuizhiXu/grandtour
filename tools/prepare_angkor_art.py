@@ -36,7 +36,9 @@ PAINTINGS = {
     "angkor_east_mebon": "siem-reap-19-east-mebon-complex-v1.png",
     "angkor_east_mebon_elephant": "siem-reap-19-east-mebon-elephant-v1.png",
     "angkor_pre_rup": "siem-reap-20-pre-rup-approach-v1.png",
-    "angkor_pre_rup_terrace": "siem-reap-20-pre-rup-terrace-v1.png"
+    "angkor_pre_rup_terrace": "siem-reap-20-pre-rup-terrace-v1.png",
+    "angkor_kravan": "siem-reap-21-kravan-front-v1.png",
+    "angkor_kravan_relief": "siem-reap-21-kravan-relief-v1.png"
 }
 
 if __name__ == "__main__":

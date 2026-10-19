@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-19",
+  "stop": 21,
+  "title": "豆蔻寺 · 多视角",
+  "englishName": "Prasat Kravan",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "foreground grass and observation-only interior relief; shared travel record",
+  "coverageAfterIntegration": {"uniqueDestinations":26,"implementedDestinations":21,"remainingDestinations":5,"extraViewTasks":[],"cancelledByUser":["小吴哥日出视角","皇家浴池"]},
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "APSARA National Authority official photographs define architecture, sculpture and composition. Approved paintings supply style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2021/07/28/kravan-temple-gallery/",
+  "verification": "Gallery heading and full-resolution image links verified in browser. Downloaded originals visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "五座砖塔正面全景",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_kravan",
+      "asset": "assets/game/scenes/siem-reap-21-kravan-front-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Angkor-Temple_-Kravan-Temple_Angkor-Temple_Siem-Reap.jpg-16.jpg",
+      "referenceSha256": "c304e2f4051494f7e58fd2c9b4640b1bb112695ea628136b0720266362087c29",
+      "prompt": "Use case: historical-scene. Create detailed natural 16:9 watercolor game background preview for The Grand Tour scene 21 PRASAT KRAVAN / 豆蔻寺, frontal five-brick-tower group. Reference 1 is sole architecture, composition and condition source: APSARA official original https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Angkor-Temple_-Kravan-Temple_Angkor-Temple_Siem-Reap.jpg-16.jpg . Reference 2 approved Thommanon watercolor is STYLE ONLY, never borrow architecture. Faithfully paint these FIVE tightly spaced brick shrines on one long low stepped platform: tall central tiered tapering tower with photographed truncated top and blind arches, shorter surviving tiered tower at far left, the other three low roofless rectangular sanctuaries exactly as visible, unequal silhouettes retained. Preserve pale conserved brick infill contrasted with old dark weathered brick, actual dark sandstone lintels and rectangular door surrounds, dark central opening, low worn steps and real small eroded guardian remains along platform edge. Do not complete lost tower tops or make all five equally tall, no speculative reconstruction, no extra towers, carved stone temples or Bayon faces. Trees rise behind both sides, pale overcast blue-grey sky, grass and three simple approach strips across low foreground. Keep exact front perspective and tower relative proportions, all shrines and tops visible; adapt 3:2 to 16:9 by cropping excess empty sky and minimally extending grass/trees only, never stretching buildings. Retain existing central doorway barrier but omit small lettered notice and translucent watermark. Gentle natural daylight, warm rusty brick, warm grey sandstone, nuanced greens, precise fine masonry and leaf brushwork, transparent watercolor layers, subtle cotton paper texture, excellent depth. Match approved detailed travel picture-book series, not loose blurry washes, thick outlines, photorealism or photo filter. No people, characters, lettering, sign, logo, UI or frame. Preserve archived conservation state.",
+      "proposedMode": "foreground grass and approach only, subject to navigation calibration after approval"
+    },
+    {
+      "title": "室内砖墙浮雕",
+      "runtimeViewIndex": 1,
+      "runtimeArt": "angkor_kravan_relief",
+      "asset": "assets/game/scenes/siem-reap-21-kravan-relief-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Angkor-Temple_-Kravan-Temple_Angkor-Temple_Siem-Reap.jpg-12.jpg",
+      "referenceSha256": "e12de8f3f54446e512758e225ab535d889d61b008ebdafb43d5b4f431e407278",
+      "prompt": "Use case: historical-scene. Create second 16:9 detailed natural watercolor game-background preview for The Grand Tour scene21 PRASAT KRAVAN / 豆蔻寺, interior brick-wall bas-relief observation. Reference1 is sole factual source for sculpture, material, composition and state: APSARA official original https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Angkor-Temple_-Kravan-Temple_Angkor-Temple_Siem-Reap.jpg-12.jpg . Reference2 approved Thommanon watercolor is STYLE ONLY. Render exactly the photographed broad interior brick wall, with one tall standing central eroded deity figure and four smaller seated figures paired at lower left and lower right. Preserve EXACT visible arm positions, number of limbs, head shapes, headdresses, eroded hands, partial missing relief details and damaged outlines; do not complete or invent iconography. All carvings are cut directly into warm reddish brick courses, with real joints crossing faces, bodies and clothing. Keep photographed narrow angled sidewalls at both edges and faint worn vertical ornaments flanking upper standing figure, dark weathering left and pale repaired brick areas right. No invented intact sculpture, separate freestanding statues, extra people or a decorative museum frame. Adapt 3:2 original to16:9 by modest top/bottom blank-brick crop and minimal existing plain brick extension at sides; preserve every main figure, their relative positions, scale and natural relief depth without stretching bodies. Warm softly lit chamber, rust ochre brick, delicate readable brick and carving brushwork, gentle shadows showing shallow relief, nuanced translucent watercolor washes and subtle cotton-paper grain. Match detailed natural travel picture-book series, not harsh ink outlines, blurry loose washes, photorealism or photo filter. Remove only translucent watermark. No floor or walkable corridor invented, no windows, no new architectural openings, no labels, letters, watermark, logo, UI or border. Preserve official photographed archaeological condition, no speculative reconstruction.",
+      "proposedMode": "observation panorama, no invented floor or walking corridor"
+    }
+  ],
+  "limitations": [
+    "Watercolor interpretations of official photographs, not photos published by APSARA.",
+    "User-approved paintings integrated with foreground grass navigation; shrine platform, steps and interior relief excluded from walking.",
+    "Archive condition retained, not a claim about present conservation state.",
+    "Small relief and masonry details may differ; official original remains the factual reference."
+  ],
+  "scope": {
+    "targetDestinations": 26,
+    "cancelledByUser": [
+      "小吴哥日出视角",
+      "皇家浴池"
+    ]
+  },
+  "nextStopAfterApproval": "女王宫 / Banteay Srei"
+}

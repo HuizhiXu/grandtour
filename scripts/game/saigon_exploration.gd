@@ -312,7 +312,7 @@ func _build_tour_targets(id: String) -> void:
 		# Keep the record label above the bottom hint panel and away from Archie.
 		var label := (_targets["tour_record"] as ExplorationTarget).get("_label") as Label
 		label.global_position = Vector2(530, 600)
-		if id in ["angkor_preah_khan", "angkor_neak_pean", "angkor_ta_som", "angkor_pre_rup"]: label.global_position = Vector2(970, 600)
+		if id in ["angkor_preah_khan", "angkor_neak_pean", "angkor_ta_som", "angkor_pre_rup", "angkor_kravan"]: label.global_position = Vector2(970, 600)
 		if id == "angkor_east_mebon": label.global_position = Vector2(1010, 530)
 		if id == "angkor_ta_prohm" and _view_index == 2:
 			var activity_label := (_targets["tour_activity"] as ExplorationTarget).get("_label") as Label
