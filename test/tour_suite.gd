@@ -26,7 +26,7 @@ func _run() -> void:
 	_ui = _main.get("_ui")
 	_traveler = _main.get("_traveler")
 	_check(Catalog.ROUTES[0].stops.size() == 8 and Catalog.ROUTES[1].stops.size() == 4, "two routes contain eight and four stops")
-	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 25, "Angkor contains all twenty-five reviewed stops")
+	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 26, "Angkor contains all twenty-six reviewed stops")
 	var all_stops: Array[String] = []
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	var missing := ""
@@ -156,7 +156,11 @@ func _verify_next_stop(id: String, route_index: int) -> void:
 
 func _verify_observation_stop(id: String) -> void:
 	var button := _ui.get("_exploration_button") as Button
-	_check(Catalog.views(id).size() == 2, "observation stop has both approved views")
+	var view_count := Catalog.views(id).size()
+	_check(view_count == (1 if id == "angkor_tonle_sap" else 2), "observation stop contains only approved views")
+	_check((_ui.get("_view_button") as Button).visible == (view_count > 1), "view selector appears only for multiple views")
+	if view_count == 1:
+		_check("切换视角" not in str(_main.call("_tour_hint")), "single observation view introduction never suggests a nonexistent switch")
 	_check(_progress().stage(id) == 0, "observation stop arrival grants no progress")
 	_check(_main.get("_panorama") and not _traveler.visible and (_main.get("_targets") as Dictionary).is_empty(), "observation stop has no walking actor or targets")
 	_check(not (_ui.get("_ground_button") as Button).visible, "observation stop has no nonexistent ground return")
@@ -173,15 +177,16 @@ func _verify_observation_stop(id: String) -> void:
 	button.pressed.emit()
 	_check(_ui.has_modal() and _progress().stage(id) == 1, "reading observation introduction advances exactly one step")
 	_ui.close_modal()
-	for view_index in [1, 0]:
+	var view_order := [1, 0] if view_count > 1 else [0]
+	for view_index in view_order:
 		if _progress().state(id).choice < 0:
 			_check(str(Catalog.STOPS[id].object) in str(_main.call("_tour_hint")), "observation hint names this stop's actual activity")
 		var saved: Dictionary = _progress().serialize()
 		_main.call("_show_views")
 		await _layout()
 		var actions := _ui.get("_modal_actions") as VBoxContainer
-		_check(actions.get_child_count() == 3, "observation view menu has both previews and return")
-		if actions.get_child_count() != 3:
+		_check(actions.get_child_count() == view_count + 1, "observation view menu has approved previews and return")
+		if actions.get_child_count() != view_count + 1:
 			_ui.close_modal()
 			return
 		var preview := actions.get_child(view_index) as Button
@@ -194,7 +199,7 @@ func _verify_observation_stop(id: String) -> void:
 		_main.call("_request_walk", Vector2(640, 660))
 		_check(not _main.get("_transitioning") and not _traveler.is_walking(), "observation controls never create a walking transition")
 		_check(not (_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(Vector2(640, 660)), "observation ground stays non-walkable")
-		if view_index == 1:
+		if view_index == view_order[0]:
 			button.pressed.emit()
 			_check(_ui.has_modal() and _progress().state(id).choice == -1, "observation choice waits for user selection")
 			_main.call("_on_postcard_choice", -1)
@@ -211,9 +216,11 @@ func _verify_observation_stop(id: String) -> void:
 	button.pressed.emit()
 	((_ui.get("_modal_actions") as VBoxContainer).get_child(0) as Button).pressed.emit()
 	_check(_progress().stage(id) == 3 and not button.visible, "observation stop completes after explicit confirmation")
+	if view_count == 1:
+		_check("切换视角" not in str(_main.call("_tour_hint")), "completed single observation view never suggests a nonexistent switch")
 	_ui.close_modal()
 	var completed: Dictionary = _progress().serialize()
-	_main.call("_select_view", 1)
+	_main.call("_select_view", view_count - 1)
 	await _scene(id)
 	_check(_progress().serialize() == completed and not button.visible, "completed observation record shared across views")
 	_main.call("_show_current_journey")

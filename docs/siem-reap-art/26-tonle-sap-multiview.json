@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-19",
+  "stop": 26,
+  "title": "洞里萨湖 · 高脚屋与水影",
+  "englishName": "Tonle Sap",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "generator": "Built-in image_gen.imagegen",
+  "officialPage": "https://www.unesco.org/en/articles/earth-network-mission-tonle-sap-biosphere-reserve-cambodia",
+  "officialCredit": "© UNESCO/Joan de la Malla",
+  "officialImage": "https://www.unesco.org/sites/default/files/styles/medium_fixed_tablet/article/2024-02/DJI_20231205043134_0226_D_Joan%20de%20la%20Malla.jpg.webp?itok=hr4iCiP5",
+  "referenceSha256": "960446dcb579dbde09f3a4176e7b971887753c1ea37ad4f4751c83c59d521f5c",
+  "referenceResolution": [
+    700,
+    466
+  ],
+  "referencePolicy": "UNESCO official photograph supplies real architectural forms; user approved a simplified less-crowded watercolor composition.",
+  "verification": "Official article image source and photographer credit verified; 700px published source downloaded and visually inspected. Unstyled guessed original URL returned 404 and was not used.",
+  "integrationMode": "one observation-only view; introduction, selected impression and confirmed travel record; no walking on water, boats or private homes",
+  "views": [
+    {
+      "title": "高脚屋与水影",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_tonle_sap",
+      "asset": "assets/game/scenes/siem-reap-26-tonle-sap-village-v3.png",
+      "prompt": "Use case: illustration-story. Create a beautiful 16:9 hand-painted watercolor background for The Grand Tour, TONLE SAP HIGH STILT WATER VILLAGE. IMPORTANT user correction: the people visited THIS TYPE of village in reference1: tall timber houses standing on piles, NOT the low floating rafts of our latest alternate image. Keep this tall stilt-house identity. User explicitly wants the earlier type but LESS CROWDED, softer colors, and stronger watercolor feeling. Reference1 UNESCO official real photograph © UNESCO/Joan de la Malla is the sole source for housing forms, timber construction, height of piles, roofs, ladders, fishing boats and environment. Reference2 our previous watercolor supplies the desired soft watercolor style only. Make an artistically simplified, selectively framed interpretation, not an exact photographic documentary: choose a small coherent section of about FOUR of the actual photographed tall stilt houses with weathered wood walls, simple faded corrugated gable roofs, open shaded verandas and real irregular thin timber piles with diagonal bracing. Preserve their vernacular forms, no fantasy architecture. Place this modest row in the upper middle distance, observed from farther across the water, comfortably smaller in the frame than the reference. Let the lake occupy the lower HALF of image, with calm continuous broad watercolor washes and gentle reflections. Only TWO small familiar narrow wooden fishing boats in separated positions near the houses, not the wall-to-wall large foreground fishing cages of earlier image. Avoid filling foreground with boats, nets, baskets and piled gear. Simplify working clutter into a few quiet marks. Do not turn houses into isolated luxury villas, palaces, tourist bungalows or low floating raft huts. No invented shore, dock, bridge, mountain, pagoda, lotus or beach. Small real-looking greenery at a frame edge only, no new dense forest. Soft hazy daylight under pale pearl-grey clouds; gentle dusty sage, pale warm wood and grey, desaturated slate blue and muted terracotta roofs. Restrained elegant watercolor with visible paper, translucent pigment, nuanced washes, soft broken edges, selective delicate detail on central houses and supports, atmospheric distance, large quiet pale grey-olive freshwater surface with subdued ripples. The composition should breathe and feel peaceful and inviting, like a thoughtful travel sketchbook painting. No vivid orange/royal blue accents, no oversharpened microtexture, no heavy ink outlines, no photorealism, digital vector style or HDR. Full bleed, no text, watermark, logo, border, game character or UI. This is a simplified composition based on official real architectural reference, not a claim to show an exact village or exact arrangement."
+    }
+  ],
+  "limitations": [
+    "Watercolor interpretation, not an official UNESCO artwork or photograph.",
+    "Simplified density and framing explicitly approved by user; not a verified layout of a named settlement.",
+    "Archived source is not evidence of present-day water level or housing condition."
+  ],
+  "coverageAfterIntegration": {
+    "cancelledByUser": [
+      "小吴哥日出视角",
+      "皇家浴池"
+    ],
+    "uniqueDestinations": 26,
+    "remainingDestinations": 0,
+    "extraViewTasks": [],
+    "implementedDestinations": 26
+  }
+}

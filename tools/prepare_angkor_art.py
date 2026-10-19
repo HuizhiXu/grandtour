@@ -46,7 +46,8 @@ PAINTINGS = {
     "angkor_preah_ko": "siem-reap-24-preah-ko-front-v1.png",
     "angkor_preah_ko_bulls": "siem-reap-24-preah-ko-bulls-v1.png",
     "angkor_bakong": "siem-reap-25-bakong-approach-v1.png",
-    "angkor_bakong_platform": "siem-reap-25-bakong-platform-v1.png"
+    "angkor_bakong_platform": "siem-reap-25-bakong-platform-v1.png",
+    "angkor_tonle_sap": "siem-reap-26-tonle-sap-village-v3.png"
 }
 
 if __name__ == "__main__":
