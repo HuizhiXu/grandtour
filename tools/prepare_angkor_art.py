@@ -40,7 +40,9 @@ PAINTINGS = {
     "angkor_kravan": "siem-reap-21-kravan-front-v1.png",
     "angkor_kravan_relief": "siem-reap-21-kravan-relief-v1.png",
     "angkor_banteay_srei": "siem-reap-22-banteay-srei-approach-v1.png",
-    "angkor_banteay_srei_pond": "siem-reap-22-banteay-srei-pond-v1.png"
+    "angkor_banteay_srei_pond": "siem-reap-22-banteay-srei-pond-v1.png",
+    "angkor_beng_mealea": "siem-reap-23-beng-mealea-boardwalk-v1.png",
+    "angkor_beng_mealea_roots": "siem-reap-23-beng-mealea-roots-v1.png"
 }
 
 if __name__ == "__main__":

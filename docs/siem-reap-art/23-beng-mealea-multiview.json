@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-19",
+  "stop": 23,
+  "title": "崩密列 · 多视角",
+  "englishName": "Beng Mealea",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "two observation-only views, explicit introduction and choice, one shared travel record",
+  "coverageAfterIntegration": {"uniqueDestinations":26,"implementedDestinations":23,"remainingDestinations":3,"extraViewTasks":[],"cancelledByUser":["小吴哥日出视角","皇家浴池"]},
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "APSARA National Authority official photographs define architecture, roots and composition. Approved paintings supply style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2021/07/20/beng-mealea-gallery/",
+  "verification": "Gallery heading and original photo links verified in browser. Full originals downloaded and visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "林间木步道与残墙",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_beng_mealea",
+      "asset": "assets/game/scenes/siem-reap-23-beng-mealea-boardwalk-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Beng-Mealea-Temple_Angkor-Temple_Siem-Reap.jpg-20.jpg",
+      "referenceSha256": "68b654bca138f872cf1bf92c91b88cb66447a13ea35063ec671e8b6d57e6018b",
+      "prompt": "Use case: historical-scene. Create detailed natural 16:9 watercolor game-background preview for The Grand Tour scene23 BENG MEALEA / 崩密列, elevated forest ruins and visitor boardwalk panorama. Reference1 APSARA official original https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Beng-Mealea-Temple_Angkor-Temple_Siem-Reap.jpg-20.jpg is the SOLE source for architecture, composition, pathway geometry and archaeological state. Reference2 approved Thommanon watercolor is STYLE ONLY, no architectural transfer. Preserve exactly this elevated oblique wide view of roofless mossy sandstone chambers and collapsed piles of large angular stone blocks. Narrow pinkish-grey weathered wooden visitor walkway enters lower center-left, turns between broken walls toward middle, with real short railings and stairs at center-right. Keep its true narrow width, angles and height, never enlarge into a broad playable plaza. Main roofless near wall left of center has thick stepped mouldings and broken upper edge, stone-baluster windows and dark rectangular doorways visible farther back. Huge branching vine/tree rises centrally through masonry, pale trunks and fine tangled branches spread across canopy, tall trunk on right, dense layered forest encases ruins. Retain all scattered block positions, irregular collapse, missing roofs and eroded stone; no reconstructed tower, added symmetric temples or tidy restored paving. Adapt 3:2 to16:9 by modest crop of upper peripheral branches and nearest rubble while preserving key walls, baluster windows and path bends; minimal lateral forest extension, no stretching architecture. Translate overexposed photographic whites into soft believable forest daylight and readable layered green foliage without invented clear sky. Muted grey ochre sandstone, mossy green blocks, fine readable stone and bark brushwork, delicate layered translucent watercolor with subtle cotton-paper texture and depth, approved detailed travel picture-book series. Not blurry washes, thick outlines, photorealism or photo filter. Remove translucent watermark only. No people, characters, signage, letters, logo, UI or border. Archived archaeological condition, not speculative reconstruction.",
+      "proposedMode": "observation panorama; elevated camera and narrow walkway do not provide a calibrated character walking area"
+    },
+    {
+      "title": "树根与坍塌石墙",
+      "runtimeViewIndex": 1,
+      "runtimeArt": "angkor_beng_mealea_roots",
+      "asset": "assets/game/scenes/siem-reap-23-beng-mealea-roots-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Beng-Mealea-Temple_Angkor-Temple_Siem-Reap.jpg-11.jpg",
+      "referenceSha256": "236aa3eb4793e04671d4176ff50bfbf5eb48bb5d9fda77fb88b14d7643e14fbf",
+      "prompt": "Use case: historical-scene. Create second detailed natural 16:9 watercolor game background preview for The Grand Tour scene23 BENG MEALEA / 崩密列, roots and collapsed chamber observation panorama. Reference1 is the SOLE architectural, tree-root and composition source: APSARA official original https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Beng-Mealea-Temple_Angkor-Temple_Siem-Reap.jpg-11.jpg . Reference2 approved Thommanon watercolor is STYLE ONLY, never transfer its buildings. Precisely render this photographed broad oblique forest ruin scene: very large pale straight tree trunk at center growing from a broken stone doorway and spreading root base over grey sandstone blocks; thick slanted trunk at RIGHT sends long exposed curving roots across stones toward center. Thin straight trunk at far left, fine green canopy overhead. Low roofless walls and partly intact carved rectangular doorframes emerge behind and to left, a dark chamber entrance beneath low broken moulding just left of center, distant collapsed grey stone structures behind. All foreground is irregular piles of angular fallen sandstone blocks, roots, moss and leaf litter, with actual voids and uneven surfaces. Preserve photographed block sizes and collapse positions, open top edges and lost roofs; no reconstructed sanctuary, new intact towers, invented courtyard, stairs or visitor boardwalk where none is shown. Keep precise asymmetry, tree positions, scale and root relationships to stone. Adapt3:2 to16:9 by modest peripheral upper canopy/nearest rubble crop and minimal lateral forest extension only, no stretching masonry. Soft believable forest daylight, layered green canopy and subtle moss, pale grey-brown bark, muted grey ochre stone with fine clear eroded masonry and bark brushwork, translucent detailed watercolor washes, subtle cotton paper texture and depth. Match approved travel picture-book series, not blurry broad wash, thick black outline, photorealism or photo filter. Remove only translucent logo. No people, game characters, signs, text, watermark, UI, logo or border. Retain archived archaeological condition; no speculative reconstruction and no invented walkable floor.",
+      "proposedMode": "observation panorama; rubble and roots excluded from walking"
+    }
+  ],
+  "limitations": [
+    "Watercolor interpretations of official photographs, not photos published by APSARA.",
+    "User-approved paintings integrated as an observation-only station with explicit travel-record actions.",
+    "Both views show archived conditions. The depicted wooden walkway is not evidence of current visitor infrastructure.",
+    "Fine stone, foliage and root details can differ from original photographs.",
+    "Proposed observation-only station with explicit introduction, observation choice and shared record; do not invent walking floor."
+  ],
+  "scope": {
+    "targetDestinations": 26,
+    "cancelledByUser": [
+      "小吴哥日出视角",
+      "皇家浴池"
+    ]
+  },
+  "nextStopAfterApproval": "神牛寺 / Preah Ko"
+}

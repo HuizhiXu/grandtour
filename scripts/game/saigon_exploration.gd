@@ -423,8 +423,8 @@ func _guide_next_angkor_target() -> void:
 func _tour_hint() -> String:
 	if _is_observation_stop():
 		var entry: Dictionary = _tour.state(_scene_id)
-		if not entry.read: return "读一读「景点介绍」，再从两个视角观察这座山寺。"
-		if entry.choice < 0: return "点击「山寺观察」，选一种印象写进手记。"
+		if not entry.read: return "读一读「景点介绍」，再切换视角观察这一站。"
+		if entry.choice < 0: return "点击「%s」，选一种印象写进手记。" % str(TourCatalog.STOPS[_scene_id].object)
 		if not entry.recorded: return "点击「记录这一站」，确认留下你的旅行印象。"
 		return "这一站已记录。可以切换视角继续观景，或打开旅行路线册。"
 	if _panorama: return "静静欣赏眼前的风景。点击「返回地面漫步」，可继续探索与记录。"

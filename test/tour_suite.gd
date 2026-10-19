@@ -26,7 +26,7 @@ func _run() -> void:
 	_ui = _main.get("_ui")
 	_traveler = _main.get("_traveler")
 	_check(Catalog.ROUTES[0].stops.size() == 8 and Catalog.ROUTES[1].stops.size() == 4, "two routes contain eight and four stops")
-	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 22, "Angkor contains all twenty-two reviewed stops")
+	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 23, "Angkor contains all twenty-three reviewed stops")
 	var all_stops: Array[String] = []
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	var missing := ""
@@ -156,7 +156,7 @@ func _verify_next_stop(id: String, route_index: int) -> void:
 
 func _verify_observation_stop(id: String) -> void:
 	var button := _ui.get("_exploration_button") as Button
-	_check(Catalog.views(id).size() == 2, "Bakheng has both approved observation views")
+	_check(Catalog.views(id).size() == 2, "observation stop has both approved views")
 	_check(_progress().stage(id) == 0, "observation stop arrival grants no progress")
 	_check(_main.get("_panorama") and not _traveler.visible and (_main.get("_targets") as Dictionary).is_empty(), "observation stop has no walking actor or targets")
 	_check(not (_ui.get("_ground_button") as Button).visible, "observation stop has no nonexistent ground return")
@@ -174,6 +174,8 @@ func _verify_observation_stop(id: String) -> void:
 	_check(_ui.has_modal() and _progress().stage(id) == 1, "reading observation introduction advances exactly one step")
 	_ui.close_modal()
 	for view_index in [1, 0]:
+		if _progress().state(id).choice < 0:
+			_check(str(Catalog.STOPS[id].object) in str(_main.call("_tour_hint")), "observation hint names this stop's actual activity")
 		var saved: Dictionary = _progress().serialize()
 		_main.call("_show_views")
 		await _layout()

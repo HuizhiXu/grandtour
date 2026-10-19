@@ -2,9 +2,9 @@
   "date": "2026-10-19",
   "status": "integrated_and_verified_locally",
   "route": "暹粒 · 吴哥",
-  "playableStops": 22,
-  "totalGameStops": 34,
-  "currentScope": {"targetDestinations":26,"remainingDestinations":["崩密列","神牛寺","巴空寺","洞里萨湖"],"cancelledByUser":["小吴哥日出视角","皇家浴池"],"extraViewTasks":[]},
+  "playableStops": 23,
+  "totalGameStops": 35,
+  "currentScope": {"targetDestinations":26,"remainingDestinations":["神牛寺","巴空寺","洞里萨湖"],"cancelledByUser":["小吴哥日出视角","皇家浴池"],"extraViewTasks":[]},
   "catalog": "scripts/game/angkor_catalog.gd",
   "navigation": "scripts/game/angkor_world.gd",
   "runtimeArtMapping": "tools/prepare_angkor_art.py",
@@ -120,6 +120,16 @@
     "otherGameplayChecks": 278,
     "coverage": ["all approach interactions physically reachable", "protected ropes, posts and closed doorway excluded from navigation", "pond panorama has no actor or targets", "return restores position and unfinished record", "both views share saved travel record"],
     "nativeCaptures": "both views and route book rendered; walking and observation views reviewed",
+    "exportedPack": "Web release export verified in isolated directory"
+  },
+  "bengMealeaVerification": {
+    "date": "2026-10-19",
+    "source": "APSARA official Beng Mealea gallery; original photographs 20 and 11",
+    "mode": "two observation-only panoramas, one shared travel record",
+    "tourChecks": 1569,
+    "otherGameplayChecks": 278,
+    "coverage": ["no invented walking floor, actor or targets", "explicit introduction and impression selection", "cancelled record preserves unfinished state", "confirmation saves record", "both views share saved progress", "observation hints name each station's actual activity"],
+    "nativeCaptures": "both views rendered; observation HUD and corrected generic introduction hint reviewed",
     "exportedPack": "Web release export verified in isolated directory"
   },
   "publication": "GitHub Pages deployment is tracked by the repository workflow."
