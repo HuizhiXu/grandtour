@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-19",
+  "stop": 19,
+  "title": "东梅棚 · 多视角",
+  "englishName": "East Mebon",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "right-hand earth path and observation-only elephant panorama; shared travel record",
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":19,"remainingDestinations":8,"extraViewTasks":["小吴哥日出"]},
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "APSARA National Authority official photographs define architecture and composition. Approved paintings supply style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2022/07/04/east-mebon-temple-photos-gallery/",
+  "verification": "Official gallery heading and original photo links verified in browser. Full originals downloaded and visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "塔群与残柱全景",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_east_mebon",
+      "asset": "assets/game/scenes/siem-reap-19-east-mebon-complex-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/East-Mebon-Temple-11.jpg",
+      "referenceSha256": "cea107c75fe372dd3c601d0b28b025e13c5dfbc4c6a12ab25bf338ef2bf1f844",
+      "prompt": "Use case: historical-scene. Create detailed natural 16:9 watercolor game-background preview for The Grand Tour, scene 19 EAST MEBON / 东梅棚, broad oblique temple-complex view. Reference 1, APSARA official photograph https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/East-Mebon-Temple-11.jpg , is the SOLE source of architecture, perspective, layout and condition. Reference 2 approved Thommanon painting is STYLE ONLY, never borrow its structures. Faithfully render precisely this photographed composition: long warm ochre laterite stepped platform across middle, central tallest tapering weathered brick sanctuary and lower asymmetric visible brick towers behind, retain their exact photographed number, relative height, spacing, incomplete tops, missing masonry and dark doorway remains. A row of freestanding pale grey weathered cylindrical stone columns stands in foreground, uneven broken heights and actual positions, with low crumbling foundation plinths extending diagonally from lower left toward center. Open dusty earth paths at right and left, subtle sparse grass, broad leafy green tree canopy framing upper right, smaller trees left and distant forest. No ancient water moat is visible: do not invent water, islands, lotus ponds, boats or restore a historic reservoir. Do not complete ruined towers, roofs or replace grey eroded brick with pristine ornament. Retain all photographed structures with accurate perspective; adapt 3:2 to16:9 by reducing empty sky and modestly extending only earth and foliage, not stretching architecture. Preserve shadowed foreground foundation with readable detail; allow gentle nuanced watercolor light, warm grey ochre and rusty stone, rich layered greens and pale blue sky, delicate masonry and leaf brushwork, transparent washes and subtle cotton-paper texture. Match the approved detailed travel picture-book series, not blurry broad washes, harsh black outlines, photorealism or photo filter. Remove photographed people only. No characters, text, sign, logo, watermark, UI or border. Documented archived archaeological condition, no speculative reconstruction.",
+      "proposedMode": "only ground path at right; raised foundations and columns excluded, subject to calibration after approval"
+    },
+    {
+      "title": "台角石象",
+      "runtimeViewIndex": 1,
+      "runtimeArt": "angkor_east_mebon_elephant",
+      "asset": "assets/game/scenes/siem-reap-19-east-mebon-elephant-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/East-Mebon-Temple-9.jpg",
+      "referenceSha256": "99ed9946f6fe9f993dacc1051e710281fbbc8f5af3dfebc6f61ccc7013c0270a",
+      "prompt": "Use case: historical-scene. Create second detailed natural 16:9 watercolor game-background preview for The Grand Tour scene 19 EAST MEBON / 东梅棚, stone elephant on terrace corner. Reference 1 APSARA National Authority original https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/East-Mebon-Temple-9.jpg is the SOLE source of archaeological architecture, statue form, condition and perspective. Reference 2 approved Thommanon watercolor is STYLE ONLY; never borrow structures. Faithfully paint photographed eye-level low oblique corner view: a single weathered dark-grey stone elephant faces camera atop the exact sharp corner of a tall ochre laterite platform, front legs and long trunk descending, broad ears, lichen mottling and eroded carved outline. Preserve photographed trunk and tusk condition without invented extra tusks or decorative costume. Two long heavy platform walls recede left and right with actual brown porous block courses, stepped moldings and damaged upper masonry. Retain the photographed few broken brick tower remnants in background, exactly their visible positions and incomplete silhouettes, no completed spires. Scattered stone rubble by lower left wall, dusty narrow earth perimeter paths along both walls, distant forest and pale blue sky. Maintain statue modest scale relative to wall, do not enlarge it into a giant or move it to ground. Adapt 3:2 to16:9 by modest sky and nearest earth crop and slight lateral earth/trees extension only, no distorted corner perspective. Keep full elephant and wall corner visible. Preserve conservation condition and weathering, no speculative rebuilt temples, extra elephants, religious ornament, gates or water. Natural gentle daylight, ochre and warm grey stone, fine readable masonry and lichen watercolor brushwork, subtle cotton-paper texture, layered transparent washes, nuanced green background, excellent depth. Match approved detailed travel picture-book art, not loose blurry watercolor, hard black outline, photorealism or photo filter. No people, characters, lettering, sign, watermark, logo, UI or border.",
+      "proposedMode": "observation panorama; terrace wall and statue excluded from walking"
+    }
+  ],
+  "limitations": [
+    "Watercolor reinterpretations based on official photographs, not images published by APSARA.",
+    "User-approved paintings integrated with calibrated right-hand ground path; raised foundations, columns and elephant terrace excluded from walking.",
+    "Archive condition is retained; no claim about current conservation state.",
+    "Landscape adaptation extends only earth and foliage, while fine stone and foliage details can differ from originals."
+  ],
+  "nextStopAfterApproval": "比粒寺 / Pre Rup"
+}

@@ -1,6 +1,14 @@
 extends RefCounted
 ## Navigation in painting coordinates (1280 x 720); water and ruins stay outside.
 static func layout(id: String, view_index: int = 0) -> Dictionary:
+	if id == "angkor_east_mebon":
+		if view_index == 1:
+			# Statue and terrace walls are observed from outside, never climbed.
+			var panorama := _make([], Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
+			panorama["panorama"] = true
+			return panorama
+		# The right-hand earth path stays clear of the raised foreground foundations.
+		return _make([Vector2(1150, 510), Vector2(1240, 510), Vector2(1240, 708), Vector2(1030, 708)], Vector2(1170, 645), Vector2(1180, 570), Vector2(1120, 665), Vector2(1180, 680))
 	if id == "angkor_ta_som":
 		if view_index == 1:
 			# Exposed roots, gate masonry and conservation supports are observation only.

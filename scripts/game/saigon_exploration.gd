@@ -313,6 +313,7 @@ func _build_tour_targets(id: String) -> void:
 		var label := (_targets["tour_record"] as ExplorationTarget).get("_label") as Label
 		label.global_position = Vector2(530, 600)
 		if id in ["angkor_preah_khan", "angkor_neak_pean", "angkor_ta_som"]: label.global_position = Vector2(970, 600)
+		if id == "angkor_east_mebon": label.global_position = Vector2(1010, 530)
 		if id == "angkor_ta_prohm" and _view_index == 2:
 			var activity_label := (_targets["tour_activity"] as ExplorationTarget).get("_label") as Label
 			activity_label.global_position = Vector2(350, 540)

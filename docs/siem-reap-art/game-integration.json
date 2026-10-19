@@ -2,8 +2,8 @@
   "date": "2026-10-19",
   "status": "integrated_and_verified_locally",
   "route": "暹粒 · 吴哥",
-  "playableStops": 18,
-  "totalGameStops": 30,
+  "playableStops": 19,
+  "totalGameStops": 31,
   "catalog": "scripts/game/angkor_catalog.gd",
   "navigation": "scripts/game/angkor_world.gd",
   "runtimeArtMapping": "tools/prepare_angkor_art.py",
@@ -79,6 +79,16 @@
     "otherGameplayChecks": 278,
     "coverage": ["all foreground interactions physically reachable", "sanctuary steps and masonry excluded from navigation", "root panorama has no walking actor or interactions", "return restores ground position and unfinished record", "both views share saved travel record"],
     "nativeCaptures": "both views, thumbnail menu and route book rendered; ground and panorama reviewed",
+    "exportedPack": "Web release export verified in isolated directory"
+  },
+  "eastMebonVerification": {
+    "date": "2026-10-19",
+    "source": "APSARA official East Mebon gallery; original photographs 11 and 9",
+    "mode": "right-hand earth path and non-walking elephant terrace panorama",
+    "tourChecks": 1298,
+    "otherGameplayChecks": 278,
+    "coverage": ["all earth-path interactions physically reachable", "raised foreground foundations and columns excluded from navigation", "elephant panorama has no walking actor or targets", "return restores position and unfinished record", "both views share saved travel record", "all route buttons remain reachable by scrolling"],
+    "nativeCaptures": "both views, thumbnail menu and route book rendered; walking and observation views reviewed",
     "exportedPack": "Web release export verified in isolated directory"
   },
   "publication": "GitHub Pages deployment is tracked by the repository workflow."
