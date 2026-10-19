@@ -26,7 +26,7 @@ func _run() -> void:
 	_ui = _main.get("_ui")
 	_traveler = _main.get("_traveler")
 	_check(Catalog.ROUTES[0].stops.size() == 8 and Catalog.ROUTES[1].stops.size() == 4, "two routes contain eight and four stops")
-	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 23, "Angkor contains all twenty-three reviewed stops")
+	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 24, "Angkor contains all twenty-four reviewed stops")
 	var all_stops: Array[String] = []
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	var missing := ""
@@ -262,10 +262,14 @@ func _verify_single_ground_return(id: String) -> void:
 
 func _verify_ground_view_return(id: String) -> void:
 	var saved: Dictionary = _progress().serialize()
+	if id == "angkor_preah_ko":
+		_check(not (_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(Vector2(640, 600)), "front bull statue remains outside navigation")
 	var original_position := _traveler.global_position
 	_main.call("_select_view", 1)
 	await _scene(id)
 	_check(not _main.get("_panorama") and _traveler.visible, "second gate view supports ground exploration")
+	if id == "angkor_preah_ko":
+		_check(not (_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(Vector2(1040, 540)), "courtyard bulls and bases remain outside navigation")
 	_check(not (_ui.get("_ground_button") as Button).visible, "ground view has no panorama return button")
 	await _approach("tour_info")
 	_ui.close_modal()
@@ -323,7 +327,7 @@ func _verify_view_return(id: String) -> void:
 
 func _verify_views(id: String) -> void:
 	var saved: Dictionary = _progress().serialize()
-	_check(Catalog.views(id).size() == (2 if id in ["angkor_banteay_kdei", "angkor_preah_khan", "angkor_neak_pean", "angkor_ta_som", "angkor_east_mebon", "angkor_pre_rup", "angkor_kravan", "angkor_banteay_srei"] else 4), "all reviewed perspectives available: " + id)
+	_check(Catalog.views(id).size() == (2 if id in ["angkor_banteay_kdei", "angkor_preah_ko", "angkor_preah_khan", "angkor_neak_pean", "angkor_ta_som", "angkor_east_mebon", "angkor_pre_rup", "angkor_kravan", "angkor_banteay_srei"] else 4), "all reviewed perspectives available: " + id)
 	for index in range(Catalog.views(id).size()):
 		_check(ResourceLoader.exists(Catalog.background_path(id, index)), "view art ships: %s/%d" % [id, index])
 		(_ui.get("_view_button") as Button).pressed.emit()

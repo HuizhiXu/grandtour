@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-19",
+  "stop": 24,
+  "title": "神牛寺 · 多视角",
+  "englishName": "Preah Ko",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "two ground views with independent session positions and one shared travel record; stone sculptures excluded",
+  "coverageAfterIntegration": {"uniqueDestinations":26,"implementedDestinations":24,"remainingDestinations":2,"extraViewTasks":[],"cancelledByUser":["小吴哥日出视角","皇家浴池"]},
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "APSARA National Authority official photographs define architecture, sculpture and composition. Approved paintings supply style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2021/07/29/preah-ko-temple-gallery/",
+  "verification": "Gallery heading and original links verified in browser; downloaded full originals visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "砖塔正面全景",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_preah_ko",
+      "asset": "assets/game/scenes/siem-reap-24-preah-ko-front-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Angkor-Temple_Preah-Ko-Temple_Angkor-Temple_Siem-Reap.jpg-17.jpg",
+      "referenceSha256": "503716ba995cf853e85ae8becbc68064efb8287f23b18f2d8cf65efa257e70a2",
+      "prompt": "Use case: historical-scene. Create detailed natural 16:9 watercolor game background preview for The Grand Tour scene24 PREAH KO / 神牛寺, frontal brick sanctuary group. Reference1 APSARA National Authority official original https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Angkor-Temple_Preah-Ko-Temple_Angkor-Temple_Siem-Reap.jpg-17.jpg is SOLE architecture, sculpture, viewpoint and condition source. Reference2 approved Thommanon watercolor is STYLE ONLY, no architecture transfer. Faithfully render this photographed frontal view with THREE large front brick towers and only actually visible portions of rear sanctuaries behind them. Central tall tower has stepped brick tiers and truncated crown, flanking towers have irregular heavily eroded brick tops; match relative heights, taper, overlaps and exact openings. Keep pale surviving stucco sections with eroded carved figures and floral lintels around rectangular dark doorways, real grey sandstone jambs/colonnettes, reddish weathered brick, missing decoration and contrasting conserved brickwork. Low sandstone platform with three short stairs, photographed worn guardian lions at each approach, one recumbent bull seen from behind at lower center on its small worn base facing central shrine. Preserve bull size and condition, do not add extra animals, intact horns, complete stucco coating or invented statues. Trees behind shrines, pale blue sky with thin clouds, broad quiet sandy-earth and sparse green grass foreground. Adapt3:2 original to16:9 by moderate empty sky crop and slight earth/forest extension laterally, preserve all tower tops and platform, no stretching. Retain actually visible conservation state and asymmetry; never complete ruins or invent grand temple wings. Natural daylight, warm rusty brick and grey ochre stone, nuanced greens, fine readable carving and masonry brushwork, detailed translucent watercolor layers, subtle cotton paper texture and depth, approved travel picture-book series. Not loose blurry wash, harsh black outline, photorealism or photo filter. Remove translucent logo only. No people, game characters, text, signage, watermark, logo, UI or border. Archived archaeological condition.",
+      "proposedMode": "foreground ground only; central bull base and shrine platform excluded, subject to calibration after approval"
+    },
+    {
+      "title": "石牛与守护狮庭院",
+      "runtimeViewIndex": 1,
+      "runtimeArt": "angkor_preah_ko_bulls",
+      "asset": "assets/game/scenes/siem-reap-24-preah-ko-bulls-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Angkor-Temple_Preah-Ko-Temple_Angkor-Temple_Siem-Reap-1.jpg-4-1.jpg",
+      "referenceSha256": "1609f51b3406d287dec30c96aad12d14cee371b38884870cf38eec02882a43a5",
+      "prompt": "Use case: historical-scene. Create second detailed natural 16:9 watercolor game background preview for The Grand Tour scene24 PREAH KO / 神牛寺, side courtyard with stone bulls and guardian lions. Reference1 APSARA National Authority official original https://apsaraauthority.gov.kh/wp-content/uploads/2021/07/APSARA-Authority_Angkor-Temple_Preah-Ko-Temple_Angkor-Temple_Siem-Reap-1.jpg-4-1.jpg is sole architecture, sculpture, composition and archaeological condition source. Reference2 approved Thommanon watercolor is STYLE ONLY, never borrow buildings. Faithfully render exact photographed lateral courtyard: cropped weathered brick sanctuary and stone platform at LEFT edge, three real seated guardian lion statues descending in perspective on stepped worn stone bases, largest at near left and smaller behind/right. On RIGHT lawn, two actually photographed recumbent stone bulls in side view face LEFT toward sanctuary, foreground bull largest on short rectangular worn base, farther bull partly overlapped. Preserve bulls' eroded heads, horns, humps, legs, scale and overlapping silhouettes exactly, no ideal anatomy reconstruction, added animals or ornate costumes. Broad quiet grass and pale sandy patches across foreground/middle, low horizontal stone foundation in distant center, dense layered green mature trees surrounding and shading courtyard. No invented complete temple in background, extra tower, roof, lake or visitor path. Adapt3:2 to16:9 with modest upper foliage and nearest grass crop or minimal lateral vegetation extension, maintain exact relative positions and scale, keep whole foreground bull and all three lions visible. Gentle natural dappled daylight, warm grey/pink stone and rusty brick, nuanced green foliage, fine readable stone wear and carving brushwork, translucent natural watercolor layers and subtle cotton paper texture, excellent depth. Match detailed approved travel picture-book series, not loose blurry washes, thick black outlines, photorealism or photo filter. Remove translucent watermark only. No people, game characters, signs, lettering, watermark, logo, UI or border. Preserve documented archived conservation state, no speculative reconstruction.",
+      "proposedMode": "foreground grass only; stone animals and bases excluded, subject to calibration after approval"
+    }
+  ],
+  "limitations": [
+    "Watercolor interpretations based on official photographs, not photos published by APSARA.",
+    "User-approved paintings integrated with independent foreground navigation; sculptures, bases, shrine platform and steps excluded from walking.",
+    "Archived conservation condition retained, not a claim about current site state.",
+    "Small sculpture and masonry details can differ; official originals remain factual references."
+  ],
+  "scope": {
+    "targetDestinations": 26,
+    "cancelledByUser": [
+      "小吴哥日出视角",
+      "皇家浴池"
+    ]
+  },
+  "nextStopAfterApproval": "巴空寺 / Bakong"
+}

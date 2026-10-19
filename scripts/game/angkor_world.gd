@@ -1,6 +1,12 @@
 extends RefCounted
 ## Navigation in painting coordinates (1280 x 720); water and ruins stay outside.
 static func layout(id: String, view_index: int = 0) -> Dictionary:
+	if id == "angkor_preah_ko":
+		if view_index == 1:
+			# Foreground below the courtyard sculptures, clear of bases and shrine steps.
+			return _make([Vector2(500, 625), Vector2(1100, 640), Vector2(1150, 720), Vector2(400, 720)], Vector2(720, 680), Vector2(550, 670), Vector2(950, 680), Vector2(720, 685))
+		# Left foreground only; the central bull and platform stay outside navigation.
+		return _make([Vector2(120, 615), Vector2(550, 615), Vector2(550, 720), Vector2(100, 720)], Vector2(380, 650), Vector2(220, 650), Vector2(470, 650), Vector2(350, 650))
 	if id == "angkor_beng_mealea":
 		# Elevated path and rubble references do not document a walkable foreground.
 		var panorama := _make([], Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
