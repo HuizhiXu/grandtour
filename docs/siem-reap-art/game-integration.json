@@ -2,8 +2,8 @@
   "date": "2026-10-19",
   "status": "integrated_and_verified_locally",
   "route": "暹粒 · 吴哥",
-  "playableStops": 17,
-  "totalGameStops": 29,
+  "playableStops": 18,
+  "totalGameStops": 30,
   "catalog": "scripts/game/angkor_catalog.gd",
   "navigation": "scripts/game/angkor_world.gd",
   "runtimeArtMapping": "tools/prepare_angkor_art.py",
@@ -69,6 +69,16 @@
     "otherGameplayChecks": 278,
     "coverage": ["all boardwalk targets physically reachable", "water on both sides excluded from navigation", "panorama has no walking actor or targets", "return restores boardwalk position and unfinished record", "route list scrolls every destination fully into view"],
     "nativeCaptures": "both views, thumbnail menu and scrolling route book rendered and reviewed",
+    "exportedPack": "Web release export verified in isolated directory"
+  },
+  "taSomVerification": {
+    "date": "2026-10-19",
+    "source": "APSARA official Ta Som gallery; original photographs 4-scaled-1 and 3-scaled-1",
+    "mode": "sanctuary foreground ground view and non-walking root gateway panorama",
+    "tourChecks": 1220,
+    "otherGameplayChecks": 278,
+    "coverage": ["all foreground interactions physically reachable", "sanctuary steps and masonry excluded from navigation", "root panorama has no walking actor or interactions", "return restores ground position and unfinished record", "both views share saved travel record"],
+    "nativeCaptures": "both views, thumbnail menu and route book rendered; ground and panorama reviewed",
     "exportedPack": "Web release export verified in isolated directory"
   },
   "publication": "GitHub Pages deployment is tracked by the repository workflow."

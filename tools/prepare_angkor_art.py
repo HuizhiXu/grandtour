@@ -30,7 +30,9 @@ PAINTINGS = {
     "angkor_preah_khan": "siem-reap-16-preah-khan-approach-v1.png",
     "angkor_preah_khan_pond": "siem-reap-16-preah-khan-colonnade-v1.png",
     "angkor_neak_pean": "siem-reap-17-neak-pean-boardwalk-v1.png",
-    "angkor_neak_pean_sanctuary": "siem-reap-17-neak-pean-sanctuary-v1.png"
+    "angkor_neak_pean_sanctuary": "siem-reap-17-neak-pean-sanctuary-v1.png",
+    "angkor_ta_som": "siem-reap-18-ta-som-gateway-v1.png",
+    "angkor_ta_som_roots": "siem-reap-18-ta-som-roots-v1.png"
 }
 
 if __name__ == "__main__":

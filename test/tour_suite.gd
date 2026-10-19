@@ -26,7 +26,7 @@ func _run() -> void:
 	_ui = _main.get("_ui")
 	_traveler = _main.get("_traveler")
 	_check(Catalog.ROUTES[0].stops.size() == 8 and Catalog.ROUTES[1].stops.size() == 4, "two routes contain eight and four stops")
-	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 17, "Angkor contains all seventeen reviewed stops")
+	_check(Catalog.ROUTES.size() == 3 and Catalog.ROUTES[2].stops.size() == 18, "Angkor contains all eighteen reviewed stops")
 	var all_stops: Array[String] = []
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	var missing := ""
@@ -93,7 +93,7 @@ func _run() -> void:
 			_check(_ui.has_modal() and _progress().state(id).read, "reading requires physical arrival: " + id)
 			_ui.close_modal()
 			if Catalog.views(id).size() == 4: await _verify_view_return(id)
-			elif id in ["angkor_preah_khan", "angkor_neak_pean"]: await _verify_single_ground_return(id)
+			elif id in ["angkor_preah_khan", "angkor_neak_pean", "angkor_ta_som"]: await _verify_single_ground_return(id)
 			elif not Catalog.views(id).is_empty(): await _verify_ground_view_return(id)
 			await _approach("tour_activity", id.begins_with("angkor_"))
 			_check(_ui.has_modal() and _progress().state(id).choice == -1, "activity requires a choice: " + id)
@@ -222,6 +222,8 @@ func _verify_observation_stop(id: String) -> void:
 func _verify_single_ground_return(id: String) -> void:
 	var saved: Dictionary = _progress().serialize()
 	var position := _traveler.global_position
+	if id == "angkor_ta_som":
+		_check(not (_main.get("_pathfinder") as IsoPathfinder).is_world_walkable(Vector2(640, 600)), "sanctuary steps and masonry remain outside walking floor")
 	if id == "angkor_neak_pean":
 		var pathfinder := _main.get("_pathfinder") as IsoPathfinder
 		_check(not pathfinder.is_world_walkable(Vector2(200, 650)) and not pathfinder.is_world_walkable(Vector2(1100, 650)), "both reservoir sides remain outside the boardwalk")
@@ -309,7 +311,7 @@ func _verify_view_return(id: String) -> void:
 
 func _verify_views(id: String) -> void:
 	var saved: Dictionary = _progress().serialize()
-	_check(Catalog.views(id).size() == (2 if id in ["angkor_banteay_kdei", "angkor_preah_khan", "angkor_neak_pean"] else 4), "all reviewed perspectives available: " + id)
+	_check(Catalog.views(id).size() == (2 if id in ["angkor_banteay_kdei", "angkor_preah_khan", "angkor_neak_pean", "angkor_ta_som"] else 4), "all reviewed perspectives available: " + id)
 	for index in range(Catalog.views(id).size()):
 		_check(ResourceLoader.exists(Catalog.background_path(id, index)), "view art ships: %s/%d" % [id, index])
 		(_ui.get("_view_button") as Button).pressed.emit()

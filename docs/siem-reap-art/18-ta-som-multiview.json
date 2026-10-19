@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-19",
+  "stop": 18,
+  "title": "塔逊庙 · 多视角",
+  "englishName": "Ta Som",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "foreground ground view and observation-only root gateway panorama; shared travel record",
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":18,"remainingDestinations":9,"extraViewTasks":["小吴哥日出"]},
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "APSARA National Authority official photographs define architecture and composition. Approved paintings supply style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2021/08/02/ta-som-temple-gallery/",
+  "verification": "Gallery title and original image hrefs verified in browser. Both full-resolution originals visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "正面塔殿门楼",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_ta_som",
+      "asset": "assets/game/scenes/siem-reap-18-ta-som-gateway-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2021/08/APSARA-Authority_Angkor-Temple_Ta-Som-Temple_Angkor-Temple_Siem-Reap.jpg-4-scaled-1.jpg",
+      "referenceSha256": "b8355e80d1bc4ef7e05de18ac22aa8463b0aa38c1fd36447c8278e53512c1941",
+      "prompt": "Use case: historical-scene. Create a detailed natural 16:9 watercolor game background draft for The Grand Tour, scene 18 TA SOM / 塔逊庙, frontal sanctuary gateway view. Reference 1 is the SOLE architectural and composition source, an APSARA National Authority official original: https://apsaraauthority.gov.kh/wp-content/uploads/2021/08/APSARA-Authority_Angkor-Temple_Ta-Som-Temple_Angkor-Temple_Siem-Reap.jpg-4-scaled-1.jpg . Reference 2 is an approved Thommanon painting for STYLE ONLY; do not borrow its buildings. Preserve exactly the photographed frontal tall tapering grey stone tower, rounded irregular upper tiers, large eroded pediment above the central rectangular dark entrance, two lower side doors, low broken lateral masonry, scattered stones, small side remnants and incomplete walls. Match proportions, number of openings, carvings and damaged silhouette; no invented Bayon faces, complete roofs, new towers or symmetrical repairs. Keep receding nested doorframes and visible trees through the doorway. Low worn steps connect to sandy stone foreground, green ground patches at sides, dense forest and leafy branches framing upper corners. Adapt landscape 3:2 photograph to 16:9 with modest sky crop and slight lateral foliage/earth extension only; preserve entire tower and steps, do not squash or stretch architecture. Allow a quiet foreground earth strip for a future character without moving the ruin. Remove photographed tourists and translucent logo only. Natural dappled daylight, warm grey ochre sandstone with moss and lichen, delicate readable carving brushwork, translucent watercolor washes, fine cotton paper texture, nuanced leafy greens, depth and precise masonry. Match the detailed travel picture-book series, not blurry wash, thick black outline, photorealism or photo filter. No people, game characters, text, watermark, logo, UI, signs or border. Retain archaeological condition in official archive; never reconstruct missing parts.",
+      "proposedMode": "ground foreground only, subject to calibration after approval"
+    },
+    {
+      "title": "树根包覆门洞",
+      "runtimeViewIndex": 1,
+      "runtimeArt": "angkor_ta_som_roots",
+      "asset": "assets/game/scenes/siem-reap-18-ta-som-roots-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2021/08/APSARA-Authority_Angkor-Temple_Ta-Som-Temple_Angkor-Temple_Siem-Reap.jpg-3-scaled-1.jpg",
+      "referenceSha256": "ac8049af2d235709c9d83c506872fca8803f4dc6c5ba6285b316bc6176daf4f8",
+      "prompt": "Use case: historical-scene. Create second 16:9 detailed natural watercolor draft for The Grand Tour scene 18 TA SOM / 塔逊庙, tree-root gateway observation view. Reference 1 is the SOLE architectural, tree-root geometry and composition evidence: APSARA National Authority official photograph https://apsaraauthority.gov.kh/wp-content/uploads/2021/08/APSARA-Authority_Angkor-Temple_Ta-Som-Temple_Angkor-Temple_Siem-Reap.jpg-3-scaled-1.jpg . Reference 2 approved Thommanon painting is STYLE ONLY, never transfer its building. Show this very specific narrow dark rectangular doorway enclosed by gigantic pale grey-brown roots, the actual central carved triangular pediment just above lintel partially exposed between roots, huge fused trunk rising out of gateway, reddish slender stems and green canopy. Preserve the photographed asymmetry: thick roots draping down both jambs, wide spreading root mass on the RIGHT foreground, thinner coiling roots at left, mossy incomplete low stone walls to each side, real dark timber diagonal support inside doorway and sunlit forest visible through passage. Respect each visible crack, missing block and eroded stone shape; do not invent roof, towers, statues, doors, complete upper building or perfect symmetry. This is a close observation of the photographed root-wrapped gate, not Ta Prohm. Adapt portrait source to horizontal 16:9 by placing the full doorway and exposed pediment near center, retaining all roots down to the soil, cropping upper trunk/canopy moderately and extending ONLY unstructured forest, existing low wall continuation and earth laterally. Never compress or stretch the gate. The roots may leave upper frame, do not fabricate unseen crown. Quiet pale sandy foreground with exposed surface roots, mottled forest daylight, delicate masonry/carving and bark brushwork, muted grey ochre mossy stone, nuanced greens, layered transparent watercolor with subtle cotton-paper texture, excellent depth and detail. Match approved travel picture-book art, no thick black outline, loose blurry wash, photorealism or photo filter. Remove only tiny distant tourists and translucent logo; keep actual conservation supports. No characters, signs, letters, text, UI, watermark, logo, frame or new architecture. Archaeological condition as documented in official archive.",
+      "proposedMode": "observation panorama; exposed roots and ruins excluded from walking"
+    }
+  ],
+  "limitations": [
+    "Watercolor reinterpretations based on official photographs, not images published by APSARA.",
+    "User-approved paintings integrated with calibrated foreground navigation; root gateway remains observation only.",
+    "Archive condition is retained; these paintings do not establish present-day conservation state.",
+    "Portrait root-gate source adapted to landscape with lateral forest and low-wall extension; small carving and foliage details can differ."
+  ],
+  "nextStopAfterApproval": "东梅棚 / East Mebon"
+}
