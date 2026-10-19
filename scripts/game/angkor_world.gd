@@ -1,6 +1,14 @@
 extends RefCounted
 ## Navigation in painting coordinates (1280 x 720); water and ruins stay outside.
 static func layout(id: String, view_index: int = 0) -> Dictionary:
+	if id == "angkor_neak_pean":
+		if view_index == 1:
+			# The sanctuary island and all foreground pools are observation only.
+			var panorama := _make([], Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
+			panorama["panorama"] = true
+			return panorama
+		# Stay inside the timber deck, clear of edge posts and reservoir water.
+		return _make([Vector2(530, 520), Vector2(800, 520), Vector2(1000, 708), Vector2(280, 708)], Vector2(640, 650), Vector2(540, 620), Vector2(820, 655), Vector2(650, 680))
 	if id == "angkor_preah_khan":
 		if view_index == 1:
 			# The green foreground is algae-covered water, not grass.

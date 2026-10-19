@@ -2,8 +2,8 @@
   "date": "2026-10-19",
   "status": "integrated_and_verified_locally",
   "route": "暹粒 · 吴哥",
-  "playableStops": 16,
-  "totalGameStops": 28,
+  "playableStops": 17,
+  "totalGameStops": 29,
   "catalog": "scripts/game/angkor_catalog.gd",
   "navigation": "scripts/game/angkor_world.gd",
   "runtimeArtMapping": "tools/prepare_angkor_art.py",
@@ -60,6 +60,16 @@
     "coverage": ["all causeway targets physically reachable", "pond water remains non-walkable", "panorama grants no remote progress", "return restores causeway view and position", "unfinished and completed travel record shared"],
     "nativeCaptures": "causeway, pond panorama and view menu rendered and reviewed; record label moved clear of traveler",
     "exportedPack": "Web release export passed in isolated directory"
+  },
+  "neakPeanVerification": {
+    "date": "2026-10-19",
+    "source": "APSARA official Neak Pean gallery; original photographs IMG_6749 and Neak-Pean-Temple-3",
+    "mode": "wooden boardwalk ground view and non-walking sanctuary panorama",
+    "tourChecks": 1142,
+    "otherGameplayChecks": 278,
+    "coverage": ["all boardwalk targets physically reachable", "water on both sides excluded from navigation", "panorama has no walking actor or targets", "return restores boardwalk position and unfinished record", "route list scrolls every destination fully into view"],
+    "nativeCaptures": "both views, thumbnail menu and scrolling route book rendered and reviewed",
+    "exportedPack": "Web release export verified in isolated directory"
   },
   "publication": "GitHub Pages deployment is tracked by the repository workflow."
 }

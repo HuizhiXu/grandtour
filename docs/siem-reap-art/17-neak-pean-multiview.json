@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-19",
+  "stop": 17,
+  "title": "龙蟠水池 · 多视角",
+  "englishName": "Neak Pean",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "default wooden boardwalk ground view and non-walking sanctuary panorama; shared travel record",
+  "coverageAfterIntegration": {"uniqueDestinations":27,"implementedDestinations":17,"remainingDestinations":10,"extraViewTasks":["小吴哥日出"]},
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "Only APSARA National Authority original photographs define architecture and composition; approved paintings supply style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2022/07/19/neak-pean-temple-photos-gallery/",
+  "verification": "Official gallery title and original photo hrefs verified in browser; full originals downloaded and visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "suggestedDefaultView": "水上木栈道",
+  "views": [
+    {
+      "title": "池中寺塔全景",
+      "runtimeViewIndex": 1,
+      "runtimeArt": "angkor_neak_pean_sanctuary",
+      "asset": "assets/game/scenes/siem-reap-17-neak-pean-sanctuary-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2023/02/IMG_6749.jpg",
+      "referenceSha256": "16b24d81b79413e3edbe3ddf13b783e5f107f09f6e4cf965d0ee6ae53a6e8aa5",
+      "prompt": "Use case: historical-scene. Asset: detailed 16:9 watercolor game background draft for The Grand Tour, scene 17 NEAK PEAN / 龙蟠水池, view A central sanctuary across the pools. Reference 1 is the sole architectural, composition and landscape source: APSARA National Authority official gallery original https://apsaraauthority.gov.kh/wp-content/uploads/2023/02/IMG_6749.jpg. Reference 2, approved Thommanon watercolor, is STYLE ONLY, never borrow its buildings or roof geometry. Paint precisely this slightly oblique broad pool view: the real tall weathered sanctuary rises right of center on its actual circular stepped island of large reddish-grey sandstone blocks. Retain photographed tower height, taper, tier proportions, irregular top, blind doorway carvings, cracks, missing details and eroded stone, no rebuilt roof or invented complete ornament. The low small pointed-arch water pavilion at foreground left is partly surrounded by green water, with its broken lobed upper outline and dark arch, exactly as reference. Wide low stone pool walls step horizontally across middle and foreground. Preserve the slender paved stone edge and existing wooden barrier at far right, leafy branches framing upper right and left, deep layered green forest behind and still green pools with muted reflections. Do not turn water to grass or put a causeway to the central island where none is photographed. Keep all main photographed architecture visible and maintain near-far scale; fit 16:9 with modest crop of bottom water and upper foliage, and minimal forest/water extension only, never stretch or reconstruct stone structures. Soft natural forest daylight, nuanced grey/ochre stone and reddish block edges, muted moss and leaf greens, fine readable carving and masonry brushwork, subtle translucent layered watercolor washes, delicate cotton paper grain, excellent depth. Match the approved detailed travel picture-book series, not loose blurry washes, harsh black outline, photorealism or photo filter. Remove only the translucent APSARA watermark, without altering architecture beneath. No people, characters, boats, added statues, signs, text, logos, UI or frame. Archaeological condition as seen in official archive, not speculative reconstruction.",
+      "proposedMode": "panorama; pools and central island are not a visitor walking area"
+    },
+    {
+      "title": "水上木栈道",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_neak_pean",
+      "asset": "assets/game/scenes/siem-reap-17-neak-pean-boardwalk-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Neak-Pean-Temple-3.jpg",
+      "referenceSha256": "cc565f0247d7da4b10b5d65e626c53710d0d77fa5d1fc8fc01dd536ad9718966",
+      "prompt": "Use case: historical-scene. Asset: second 16:9 detailed natural watercolor game background draft for The Grand Tour scene 17 NEAK PEAN / 龙蟠水池, view B reservoir boardwalk. Reference 1 is the sole factual composition, geometry, landscape and light reference: APSARA official original https://apsaraauthority.gov.kh/wp-content/uploads/2022/07/Neak-Pean-Temple-3.jpg. Reference 2 approved Thommanon watercolor is STYLE ONLY, no architectural transfer. Paint exactly this quiet straight wooden visitor boardwalk stretching from the broad center foreground to the small vanishing point at a dense green forest shore. Preserve its precise trapezoid perspective, broad horizontal weathered timber planks, repeated short dark square posts along BOTH edges at the real decreasing spacings, their attachment plates, and the fact it has NO tall handrail joining these low posts. Still reservoir water lies on both sides with soft tree reflections and scattered green surface plants. Keep the photographed separate pale metal scaffold walkway/construction frame along the LEFT side of the water, parallel and then receding toward the shore; do not erase actual infrastructure or turn it into an invented ancient stone causeway. Preserve low far bank and layered trees, pale overcast blue-grey sky and subtle cool daylight, muted grey-brown timber, soft green water and forest. Fit 16:9 by modest sky and nearest-boardwalk crop while keeping both lower plank edges visible; maintain correct taper and horizon position. Do not add a temple, tower, island pavilion or other landmark at the vanishing point where none is visible in the photograph. No guessed archaeological structures, bridges elsewhere, boats, people, characters, birds, flowers, palm rows, sunrise or sunset. Fine watercolor picture-book art with detailed wood grain, readable plank joints and post shadows, delicate translucent washes, nuanced greens, subtle cotton-paper texture and excellent depth. Match approved detailed series, not loose blurry washes, harsh black outlines, photorealism or a photo filter. No text, signs, lettering, watermark, logo, UI or border. Real documented modern visitor boardwalk through the reservoir, not an imagined historic reconstruction.",
+      "proposedMode": "wooden-boardwalk foreground only, subject to navigation calibration after approval"
+    }
+  ],
+  "limitations": [
+    "Watercolor reinterpretations of official reference photographs, not photographs published by APSARA.",
+    "User-approved paintings integrated with calibrated boardwalk navigation; all water and sanctuary island remain observation only.",
+    "Photographed archive conditions are retained, not a claim about current water level or conservation state.",
+    "Small masonry and foliage details can differ; compare with official originals during review."
+  ],
+  "nextStopAfterApproval": "塔逊庙 / Ta Som"
+}

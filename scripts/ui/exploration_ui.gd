@@ -204,11 +204,18 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.pressed.connect(func() -> void: route_selected.emit(selected))
 		tabs.add_child(button)
+	var scroll := ScrollContainer.new()
+	scroll.name = "RouteStops"
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.custom_minimum_size.y = minf(ceilf(route.stops.size() / 2.0) * 46.0 - 6.0, 300.0)
+	scroll.follow_focus = true
+	_modal_actions.add_child(scroll)
 	var grid := GridContainer.new()
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	grid.columns = 2
 	grid.add_theme_constant_override("h_separation", 8)
 	grid.add_theme_constant_override("v_separation", 6)
-	_modal_actions.add_child(grid)
+	scroll.add_child(grid)
 	for index in range(route.stops.size()):
 		var id: String = route.stops[index]
 		var suffix := "  ✓" if completed.get(id, false) else ""
@@ -218,6 +225,7 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.pressed.connect(func() -> void: stop_selected.emit(id))
 		grid.add_child(button)
+		if id == current_stop: scroll.ensure_control_visible.call_deferred(button)
 	_add_action_button("继续漫步", close_modal, false)
 
 
