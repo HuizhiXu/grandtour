@@ -118,7 +118,8 @@ static func layout(id: String, view_index: int = 0) -> Dictionary:
 		"angkor_bayon":
 			return _make([Vector2(100, 535), Vector2(640, 535), Vector2(640, 610), Vector2(100, 610)], Vector2(360, 575), Vector2(200, 575), Vector2(520, 575), Vector2(360, 575))
 		"angkor_baphuon":
-			return _make([Vector2(790, 560), Vector2(1220, 560), Vector2(1220, 708), Vector2(650, 708)], Vector2(950, 650), Vector2(850, 620), Vector2(1120, 650), Vector2(970, 675))
+			# Right foreground lawn, between the raised causeway and the large tree trunk.
+			return _make([Vector2(830, 600), Vector2(1010, 600), Vector2(1010, 708), Vector2(740, 708)], Vector2(900, 655), Vector2(860, 640), Vector2(960, 655), Vector2(900, 680))
 		"angkor_phimeanakas":
 			return _make([Vector2(630, 590), Vector2(1180, 590), Vector2(1210, 708), Vector2(630, 708)], Vector2(760, 650), Vector2(690, 640), Vector2(1010, 655), Vector2(800, 675))
 		"angkor_elephants":
