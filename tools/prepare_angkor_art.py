@@ -38,7 +38,9 @@ PAINTINGS = {
     "angkor_pre_rup": "siem-reap-20-pre-rup-approach-v1.png",
     "angkor_pre_rup_terrace": "siem-reap-20-pre-rup-terrace-v1.png",
     "angkor_kravan": "siem-reap-21-kravan-front-v1.png",
-    "angkor_kravan_relief": "siem-reap-21-kravan-relief-v1.png"
+    "angkor_kravan_relief": "siem-reap-21-kravan-relief-v1.png",
+    "angkor_banteay_srei": "siem-reap-22-banteay-srei-approach-v1.png",
+    "angkor_banteay_srei_pond": "siem-reap-22-banteay-srei-pond-v1.png"
 }
 
 if __name__ == "__main__":

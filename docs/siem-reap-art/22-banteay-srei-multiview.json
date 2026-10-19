@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-19",
+  "stop": 22,
+  "title": "女王宫 · 多视角",
+  "englishName": "Banteay Srei",
+  "approval": "approved_for_game_integration_by_user",
+  "integratedIntoGame": true,
+  "integrationMode": "central approach ground view and non-walking pond panorama; shared travel record",
+  "coverageAfterIntegration": {"uniqueDestinations":26,"implementedDestinations":22,"remainingDestinations":4,"extraViewTasks":[],"cancelledByUser":["小吴哥日出视角","皇家浴池"]},
+  "generator": "Built-in image_gen.imagegen",
+  "referencePolicy": "APSARA National Authority official photographs define architecture, landscape and composition. Approved paintings supply style only.",
+  "officialGallery": "https://apsaraauthority.gov.kh/2021/07/19/banteay-srei-gallery/",
+  "verification": "Gallery reached from official temple overview. Heading and full-resolution image links verified in browser; downloaded originals visually inspected before generation.",
+  "styleReference": "assets/game/scenes/siem-reap-10-thommanon-v1.png",
+  "views": [
+    {
+      "title": "入口石道与塔群",
+      "runtimeViewIndex": 0,
+      "runtimeArt": "angkor_banteay_srei",
+      "asset": "assets/game/scenes/siem-reap-22-banteay-srei-approach-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2023/10/Apsara-National-Authority-Banteay-Srei-temple-2.jpg",
+      "referenceSha256": "b8b936bfacd2aeb62fec2972295cef365fb896ba58ac242c7305018ac7fb8565",
+      "prompt": "Use case: historical-scene. Create detailed natural 16:9 watercolor game-background preview for The Grand Tour scene22 BANTEAY SREI / 女王宫, front approach and sanctuary group. Reference1 APSARA National Authority official original https://apsaraauthority.gov.kh/wp-content/uploads/2023/10/Apsara-National-Authority-Banteay-Srei-temple-2.jpg is the SOLE source of architecture, composition, proportions and conservation condition. Reference2 approved Thommanon watercolor is STYLE ONLY, no transfer of its building. Paint exactly photographed three small reddish-pink sandstone tiered sanctuary towers behind layered lower doorways and richly carved pediments, central tallest tower, side towers and their actual partial occlusions and unequal heights. Preserve detailed weathered floral carving, dark joints, irregular missing stone, roofless side masonry, central peaked carved doorway pediment, two flanking stone-baluster windows, side rectangular openings. Keep actual pale conservation diagonal brace inside central doorway and wooden barrier, photographed low wooden visitor walkways at sides and conservation ropes/stakes, not invent intact walls or perfect symmetry. Broad sandy reddish approach runs from foreground center toward doorway, repeated short rounded weathered stone boundary posts along both sides decreasing in size, grass at sides, dense green forest fills background with no invented blue skyline above towers. Maintain exact tower number and doorway alignments. Adapt 3:2 source to16:9 by modest nearest dirt crop and slight lateral forest/earth extension only, do not crop main tower tops, stretch or rebuild architecture. Warm natural daylight, nuanced pink ochre sandstone and muted green forest, delicate clearly readable architectural carving and masonry brushwork, layered translucent watercolor washes, subtle cotton-paper grain, excellent depth. Match approved detailed travel picture-book series, not loose blurry watercolor, harsh outlines, photorealism or photo filter. Remove small text signs only, retain conservation boundaries. No people, game characters, text, logo, watermark, UI or border. Archived archaeological condition, no speculative reconstruction.",
+      "proposedMode": "central foreground approach only; conservation ropes and structures excluded, subject to calibration after approval"
+    },
+    {
+      "title": "池畔建筑群全景",
+      "runtimeViewIndex": 1,
+      "runtimeArt": "angkor_banteay_srei_pond",
+      "asset": "assets/game/scenes/siem-reap-22-banteay-srei-pond-v1.png",
+      "officialOriginal": "https://apsaraauthority.gov.kh/wp-content/uploads/2023/10/Apsara-National-Authority-Banteay-Srei-temple-3.jpg",
+      "referenceSha256": "6e97fcf2c467eca5008d52b44cb025d38fac526784888c3b7447f80b6104fc85",
+      "prompt": "Use case: historical-scene. Create second detailed natural 16:9 watercolor game-background preview for The Grand Tour scene22 BANTEAY SREI / 女王宫, broad pond reflection panorama. Reference1 APSARA official original https://apsaraauthority.gov.kh/wp-content/uploads/2023/10/Apsara-National-Authority-Banteay-Srei-temple-3.jpg is SOLE architectural, composition and landscape source. Reference2 approved Thommanon watercolor is STYLE ONLY, no borrowed buildings. Faithfully paint this photographed wide view across still green-blue pond toward small pink sandstone sanctuary group left of center, weathered low enclosure wall stretching horizontally, real open roofless doorway pavilion right of center with pale diagonal conservation brace. Retain actual irregular carved pediments, tiered small tower silhouettes, partial tree occlusion and damaged stone, no enlarged or reassembled buildings. Preserve distant architectural scale. Grassy far bank with scattered dark weathered stones runs along water, tall straight pale tree trunk and high green crown near right of center, other two slender tall trees to its right, broad dense forest left and right. Wide foreground WATER contains temple and tree reflections with subtle ripples and small central lily patch exactly as source; never turn water into grass or invent a foreground visitor path, causeway, island, boats or buildings. Blue sky with gentle white clouds, natural clear daylight, warm pink ochre stone and nuanced greens, delicate readable masonry and tree brushwork, reflective translucent watercolor washes and fine cotton-paper grain, excellent depth. Adapt 3:2 to16:9 with modest nearest water/empty sky crop, keep full tree crown and visible complex, minimal foliage/water lateral extension only, no squashing architecture. Match detailed travel picture-book series, not loose blurry wash, hard black outlines, photorealism or photo filter. No people, game characters, signs, text, watermark, logo, UI or border. Documented archived condition, no speculative reconstruction or invented sunset.",
+      "proposedMode": "observation panorama; all foreground water excluded from walking"
+    }
+  ],
+  "limitations": [
+    "Watercolor interpretations of official photographs, not images published by APSARA.",
+    "User-approved paintings integrated with central approach navigation; protected boundaries, closed doorway and foreground pond remain non-walkable.",
+    "Archived conservation state retained; not a claim about current site condition.",
+    "Fine carving and landscape details can differ; official originals remain factual references."
+  ],
+  "scope": {
+    "targetDestinations": 26,
+    "cancelledByUser": [
+      "小吴哥日出视角",
+      "皇家浴池"
+    ]
+  },
+  "nextStopAfterApproval": "崩密列 / Beng Mealea"
+}

@@ -1,6 +1,14 @@
 extends RefCounted
 ## Navigation in painting coordinates (1280 x 720); water and ruins stay outside.
 static func layout(id: String, view_index: int = 0) -> Dictionary:
+	if id == "angkor_banteay_srei":
+		if view_index == 1:
+			# All foreground is pond water; the far bank is observation only.
+			var panorama := _make([], Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO)
+			panorama["panorama"] = true
+			return panorama
+		# Central approach only, clear of stone posts, ropes and closed doorways.
+		return _make([Vector2(430, 570), Vector2(700, 570), Vector2(725, 708), Vector2(360, 708)], Vector2(560, 650), Vector2(480, 625), Vector2(650, 650), Vector2(560, 680))
 	if id == "angkor_kravan":
 		if view_index == 1:
 			# The relief fills the frame; no chamber floor is documented in this view.
