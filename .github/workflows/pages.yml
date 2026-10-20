@@ -32,6 +32,8 @@ jobs:
           python3 tools/fetch_web_template.py --version "$GODOT_VERSION" --debug --output "$template_dir/web_nothreads_debug.zip"
       - name: Import and export the playable game
         run: bash tools/export_web.sh
+      - name: Verify the in-game license page before publishing
+        run: python3 tools/verify_web_licenses.py dist/web/open-source-licenses.html
       - name: Verify movement, interactions and postcard quest
         shell: bash
         run: |

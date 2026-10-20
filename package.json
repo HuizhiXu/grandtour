@@ -6,7 +6,7 @@
     "verify": "./tools/verify.sh",
     "verify:release": "./tools/verify.sh --export",
     "verify:clean": "./tools/verify_clean_scaffold.sh",
-    "export": "mkdir -p dist && godot --headless --path . --export-release Web dist/index.html",
+    "export": "bash tools/export_web.sh",
     "dev": "node scripts/manus/runtime-command.cjs ./server.mjs",
     "build": "node scripts/manus/runtime-command.cjs ./build.mjs",
     "preview:build": "node scripts/manus/runtime-command.cjs ./preview-build.mjs",
