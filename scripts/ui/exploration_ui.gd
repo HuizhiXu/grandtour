@@ -116,7 +116,7 @@ func set_views(count: int, selected: int, panorama: bool, observation_only: bool
 	_view_button.text = "切换视角  %d / %d" % [selected + 1, count]
 	_ground_button.visible = panorama and not observation_only
 	if observation_only:
-		_hint_label.text = "观景站 · 阅读介绍、选择观察印象，再记入旅行手记"
+		_hint_label.text = "观景站 · 点击「景点介绍」了解这一站"
 	else:
 		_hint_label.text = "观景视角 · 点击「返回地面漫步」回到刚才的位置" if panorama else "点击空地带 Archie 漫步 · 点击人物或物件后，她会先走近再互动"
 
@@ -128,12 +128,12 @@ func set_exploration_action(title: String, walking: bool = true) -> void:
 
 func show_views(title: String, views: Array, selected: int) -> void:
 	var observation_only: bool = not views.is_empty() and views[0].get("observation_only", false)
-	var body := "两个视角共享这一站的旅行记录。返回画面后，可阅读介绍、选择观察印象并记录这一站。" if observation_only else "选一幅风景继续探索。地面视角可漫步与互动，观景视角可静静欣赏。\n各视角共享这一站的旅行记录，切回地面时记住本次游玩的位置。"
+	var body := "选择喜欢的视角欣赏风景，点击「景点介绍」了解这一站。"
 	_open_modal(title + " · 切换视角", body)
 	for index in range(views.size()):
 		var choice := index
-		var mode := "静静观景 · 可一键返回地面" if views[index].panorama else "地面漫步 · 可观察与记录"
-		if observation_only: mode = "观景记录 · 阅读介绍与留下印象"
+		var mode := "静静观景 · 可一键返回地面" if views[index].panorama else "地面漫步"
+		if observation_only: mode = "静静观景"
 		var button := _make_button(str(views[index].title) + (" · 当前" if index == selected else "") + "\n" + mode, index == selected)
 		button.icon = load(views[index].background) as Texture2D
 		button.expand_icon = true
@@ -167,34 +167,25 @@ func set_quest_progress(stage: int, hint: String) -> void:
 	_quest_button.text = "查看明信片"
 
 
-func set_visit_progress(stage: int, hint: String) -> void:
-	_quest_progress.text = "独立宫  ·  %d / 4" % stage if stage < 4 else "独立宫  ·  已完成 ✓"
-	_quest_title.text = "参观独立宫"
-	_quest_label.text = hint
-	_quest_button.text = "查看参观纪念"
-
-
-func set_stop_progress(title: String, stage: int, hint: String, observation_only: bool = false) -> void:
-	var mode := "观景记录" if observation_only else "景点漫步"
-	_quest_progress.text = mode + ("  ·  %d / 3" % stage if stage < 3 else "  ·  已记录 ✓")
+func set_introduction(title: String) -> void:
+	_quest_progress.text = "景点介绍"
 	_quest_title.text = title
-	_quest_label.text = hint
-	_quest_button.text = "查看旅行记录"
+	_quest_label.text = "了解这一站的故事，自由欣赏眼前的风景。"
+	_quest_button.text = "景点介绍"
 
 
-func set_route_progress(count: int, has_next: bool, total: int = 12) -> void:
-	_route_button.text = "旅行路线  %d / %d" % [count, total]
-	_next_button.text = "下一站 →" if has_next else "查看路线记录"
+func set_introduction_hint(panorama: bool) -> void:
+	_hint_label.text = "静静欣赏眼前的风景 · 点击「景点介绍」了解这一站" if panorama else "点击空地带 Archie 漫步 · 点击「景点介绍」了解这一站"
+
+
+func set_route_progress(_count: int, has_next: bool, _total: int = 12) -> void:
+	_route_button.text = "旅行路线"
+	_next_button.text = "下一站 →" if has_next else "查看旅行路线"
 
 
 func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: int, current_stop: String, completed: Dictionary) -> void:
 	var route: Dictionary = routes[selected_route]
-	var done := 0
-	for id: String in route.stops:
-		if completed.get(id, false): done += 1
-	_open_modal("旅行路线册 · %d / %d 已记录" % [done, route.stops.size()], route.subtitle + "\n\n" + route.note)
-	if done == route.stops.size():
-		_modal_title.text = "路线已完成 · " + str(route.title)
+	_open_modal("旅行路线册 · " + str(route.title), route.subtitle + "\n\n" + route.note)
 	var tabs := HBoxContainer.new()
 	_modal_actions.add_child(tabs)
 	for index in range(routes.size()):

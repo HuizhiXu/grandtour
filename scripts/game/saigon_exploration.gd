@@ -6,9 +6,7 @@ const TargetType := preload("res://scripts/entities/exploration_target.gd")
 const UIType := preload("res://scripts/ui/exploration_ui.gd")
 const OpenSourceLicenseHelper := preload("res://scripts/manus/open_source_licenses.gd")
 const Postcard := preload("res://scripts/game/postcard_quest.gd")
-const Palace := preload("res://scripts/game/palace_visit.gd")
 const TourCatalog := preload("res://scripts/game/tour_catalog.gd")
-const TourProgress := preload("res://scripts/game/tour_progress.gd")
 const TourWorld := preload("res://scripts/game/tour_world.gd")
 const PALACE_BG: Texture2D = preload("res://assets/game/runtime/independence-palace.jpg")
 const PALACE_HALL_BG: Texture2D = preload("res://assets/game/runtime/independence-palace-hall.jpg")
@@ -44,8 +42,6 @@ var _postcard := Postcard.new()
 var _postcard_context := ""
 var _destination_marker: Line2D
 var _hovered_target: ExplorationTarget
-var _palace := Palace.new()
-var _tour := TourProgress.new()
 var _route_index := 0
 var _view_index := 0
 var _panorama := false
@@ -58,8 +54,6 @@ func _ready() -> void:
 	var save_store := get_node_or_null("/root/SaveStore")
 	if save_store != null:
 		_postcard.restore(save_store.call("get_postcard_progress"))
-		_palace.restore(save_store.call("get_palace_progress"))
-		_tour.restore(save_store.call("get_tour_progress"))
 	var locale_service := get_node_or_null("/root/I18n")
 	if locale_service != null:
 		locale_service.call("set_locale", "zh-CN")
@@ -178,7 +172,6 @@ func _build_ui() -> void:
 	_ui.views_requested.connect(_show_views)
 	_ui.view_selected.connect(_select_view)
 	_ui.ground_view_requested.connect(_return_to_ground)
-	_ui.exploration_action_requested.connect(_guide_next_angkor_target)
 	_ui.modal_closed.connect(func() -> void: _postcard_context = "")
 
 
@@ -281,7 +274,6 @@ func _setup_scene(scene_name: String, player_spawn: Vector2, view_index: int = 0
 		_collision_root.add_child(body)
 
 	if TourCatalog.is_new_stop(scene_name):
-		if not _panorama: _build_tour_targets(scene_name)
 		_ui.set_npc_position(Vector2.ZERO, false)
 	elif scene_name == "outdoor":
 		_build_outdoor_targets()
@@ -291,7 +283,6 @@ func _setup_scene(scene_name: String, player_spawn: Vector2, view_index: int = 0
 		_add_target("postcard_desk", "postcard", "明信片书写台", Vector2(828.0, 366.0), Vector2(770.0, 460.0), Vector2(116.0, 90.0))
 		_ui.set_npc_position(Vector2.ZERO, false)
 	else:
-		_build_palace_targets(scene_name)
 		_ui.set_npc_position(Vector2.ZERO, false)
 	_ui.clear_destination()
 	_ui.set_paused(false)
@@ -302,41 +293,8 @@ func _tour_floor(id: String) -> PackedVector2Array:
 	return TourWorld.layout(id, _view_index).floor
 
 
-func _build_tour_targets(id: String) -> void:
-	var stop: Dictionary = TourCatalog.STOPS[id]
-	var layout: Dictionary = TourWorld.layout(id, _view_index)
-	_add_target("tour_info", "tour_info", "景点介绍", layout.info, layout.info_stand, Vector2(100, 100))
-	_add_target("tour_activity", "tour_activity", stop.object, layout.activity, layout.activity_stand, Vector2(130, 104))
-	_add_target("tour_record", "tour_record", "记录这一站", layout.get("record", Vector2(640, 690)), layout.get("record_stand", Vector2(640, 615)), Vector2(150, 44))
-	if not TourCatalog.views(id).is_empty():
-		# Keep the record label above the bottom hint panel and away from Archie.
-		var label := (_targets["tour_record"] as ExplorationTarget).get("_label") as Label
-		label.global_position = Vector2(530, 600)
-		if id in ["angkor_preah_khan", "angkor_neak_pean", "angkor_ta_som", "angkor_pre_rup", "angkor_kravan", "angkor_banteay_srei", "angkor_preah_ko", "angkor_bakong"]: label.global_position = Vector2(970, 600)
-		if id == "angkor_east_mebon": label.global_position = Vector2(1010, 530)
-		if id == "angkor_ta_prohm" and _view_index == 2:
-			var activity_label := (_targets["tour_activity"] as ExplorationTarget).get("_label") as Label
-			activity_label.global_position = Vector2(350, 540)
-	# Record labels are clickable independently of their physical arrival point.
-	# Keep them clear of the arrival actor and the fixed bottom HUD.
-	var record_positions := {
-		"angkor_banteay_kdei": Vector2(930, 565),
-		"angkor_wat": Vector2(970, 570),
-		"angkor_thommanon": Vector2(900, 610),
-		"angkor_ta_keo": Vector2(970, 600),
-		"angkor_bayon": Vector2(650, 550),
-		"angkor_leper_king": Vector2(930, 560),
-		"angkor_ta_prohm": Vector2(700, 560),
-	}
-	if record_positions.has(id):
-		((_targets["tour_record"] as ExplorationTarget).get("_label") as Label).global_position = record_positions[id]
-
-
 func _completed_stops() -> Dictionary:
-	var completed := {"palace": _palace.stage() == 4, "post_office": _postcard.sent}
-	for id: String in TourCatalog.STOPS:
-		if TourCatalog.is_new_stop(id): completed[id] = _tour.stage(id) == 3
-	return completed
+	return {"post_office": _postcard.sent}
 
 
 func _show_routes() -> void:
@@ -405,85 +363,6 @@ func _is_observation_stop() -> bool:
 	return _panorama and TourCatalog.STOPS.get(_scene_id, {}).get("observation_only", false)
 
 
-func _can_tour_interact(target_id: String) -> bool:
-	return _is_observation_stop() or _near_target(target_id)
-
-
-func _next_angkor_target() -> String:
-	if not _scene_id.begins_with("angkor_") or _panorama and not _is_observation_stop(): return ""
-	var entry: Dictionary = _tour.state(_scene_id)
-	if entry.recorded: return ""
-	if not entry.read: return "tour_info"
-	if entry.choice < 0: return "tour_activity"
-	return "tour_record"
-
-
-func _guide_next_angkor_target() -> void:
-	if _paused or _transitioning or _ui.has_modal(): return
-	if _is_observation_stop():
-		match _next_angkor_target():
-			"tour_info":
-				_tour.read(_scene_id)
-				_save_tour()
-				_ui.show_information(TourCatalog.STOPS[_scene_id].title, TourCatalog.STOPS[_scene_id].info)
-			"tour_activity": _show_tour_activity()
-			"tour_record": _show_tour_record()
-		return
-	var target := _targets.get(_next_angkor_target()) as ExplorationTarget
-	if is_instance_valid(target): _on_target_selected(target)
-
-
-func _tour_hint() -> String:
-	if _is_observation_stop():
-		var entry: Dictionary = _tour.state(_scene_id)
-		var multiple_views := TourCatalog.views(_scene_id).size() > 1
-		if not entry.read: return "读一读「景点介绍」，再切换视角观察这一站。" if multiple_views else "读一读「景点介绍」，静静观察高脚屋与水影。"
-		if entry.choice < 0: return "点击「%s」，选一种印象写进手记。" % str(TourCatalog.STOPS[_scene_id].object)
-		if not entry.recorded: return "点击「记录这一站」，确认留下你的旅行印象。"
-		return "这一站已记录。可以切换视角继续观景，或打开旅行路线册。" if multiple_views else "这一站已记录。继续欣赏水上村落，或打开旅行路线册。"
-	if _panorama: return "静静欣赏眼前的风景。点击「返回地面漫步」，可继续探索与记录。"
-	var entry: Dictionary = _tour.state(_scene_id)
-	if not entry.read: return "走近「景点介绍」，了解这一站的故事。"
-	if entry.choice < 0: return "走到「%s」，%s。" % [TourCatalog.STOPS[_scene_id].object, TourCatalog.STOPS[_scene_id].activity]
-	if not entry.recorded: return "走到前方「记录这一站」，留下你的旅行印象。"
-	return "这一站已记录。继续漫步，或点击「下一站」前往新的景点。"
-
-
-func _save_tour() -> void:
-	_update_postcard_hud()
-	var store := get_node_or_null("/root/SaveStore")
-	if store != null and not store.call("set_tour_progress", _tour.serialize()):
-		_ui.show_feedback("暂时无法保存；本次旅行仍可继续。")
-
-
-func _show_tour_activity() -> void:
-	var stop: Dictionary = TourCatalog.STOPS[_scene_id]
-	if _tour.stage(_scene_id) == 3:
-		_show_tour_record()
-		return
-	_postcard_context = "tour_choice"
-	var choices: Array[String] = []
-	choices.assign(stop.choices)
-	_ui.show_postcard(stop.activity, stop.prompt, choices)
-
-
-func _show_tour_record() -> void:
-	if _paused or _transitioning: return
-	_traveler.cancel_path()
-	_pending_target = null
-	_clear_destination()
-	var stop: Dictionary = TourCatalog.STOPS[_scene_id]
-	var entry: Dictionary = _tour.state(_scene_id)
-	_postcard_context = "tour_status"
-	if entry.recorded:
-		_ui.show_postcard(stop.title + " · 旅行记录", "这一站已记录 ✓\n\n%s\n\n%s" % [stop.choices[entry.choice], stop.replies[entry.choice]])
-	elif _tour.stage(_scene_id) == 2 and _can_tour_interact("tour_record"):
-		_postcard_context = "tour_record"
-		_ui.show_postcard("留下这一站的印象", "%s\n\n%s" % [stop.title, stop.replies[entry.choice]], ["记入旅行手记"])
-	else:
-		_ui.show_postcard(stop.title + " · 旅行记录", _tour_hint())
-
-
 func _palace_floor(scene_name: String) -> PackedVector2Array:
 	if scene_name == "palace_hall":
 		return PackedVector2Array([Vector2(410, 286), Vector2(866, 286), Vector2(1020, 370), Vector2(1130, 540), Vector2(1080, 700), Vector2(190, 700), Vector2(150, 540), Vector2(300, 370)])
@@ -501,18 +380,6 @@ func _palace_walls(scene_name: String) -> Array[PackedVector2Array]:
 		var angle := TAU * float(index) / 32.0
 		lawn.append(Vector2(645, 478) + Vector2(cos(angle) * 337.0, sin(angle) * 83.0))
 	return [lawn]
-
-
-func _build_palace_targets(scene_name: String) -> void:
-	if scene_name == "palace_garden":
-		_add_target("palace_architecture", "palace_architecture", "建筑介绍", Vector2(1115, 550), Vector2(1040, 580), Vector2(80, 74))
-		_add_target("palace_view", "palace_view", "庭院观景", Vector2(177, 590), Vector2(275, 600), Vector2(74, 74))
-		_add_target("palace_door", "palace_enter", "进入独立宫", Vector2(640, 320), Vector2(640, 352), Vector2(130, 82))
-		_add_target("post_office_return", "post_office_return", "返回中央邮局", Vector2(640, 674), Vector2(640, 640), Vector2(160, 62))
-	else:
-		_add_target("palace_exhibit", "palace_exhibit", "接待厅展览说明", Vector2(640, 253), Vector2(640, 322), Vector2(150, 70))
-		_add_target("palace_souvenir", "palace_souvenir", "参观纪念台", Vector2(1110, 355), Vector2(990, 430), Vector2(120, 100))
-		_add_target("palace_exit", "palace_exit", "返回庭院", Vector2(640, 680), Vector2(640, 630), Vector2(170, 70))
 
 
 func _outdoor_floor() -> PackedVector2Array:
@@ -685,34 +552,9 @@ func _on_traveler_blocked() -> void:
 
 func _activate_target(target: ExplorationTarget) -> void:
 	match target.target_kind:
-		"tour_info":
-			_tour.read(_scene_id)
-			_save_tour()
-			_ui.show_information(TourCatalog.STOPS[_scene_id].title, TourCatalog.STOPS[_scene_id].info)
-		"tour_activity":
-			_show_tour_activity()
-		"tour_record":
-			_show_tour_record()
 		"palace_travel":
 			_ui.close_modal()
 			_transition_to("palace_garden")
-		"post_office_return":
-			_transition_to("outdoor")
-		"palace_enter":
-			_transition_to("palace_hall")
-		"palace_exit":
-			_transition_to("palace_garden")
-		"palace_architecture":
-			_record_palace_stop("architecture")
-			_ui.show_information("独立宫 · 建筑与光影", Palace.INFO)
-		"palace_view":
-			_record_palace_stop("garden")
-			_ui.show_information("在庭院停一会儿", Palace.VIEW)
-		"palace_exhibit":
-			_record_palace_stop("exhibit")
-			_ui.show_information("独立宫 · 历史的一页", Palace.EXHIBIT)
-		"palace_souvenir":
-			_show_palace_visit()
 		"info":
 			if _postcard.read_sign():
 				_save_postcard()
@@ -750,10 +592,10 @@ func _near_target(id: String) -> bool:
 
 
 func _update_postcard_hud() -> void:
-	if TourCatalog.is_new_stop(_scene_id):
-		_ui.set_stop_progress(TourCatalog.STOPS[_scene_id].title, _tour.stage(_scene_id), _tour_hint(), _is_observation_stop())
-	elif _scene_id.begins_with("palace_"):
-		_ui.set_visit_progress(_palace.stage(), Palace.HINTS[_palace.stage()])
+	var stop_id := TourCatalog.stop_for_scene(_scene_id)
+	var introduction_only := stop_id != "post_office"
+	if introduction_only:
+		_ui.set_introduction(TourCatalog.STOPS[stop_id].title)
 	else:
 		var hint: String = Postcard.HINTS[_postcard.stage()]
 		if _postcard.sent:
@@ -764,45 +606,22 @@ func _update_postcard_hud() -> void:
 		if completed: count += 1
 	_ui.set_route_progress(count, not _next_stop_id().is_empty(), TourCatalog.STOPS.size())
 	_ui.set_views(TourCatalog.views(_scene_id).size(), _view_index, _panorama, _is_observation_stop())
-	var next_target := _targets.get(_next_angkor_target()) as ExplorationTarget
-	if _is_observation_stop():
-		_ui.set_exploration_action({"tour_info":"景点介绍", "tour_activity":TourCatalog.STOPS[_scene_id].object, "tour_record":"记录这一站"}.get(_next_angkor_target(), ""), false)
-	else:
-		_ui.set_exploration_action(next_target.display_name if is_instance_valid(next_target) else "")
+	_ui.set_exploration_action("")
+	if introduction_only:
+		_ui.set_introduction_hint(_panorama)
 
 
 func _show_current_journey() -> void:
-	if TourCatalog.is_new_stop(_scene_id):
-		_show_tour_record()
-	elif _scene_id.begins_with("palace_"):
-		_show_palace_visit()
-	else:
+	if _paused or _transitioning: return
+	var stop_id := TourCatalog.stop_for_scene(_scene_id)
+	if stop_id == "post_office":
 		_show_postcard()
-
-
-func _record_palace_stop(stop: String) -> void:
-	if not _palace.record(stop):
 		return
-	_update_postcard_hud()
-	var save_store := get_node_or_null("/root/SaveStore")
-	if save_store != null and not save_store.call("set_palace_progress", _palace.serialize()):
-		_ui.show_feedback("暂时无法保存；本次参观仍可继续。")
-
-
-func _show_palace_visit() -> void:
-	if _paused or _transitioning:
-		return
+	if _ui.has_modal(): return
 	_traveler.cancel_path()
 	_pending_target = null
 	_clear_destination()
-	_postcard_context = "palace_status"
-	if _palace.stage() == 4:
-		_ui.show_postcard("独立宫 · 旅行纪念", "独立宫参观完成 ✓\n\n庭院里的水声、立面的光影，还有大厅里留存的历史，成为今天旅途的新一页。\n\n打开旅行路线册，继续认识西贡。")
-	elif _palace.stage() == 3 and _near_target("palace_souvenir"):
-		_postcard_context = "palace_collect"
-		_ui.show_postcard("为这一站留下纪念", "建筑、庭院与历史，已经串成今天的参观路线。收下一枚独立宫旅行纪念，记住这段慢慢走过的时光。", ["收下旅行纪念"])
-	else:
-		_ui.show_postcard(Palace.TITLE, Palace.HINTS[_palace.stage()])
+	_ui.show_information(TourCatalog.STOPS[stop_id].title, TourCatalog.STOPS[stop_id].info)
 
 
 func _save_postcard() -> void:
@@ -849,22 +668,6 @@ func _on_postcard_choice(index: int) -> void:
 		return
 	var changed := false
 	match _postcard_context:
-		"tour_choice":
-			if TourCatalog.is_new_stop(_scene_id) and _can_tour_interact("tour_activity") and _tour.choose(_scene_id, index):
-				_save_tour()
-				_postcard_context = "tour_status"
-				_ui.show_information(TourCatalog.STOPS[_scene_id].activity, TourCatalog.STOPS[_scene_id].replies[index] + "\n\n" + _tour_hint())
-			return
-		"tour_record":
-			if index == 0 and TourCatalog.is_new_stop(_scene_id) and _can_tour_interact("tour_record") and _tour.record(_scene_id):
-				_save_tour()
-				_show_tour_record()
-			return
-		"palace_collect":
-			if index == 0 and _scene_id == "palace_hall" and _near_target("palace_souvenir"):
-				_record_palace_stop("souvenir")
-				_show_palace_visit()
-			return
 		"offer":
 			if index == 0 and _near_target("photographer"):
 				changed = _postcard.accept()

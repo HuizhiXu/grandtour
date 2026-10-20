@@ -74,22 +74,21 @@ func _verify() -> void:
 		_check(main.has_method("_request_walk"), "pack retains click-to-move routing")
 		_check(targets.has("palace_travel"), "pack includes next stop route")
 		main.call("_setup_scene", "palace_garden", Vector2(640, 640))
-		_check((main.get("_targets") as Dictionary).has("palace_door"), "pack builds palace garden")
+		_check((main.get("_targets") as Dictionary).is_empty(), "palace garden has no exploration tasks")
 		main.call("_setup_scene", "palace_hall", Vector2(640, 620))
-		_check((main.get("_targets") as Dictionary).has("palace_souvenir"), "pack builds palace hall")
+		_check((main.get("_targets") as Dictionary).is_empty(), "palace hall has no souvenir quest")
 		for id: String in TourCatalog.STOPS:
 			if not TourCatalog.is_new_stop(id): continue
 			main.call("_setup_scene", id, Vector2(640, 620))
-			var observation_only: bool = TourCatalog.STOPS[id].get("observation_only", false)
-			_check((main.get("_targets") as Dictionary).has("tour_activity") != observation_only, "pack builds correct tour interaction mode: " + id)
+			_check((main.get("_targets") as Dictionary).is_empty(), "scenic stop has no exploration tasks: " + id)
 			var guidance := (main.get("_ui") as Control).get("_exploration_button") as Button
-			_check(guidance != null and guidance.visible == id.begins_with("angkor_"), "pack includes Angkor walking guidance: " + id)
+			_check(guidance != null and not guidance.visible, "pack hides exploration guidance: " + id)
 			for view_index in range(TourCatalog.views(id).size()):
 				_check(ResourceLoader.exists(TourCatalog.background_path(id, view_index)), "pack includes view: %s/%d" % [id, view_index])
 				main.call("_setup_scene", id, Vector2(640, 620), view_index)
 				_check(main.get("_view_index") == view_index, "pack switches view: %s/%d" % [id, view_index])
 				if main.get("_panorama"):
-					_check(guidance.visible == observation_only, "pack uses observation actions only at observation stops: " + id)
+					_check(not guidance.visible, "pack uses observation actions only at observation stops: " + id)
 					_check(not (main.get("_traveler") as Node2D).visible, "pack hides walking actor in panoramas: " + id)
 			if not TourCatalog.views(id).is_empty():
 				main.call("_show_views")

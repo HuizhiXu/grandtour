@@ -1,5 +1,7 @@
 extends RefCounted
 
+## Legacy save compatibility for the retired three-choice activities.
+const LEGACY_CHOICE_COUNT := 3
 const Catalog := preload("res://scripts/game/tour_catalog.gd")
 var _stops: Dictionary = {}
 
@@ -18,7 +20,7 @@ func read(id: String) -> void:
 	_stops[id] = entry
 
 func choose(id: String, choice: int) -> bool:
-	if not Catalog.is_new_stop(id) or choice < 0 or choice >= Catalog.STOPS[id].choices.size(): return false
+	if not Catalog.is_new_stop(id) or choice < 0 or choice >= LEGACY_CHOICE_COUNT: return false
 	var entry := state(id)
 	if entry.recorded: return false
 	entry.choice = choice
@@ -42,6 +44,6 @@ func restore(data: Dictionary) -> void:
 		var raw: Dictionary = data[id]
 		var value: Variant = raw.get("choice", -1)
 		var choice := int(value) if value is int or value is float else -1
-		if choice < 0 or choice >= Catalog.STOPS[id].choices.size(): choice = -1
+		if choice < 0 or choice >= LEGACY_CHOICE_COUNT: choice = -1
 		var read_done: bool = raw.get("read", false) == true
 		_stops[id] = {"read": read_done, "choice": choice, "recorded": raw.get("recorded", false) == true and read_done and choice >= 0}
