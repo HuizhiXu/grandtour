@@ -32,7 +32,7 @@ def main() -> None:
             updated,
         )
         updated, size_count = re.subn(
-            r"(?m)^process/size_limit=\\d+$",
+            r"(?m)^process/size_limit=\d+$",
             f"process/size_limit={MAX_TEXTURE_EDGE}",
             updated,
         )
