@@ -114,9 +114,17 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         stopObserving();
         console.error('[game-loading] Startup failed', error);
         loading.hidden = false;
+        const details = String(error && (error.message || error) || 'Unknown startup error').slice(0, 240);
+        const category = /memory|alloc|out of memory/i.test(details) ? 'memory'
+          : /fetch|network|failed to load|could not be loaded|404|HTTP/i.test(details) ? 'network'
+          : /wasm|webassembly|compile|instantiate/i.test(details) ? 'webassembly'
+          : /webgl|browser features|unsupported/i.test(details) ? 'compatibility'
+          : 'startup';
         status.textContent = zh ? '游戏加载失败，请重试。' : 'Unable to load the game. Please retry.';
+        notice.hidden = false;
+        notice.textContent = (zh ? '错误类型：' : 'Error category: ') + category + ' · ' + details;
+        notice.setAttribute('role', 'alert');
         progress.hidden = true;
-        notice.hidden = true;
         retry.hidden = false;
       };
       // Some Godot bootstrap promises do not forward download/compile failures.
