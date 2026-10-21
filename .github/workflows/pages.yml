@@ -30,8 +30,15 @@ jobs:
           template_dir="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
           python3 tools/fetch_web_template.py --version "$GODOT_VERSION" --output "$template_dir/web_nothreads_release.zip"
           python3 tools/fetch_web_template.py --version "$GODOT_VERSION" --debug --output "$template_dir/web_nothreads_debug.zip"
+      - name: Optimize web scene textures
+        run: python3 tools/optimize_web_textures.py
       - name: Import and export the playable game
         run: bash tools/export_web.sh
+      - name: Report download sizes
+        shell: bash
+        run: |
+          du -h dist/web/* | sort -h
+          python3 tools/check_web_size.py dist/web
       - name: Verify the in-game license page before publishing
         run: python3 tools/verify_web_licenses.py dist/web/open-source-licenses.html
       - name: Verify movement, interactions and postcard quest
