@@ -5,7 +5,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 STOPS = (
     "datong_city_wall", "datong_huayan", "datong_shanhua",
-    "datong_nine_dragon_wall", "datong_yungang", "datong_hengshan",
+    "datong_nine_dragon_wall", "datong_yungang",
     "datong_hanging_temple", "yingxian_wooden_pagoda",
 )
 

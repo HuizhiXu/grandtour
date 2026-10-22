@@ -14,14 +14,14 @@ func _initialize() -> void:
 func _run() -> void:
 	var store := root.get_node("SaveStore")
 	var original: Dictionary = store.get("_data").duplicate(true)
-	# A valid stop from another journey must not become a Datong bookmark.
-	store.get("_data")["travel_bookmarks"] = {"datong": "angkor_wat", "angkor": "angkor_bayon"}
+	# Existing saves may still point to the removed Hengshan stop.
+	store.get("_data")["travel_bookmarks"] = {"datong": "datong_hengshan", "angkor": "angkor_bayon"}
 	_main = MAIN.instantiate()
 	root.add_child(_main)
 	await _layout()
 	_ui = _main.get("_ui")
 	_check(_ui.has_modal(), "startup opens the travel library")
-	_check((_main.get("_journey_bookmarks") as Dictionary).get("datong", "") == "", "cross-journey bookmark ignored")
+	_check((_main.get("_journey_bookmarks") as Dictionary).get("datong", "") == "", "removed stop bookmark ignored")
 	_check((_main.get("_journey_bookmarks") as Dictionary).get("angkor") == "angkor_bayon", "valid bookmark restored")
 	var shelf := _ui.find_child("JourneyShelf", true, false)
 	_check(shelf != null and shelf.get_child_count() == 3, "three separate journey covers")

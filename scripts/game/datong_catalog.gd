@@ -3,9 +3,9 @@ extends RefCounted
 
 const ROUTE: Dictionary = {
 	"journey": "datong", "title": "大同及周边 · 晋北古建之旅", "tab": "晋北古建",
-	"subtitle": "古城墙 → 华严寺 → 善化寺 → 九龙壁 → 云冈石窟 → 恒山 → 悬空寺 → 应县木塔",
+	"subtitle": "古城墙 → 华严寺 → 善化寺 → 九龙壁 → 云冈石窟 → 悬空寺 → 应县木塔",
 	"note": "从古城的砖瓦走向山间的木构，再到应县仰望古塔。可按绘本顺序浏览，也可自由选站；城外及应县之间采用乘车转场。应县木塔位于朔州市应县，是本册的周边延伸站。",
-	"stops": ["datong_city_wall", "datong_huayan", "datong_shanhua", "datong_nine_dragon_wall", "datong_yungang", "datong_hengshan", "datong_hanging_temple", "yingxian_wooden_pagoda"]
+	"stops": ["datong_city_wall", "datong_huayan", "datong_shanhua", "datong_nine_dragon_wall", "datong_yungang", "datong_hanging_temple", "yingxian_wooden_pagoda"]
 }
 
 const STOPS: Dictionary = {
@@ -29,12 +29,8 @@ const STOPS: Dictionary = {
 		"title": "云冈石窟", "scene": "datong_yungang", "region": "山西 · 大同", "area": "云冈",
 		"info": "云冈石窟开凿于北魏时期，石刻艺术在这里与山崖融为一体。本幅是第 20 窟露天大佛：宽阔的面容、袈裟的衣纹与风化的岩壁，记录着时间留下的痕迹。人物只在护栏外的参观步道漫步，石刻和崖壁保留为观赏区域。"
 	},
-	"datong_hengshan": {
-		"title": "恒山", "scene": "datong_hengshan", "region": "山西 · 浑源", "area": "恒山", "observation_only": true,
-		"info": "北岳恒山位于大同市浑源县，山中的庙宇依山势而建。本幅远望恒宗殿一带的建筑群：红墙、黄瓦、白石栏与松树层层相叠，背后是高大的崖壁。静静观景，体会建筑如何顺着山体展开。"
-	},
 	"datong_hanging_temple": {
-		"title": "悬空寺", "scene": "datong_hanging_temple", "region": "山西 · 浑源", "area": "恒山", "observation_only": true,
+		"title": "悬空寺", "scene": "datong_hanging_temple", "region": "山西 · 浑源", "area": "浑源", "observation_only": true,
 		"info": "悬空寺位于大同市浑源县，依翠屏峰崖壁而建。木构楼阁、狭长栈道与岩壁彼此相接，形成高低错落的轮廓。嵌入山体的横梁是理解其结构的重要线索；从远处观察，也能看见细长立柱与层层屋檐之间的关系。"
 	},
 	"yingxian_wooden_pagoda": {
