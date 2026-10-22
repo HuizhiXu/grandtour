@@ -41,6 +41,8 @@ jobs:
         run: |
           du -h dist/web/* | sort -h
           python3 tools/check_web_size.py dist/web
+      - name: Verify download recovery and loading progress
+        run: node tools/test_web_loader.mjs dist/web/game-$(git rev-parse --short=12 HEAD).js
       - name: Verify the in-game license page before publishing
         run: python3 tools/verify_web_licenses.py dist/web/open-source-licenses.html
       - name: Verify movement, interactions and postcard quest
@@ -53,6 +55,7 @@ jobs:
           "$GODOT_BIN" --headless --path . --script res://test/archie_animation_suite.gd
           "$GODOT_BIN" --headless --path . --script res://test/palace_suite.gd
           "$GODOT_BIN" --headless --path . --script res://test/tour_suite.gd
+          "$GODOT_BIN" --headless --path . --script res://test/journey_suite.gd
       - name: Verify exported playable pack in isolation
         shell: bash
         run: |

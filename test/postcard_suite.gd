@@ -26,6 +26,7 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	var ui := main.get("_ui") as ExplorationUI
+	ui.close_modal()
 	var traveler := main.get("_traveler") as Traveler
 	await _capture("01-street")
 	await _test_movement(main)

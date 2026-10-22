@@ -14,6 +14,7 @@ func _run() -> void:
 	root.add_child(main)
 	await physics_frame
 	await physics_frame
+	(main.get("_ui") as Control).call("close_modal")
 	var traveler := main.get("_traveler") as Traveler
 	var floor: PackedVector2Array = main.call("_outdoor_floor")
 	var pathfinder := main.get("_pathfinder") as IsoPathfinder

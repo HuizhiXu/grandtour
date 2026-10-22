@@ -3,6 +3,12 @@
   "checks": [
     {
       "kind": "script",
+      "path": "res://test/journey_suite.gd",
+      "expect": "[journey-tests] PASS:",
+      "profile": "source"
+    },
+    {
+      "kind": "script",
       "path": "res://test/tour_suite.gd",
       "expect": "[tour-tests] PASS:",
       "profile": "source"

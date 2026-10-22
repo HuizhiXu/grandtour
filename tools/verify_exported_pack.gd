@@ -66,7 +66,15 @@ func _verify() -> void:
 		root.add_child(main)
 		await process_frame
 		await process_frame
-		_check(str(main.get("_scene_id")) == "outdoor", "pack boots directly into the street")
+		_check(str(main.get("_scene_id")) == "outdoor", "pack prepares the street behind the travel library")
+		var library_ui := main.get("_ui") as Control
+		_check(library_ui.call("has_modal"), "pack opens the travel library")
+		_check(library_ui.find_child("Journey_datong", true, false) != null, "pack includes the Datong cover")
+		library_ui.call("close_modal")
+		for journey: Dictionary in TourCatalog.JOURNEYS:
+			_check(ResourceLoader.exists(str(journey.cover)), "exported journey cover: " + str(journey.id))
+		for id: String in TourCatalog.Datong.STOPS:
+			_check(not ResourceLoader.exists("res://assets/game/scenes/%s-v1.png" % id), "Datong source PNG excluded: " + id)
 		_check(main.get("_traveler") is CharacterBody2D, "pack creates a controllable traveler")
 		var targets: Dictionary = main.get("_targets")
 		for target_id: String in ["post_office_info", "old_mailbox", "photographer", "post_office_door"]:

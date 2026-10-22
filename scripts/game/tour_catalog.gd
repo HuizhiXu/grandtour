@@ -2,13 +2,20 @@ extends RefCounted
 ## Scenic stops with introductions; the post office retains its postcard quest.
 
 const Angkor := preload("res://scripts/game/angkor_catalog.gd")
+const Datong := preload("res://scripts/game/datong_catalog.gd")
+const JOURNEYS: Array[Dictionary] = [
+	{"id": "saigon", "title": "西贡漫步", "region": "越南 · 胡志明市", "subtitle": "街道、建筑与城市日常", "description": "从老邮局的第一张明信片出发。", "cover": "res://assets/game/runtime/saigon-exterior.jpg", "start": "post_office", "routes": [0, 1]},
+	{"id": "angkor", "title": "吴哥寻迹", "region": "柬埔寨 · 暹粒", "subtitle": "在树林与石刻之间慢慢走", "description": "沿着石道，翻开古寺与湖畔的风景。", "cover": "res://assets/game/runtime/tour-angkor_wat.jpg", "start": "angkor_south_gate", "routes": [2]},
+	{"id": "datong", "title": "大同及周边", "region": "中国 · 山西", "subtitle": "一册晋北古建之旅", "description": "从古城、石窟走向悬空寺与应县木塔。", "cover": "res://assets/game/runtime/tour-datong_hanging_temple.jpg", "start": "datong_city_wall", "routes": [3]},
+]
 const ROUTES: Array[Dictionary] = [
 	{"title": "经典建筑与城市漫步", "subtitle": "独立宫 → 红教堂 → 中央邮局 → 书街 → 市政厅 → 歌剧院 → 阮惠步行街 → 咖啡公寓", "note": "沿城市中心慢慢走，从历史建筑走向当代街头。教堂、市政厅和歌剧院以外观欣赏为主。", "stops": ["palace", "cathedral", "post_office", "book_street", "city_hall", "opera", "nguyen_hue", "cafe_apartments"]},
 	{"title": "市场、艺术与历史", "subtitle": "滨城市场 → 美术馆 → 粉红教堂 → 战争遗迹博物馆", "note": "市场与美术馆相邻；粉红教堂较远，可乘车前往。可自由选站，也可把战争遗迹博物馆与独立宫一起参观，减少折返。", "stops": ["ben_thanh", "fine_arts", "pink_church", "war_museum"]},
 	Angkor.ROUTE,
+	Datong.ROUTE,
 ]
 
-static var STOPS: Dictionary = SAIGON_STOPS.merged(Angkor.STOPS)
+static var STOPS: Dictionary = SAIGON_STOPS.merged(Angkor.STOPS).merged(Datong.STOPS)
 
 const SAIGON_STOPS: Dictionary = {
 	"palace": {"title": "独立宫", "scene": "palace_garden", "info": "独立宫由建筑师吴曰树（Ngô Viết Thụ）设计，于 1966 年落成。横向舒展的楼体与立面遮阳构件，将现代建筑语言与东方意象结合在一起。"},
@@ -78,3 +85,19 @@ static func background_path(id: String, view_index: int = 0) -> String:
 	if not perspectives.is_empty():
 		return "res://assets/game/runtime/tour-%s.jpg" % perspectives[clampi(view_index, 0, perspectives.size() - 1)].art
 	return "res://assets/game/runtime/tour-%s.jpg" % id
+
+
+static func journey(id: String) -> Dictionary:
+	for entry: Dictionary in JOURNEYS:
+		if entry.id == id: return entry
+	return {}
+
+
+static func journey_for_route(route_index: int) -> Dictionary:
+	for entry: Dictionary in JOURNEYS:
+		if route_index in entry.routes: return entry
+	return JOURNEYS[0]
+
+
+static func journey_for_stop(id: String) -> Dictionary:
+	return journey_for_route(route_for_stop(id))

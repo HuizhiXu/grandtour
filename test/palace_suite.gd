@@ -12,6 +12,7 @@ func _run() -> void:
 	await process_frame
 	main.call("_setup_scene", "palace_garden", Vector2(640, 640))
 	var ui := main.get("_ui") as ExplorationUI
+	ui.close_modal()
 	_check((main.get("_targets") as Dictionary).is_empty(), "palace no longer offers visit tasks or an entrance quest")
 	_check(not main.has_method("_show_palace_visit"), "souvenir collection removed")
 	var pathfinder = main.get("_pathfinder")

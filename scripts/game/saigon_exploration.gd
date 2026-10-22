@@ -47,6 +47,7 @@ var _view_index := 0
 var _panorama := false
 var _view_positions: Dictionary = {}
 var _ground_views: Dictionary = {}
+var _journey_bookmarks: Dictionary = {}
 
 
 func _ready() -> void:
@@ -54,6 +55,11 @@ func _ready() -> void:
 	var save_store := get_node_or_null("/root/SaveStore")
 	if save_store != null:
 		_postcard.restore(save_store.call("get_postcard_progress"))
+		var saved_bookmarks: Dictionary = save_store.call("get_travel_bookmarks")
+		for journey: Dictionary in TourCatalog.JOURNEYS:
+			var stop_id := str(saved_bookmarks.get(journey.id, ""))
+			if TourCatalog.STOPS.has(stop_id) and TourCatalog.journey_for_stop(stop_id).id == journey.id:
+				_journey_bookmarks[journey.id] = stop_id
 	var locale_service := get_node_or_null("/root/I18n")
 	if locale_service != null:
 		locale_service.call("set_locale", "zh-CN")
@@ -66,6 +72,7 @@ func _ready() -> void:
 		tuning_store.connect("value_changed", _on_tuning_changed)
 	_apply_tuning()
 	_update_postcard_hud()
+	_show_journeys()
 
 
 func _process(_delta: float) -> void:
@@ -163,6 +170,8 @@ func _build_ui() -> void:
 	_ui.postcard_requested.connect(_show_current_journey)
 	_ui.postcard_choice.connect(_on_postcard_choice)
 	_ui.routes_requested.connect(_show_routes)
+	_ui.journeys_requested.connect(_show_journeys)
+	_ui.journey_selected.connect(_select_journey)
 	_ui.route_selected.connect(func(index: int) -> void:
 		_route_index = index
 		_show_routes()
@@ -237,7 +246,7 @@ func _setup_scene(scene_name: String, player_spawn: Vector2, view_index: int = 0
 		floor_outline = _tour_floor(scene_name)
 		obstacles.assign(TourWorld.layout(scene_name, _view_index).obstacles)
 		if _panorama: walk_rect = Rect2()
-		var region := "暹粒" if scene_name.begins_with("angkor_") else "西贡"
+		var region: String = TourCatalog.STOPS[scene_name].get("region", "暹粒" if scene_name.begins_with("angkor_") else "西贡")
 		_ui.set_location("%s · %s" % [region, TourCatalog.STOPS[scene_name].title])
 		if not TourCatalog.views(scene_name).is_empty():
 			_ui.set_location("%s · %s" % [TourCatalog.STOPS[scene_name].title, TourCatalog.views(scene_name)[_view_index].title])
@@ -303,7 +312,35 @@ func _show_routes() -> void:
 	_pending_target = null
 	_clear_destination()
 	_postcard_context = "routes"
-	_ui.show_routes(TourCatalog.ROUTES, TourCatalog.STOPS, _route_index, TourCatalog.stop_for_scene(_scene_id), _completed_stops())
+	var journey := TourCatalog.journey_for_route(_route_index)
+	var resume_id := str(_journey_bookmarks.get(journey.id, journey.start))
+	_ui.show_routes(TourCatalog.ROUTES, TourCatalog.STOPS, _route_index, TourCatalog.stop_for_scene(_scene_id), _completed_stops(), journey, resume_id)
+
+
+func _show_journeys() -> void:
+	if _paused or _transitioning: return
+	_traveler.cancel_path()
+	_pending_target = null
+	_clear_destination()
+	_postcard_context = "journeys"
+	_ui.show_journeys(TourCatalog.JOURNEYS, TourCatalog.ROUTES, TourCatalog.STOPS, _journey_bookmarks, TourCatalog.stop_for_scene(_scene_id))
+
+
+func _select_journey(id: String) -> void:
+	if _paused or _transitioning: return
+	var journey := TourCatalog.journey(id)
+	if journey.is_empty(): return
+	var resume_id := str(_journey_bookmarks.get(id, journey.start))
+	_route_index = TourCatalog.route_for_stop(resume_id)
+	_show_routes()
+
+
+func _remember_stop(id: String) -> void:
+	var journey := TourCatalog.journey_for_stop(id)
+	_journey_bookmarks[journey.id] = id
+	var save_store := get_node_or_null("/root/SaveStore")
+	if save_store != null and not save_store.call("set_travel_bookmark", str(journey.id), id):
+		_ui.show_feedback("暂时无法保存停留位置；本次旅行仍可继续。")
 
 
 func _show_views() -> void:
@@ -335,11 +372,21 @@ func _travel_to_stop(id: String) -> void:
 	_route_index = TourCatalog.route_for_stop(id)
 	_ui.close_modal()
 	var scene: String = TourCatalog.STOPS[id].scene
-	if scene == _scene_id and _view_index == 0: return
+	if scene == _scene_id and _view_index == 0:
+		_remember_stop(id)
+		return
 	var from_stop := TourCatalog.stop_for_scene(_scene_id)
 	await _transition_to(scene)
+	_remember_stop(id)
 	var by_car := id == "pink_church" or from_stop == "pink_church"
-	_ui.show_feedback(("乘车转场 · " if by_car else "沿路线前往 · ") + str(TourCatalog.STOPS[id].title))
+	var heading := "沿路线前往 · "
+	if TourCatalog.journey_for_stop(id).id != TourCatalog.journey_for_stop(from_stop).id:
+		heading = "翻开新旅程 · "
+		by_car = false
+	elif TourCatalog.journey_for_stop(id).id == "datong":
+		by_car = TourCatalog.STOPS[id].area != TourCatalog.STOPS[from_stop].area
+	if by_car: heading = "乘车转场 · "
+	_ui.show_feedback(heading + str(TourCatalog.STOPS[id].title))
 
 
 func _next_stop_id() -> String:
@@ -731,7 +778,13 @@ func _set_paused(paused: bool) -> void:
 
 func _return_to_start() -> void:
 	_set_paused(false)
+	var journey := TourCatalog.journey_for_stop(TourCatalog.stop_for_scene(_scene_id))
+	if journey.id != "saigon":
+		_travel_to_stop(str(journey.start))
+		return
 	_setup_scene("outdoor", Vector2(640.0, 622.0))
+	_route_index = 0
+	_remember_stop("post_office")
 	_ui.show_feedback("旅程从西贡中央邮局前重新开始。")
 
 

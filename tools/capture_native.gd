@@ -15,6 +15,8 @@ func _capture() -> void:
 	root.add_child(main)
 	await process_frame
 	await process_frame
+	if OS.get_environment("GRANDTOUR_CAPTURE_LIBRARY") != "1":
+		(main.get("_ui") as Control).call("close_modal")
 	var stop := OS.get_environment("GRANDTOUR_CAPTURE_STOP")
 	if not stop.is_empty():
 		if not Catalog.STOPS.has(stop):
@@ -23,6 +25,8 @@ func _capture() -> void:
 			return
 		main.call("_travel_to_stop", stop)
 		while main.get("_transitioning"): await process_frame
+	var journey := OS.get_environment("GRANDTOUR_CAPTURE_JOURNEY")
+	if not journey.is_empty(): main.call("_select_journey", journey)
 	var view := OS.get_environment("GRANDTOUR_CAPTURE_VIEW")
 	if not view.is_empty():
 		var index := view.to_int()

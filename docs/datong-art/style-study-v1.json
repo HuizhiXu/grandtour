@@ -1,0 +1,105 @@
+{
+  "date": "2026-10-22",
+  "journey": {
+    "title": "大同及周边 · 晋北古建之旅",
+    "status": "proposed_awaiting_user_confirmation",
+    "scope": "大同市及朔州市应县；本轮仅研究与单张画风样图"
+  },
+  "proposed_stops": [
+    {
+      "id": "datong_yungang",
+      "title": "云冈石窟",
+      "area": "大同"
+    },
+    {
+      "id": "datong_huayan",
+      "title": "华严寺",
+      "area": "大同古城"
+    },
+    {
+      "id": "datong_shanhua",
+      "title": "善化寺",
+      "area": "大同古城"
+    },
+    {
+      "id": "datong_nine_dragon_wall",
+      "title": "九龙壁",
+      "area": "大同古城"
+    },
+    {
+      "id": "datong_city_wall",
+      "title": "大同古城墙",
+      "area": "大同古城"
+    },
+    {
+      "id": "datong_hanging_temple",
+      "title": "悬空寺",
+      "area": "大同市浑源县",
+      "required_by_user": true
+    },
+    {
+      "id": "datong_hengshan",
+      "title": "恒山",
+      "area": "大同市浑源县"
+    },
+    {
+      "id": "yingxian_wooden_pagoda",
+      "title": "应县木塔",
+      "area": "朔州市应县（大同周边延伸站）",
+      "required_by_user": true
+    }
+  ],
+  "sources": [
+    {
+      "title": "大同：传统文化现代科技的双向奔赴",
+      "url": "https://ai.dt.gov.cn/dtszf/whzctm/202509/87dc0d76d62149c99dcc6af1dab36b2b.shtml"
+    },
+    {
+      "title": "大同景区联动：古城、云冈、悬空寺、应县木塔",
+      "url": "https://dt.gov.cn/dtszf/lnzcfuxmd/202505/21cbfa7671ef48ba8fe5ff5999e268b8.shtml"
+    },
+    {
+      "title": "浑源县人民政府：悬空寺",
+      "url": "https://www.hunyuan.gov.cn/hyxrmzfz/sqgllssy/202307/c225082439fa4738b9b0d9e645b96483.shtml"
+    },
+    {
+      "title": "浑源县人民政府：恒山、悬空寺精品线路",
+      "url": "https://www.hunyuan.gov.cn/hyxrmzfz/dtyw/202607/3d3d40ae774943928549359bd2e52827.shtml"
+    },
+    {
+      "title": "山西省政府驻天津办事处：应县佛宫寺释迦塔位置",
+      "url": "https://sxszfztjb.shanxi.gov.cn/djgz/wmcj/202207/t20220721_9571815.shtml"
+    },
+    {
+      "title": "建筑图像来源：山西省政府驻广州办事处转载中国日报",
+      "url": "https://sxszfzgzb.shanxi.gov.cn/zshz/tzdt/202603/t20260330_10089990.shtml"
+    },
+    {
+      "title": "浑源文物保护利用实施方案：悬空寺简介与照片",
+      "url": "https://www.hunyuan.gov.cn/hyxrmzfz/tzbh/202403/28ad3231902d423eb2700144e7594c01/files/ef12bf54027b4833b5029f9099729811.pdf",
+      "page": 40
+    }
+  ],
+  "style_sample": {
+    "subject": "悬空寺外观全景",
+    "status": "awaiting_user_style_confirmation",
+    "integrated_into_game": false,
+    "generator": "built-in image_gen",
+    "output": "docs/datong-art/previews/hanging-temple-style-v1.png",
+    "style_reference": "assets/game/scenes/saigon-exterior.png",
+    "architecture_reference": {
+      "file": "docs/datong-art/references/hanging-temple-detail-official.jpg",
+      "image_url": "https://sxszfzgzb.shanxi.gov.cn/zshz/tzdt/202603/W020260330670658282499.jpg",
+      "publisher": "山西省人民政府驻广州办事处",
+      "upstream": "中国日报",
+      "article_date": "2026-03-30",
+      "roles": "建筑整体轮廓、屋檐、栈道、崖壁和材质事实参考"
+    },
+    "original_generated_file": "C:\\Users\\Sophia\\.codex\\generated_images\\01a162b9-c0df-7a90-8ef8-ca92aa2739d2\\exec-adaa5e2a-0e96-4a4d-945b-0cbb5e0b0963.png",
+    "prompt": "Use case: illustration-story.\nAsset type: ONE landscape 16:9 style approval sample for The Grand Tour interactive travel picture book, new Datong-and-surroundings chapter. Generate one complete full-bleed scene of Xuankong Si / Hanging Temple, Hunyuan, Shanxi, China. This is a single real location, not a composite of attractions.\n\nInput image roles, strict:\nImage 1 (saigon-exterior.png): STYLE REFERENCE ONLY. Match its precise fine brown pen drawing, clearly described architecture, transparent watercolor washes, subtle ivory watercolor paper grain, warm approachable travel picture-book atmosphere, controlled edges and legible detail. Do not copy the Vietnamese building, tropical plants, square, benches or vehicles.\nImage 2 (hanging-temple-detail-official.jpg): ARCHITECTURAL AND SITE REFERENCE, photograph republished by the Shanxi provincial government office on March 30 2026 from China Daily. Follow this photograph for actual Hanging Temple silhouette, proportions, existing condition, topology, roof shapes and the cliff. The entire complex in this photograph is the subject, not just a detail.\n\nSubject and composition: The temple runs along a towering rough, layered gray-buff cliff. Preserve the photo's actual asymmetric sequence: lower long red-walled temple court on stone masonry at left; projecting stacked timber pavilions around the center; narrow rising cliff-hugging wooden galleries connecting to the taller pavilion at upper right. Preserve the visually slender vertical supports, reddish-brown rails and posts, dark shadowed windows, actual restrained ochre and gray-green tiled roofs. Buildings must cling to the rock, with visible empty air below the projecting galleries. Do not turn them into free-standing buildings, do not put foundations under the hovering portions, do not invent symmetric repeated pagodas. The cliff must feel large relative to the delicate temple. Make the complete temple large and readable across the middle of the image with comfortable margin at both ends; do not crop any pavilion. Use the photograph's frontal slightly oblique observer view, widened naturally to 16:9, never an aerial or forced isometric view. Lower foreground retains rugged stone, a few natural shrubs and sparse muted foliage as in the photograph, giving depth without blocking the temple. Do not invent a broad plaza, a new bridge, a moat, a river or an imaginary approach staircase.\n\nStyle: Same finished architectural watercolor illustration language as Image 1, fine controlled warm-brown contour lines, carefully drawn beams and eaves, translucent mineral-color watercolor, airy luminous surfaces with modest paper grain. More detailed and crisp than a loose wash painting. Architectural lines are delicate, not thick black cartoon outlines. The rock uses light warm gray, limestone beige and soft cool shadow washes; timber uses aged subdued red-brown; roofs have restrained ochre and gray-green; sparse vegetation uses muted sage and olive. Bright gentle natural daytime, quiet, pleasant and contemplative. Maintain clear value separation between dark timber, pale rock and soft plants, with sufficient saturation to feel related to the postal reference. No sepia-only wash or overly desaturated grayscale.\n\nConstraints: One seamless landscape, opaque background, no UI, no labels, no typography, no watermark, no frame or collage, no legend, no paper page borders. Omit tourists and game characters so the architecture and painting style can be evaluated. Do not reproduce the photograph as a photo filter. No photorealism, no 3D render, no anime, no fantasy architecture, no exaggerated elevation or gigantic columns, no dramatic fog or sunset, no additional sites including the Yingxian Pagoda. Architecture must remain recognizable and structurally consistent with Image 2.",
+    "review": {
+      "visual_inspection": "生成图已目视检查；单场景、完整建筑、不含人物与界面；本轮用于画风确认。正式生产前需逐图核对建筑细节。",
+      "next_step": "等待用户确认景点范围与画风；确认前不批量生成、不接入游戏。"
+    }
+  }
+}

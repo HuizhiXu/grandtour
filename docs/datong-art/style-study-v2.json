@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-22",
+  "subject": "悬空寺",
+  "version": 2,
+  "parent": "style-study-v1.json",
+  "user_feedback": "还可以更加精美些",
+  "status": "approved",
+  "integrated_into_game": true,
+  "generator": "built-in image_gen",
+  "output": "docs/datong-art/previews/hanging-temple-style-v2.png",
+  "input_images": [
+    {
+      "role": "edit_target",
+      "path": "docs/datong-art/previews/hanging-temple-style-v1.png"
+    },
+    {
+      "role": "architecture_reference",
+      "path": "docs/datong-art/references/hanging-temple-detail-official.jpg"
+    },
+    {
+      "role": "style_family_reference",
+      "path": "assets/game/scenes/saigon-exterior.png"
+    }
+  ],
+  "refinements": [
+    "细化屋檐、栏杆与木构线条",
+    "增加暖色高光与灰紫阴影之间的层次",
+    "细腻水彩色块与材质过渡",
+    "保留第一版场景构图与完整建筑"
+  ],
+  "prompt": "Use case: style-transfer.\nAsset type: ONE revised 16:9 landscape architectural watercolor illustration for style approval, not yet a game production asset.\nPrimary request: Refine the existing Hanging Temple sample into a distinctly more exquisite, carefully art-directed, publication-quality travel picture-book illustration. The user likes the direction but asks for greater beauty and refinement. Make this a perceptible artistic improvement, not just extra sharpness or a denser texture.\n\nInput image 1: EDIT TARGET, current hanging-temple-style-v1.png. Preserve the location, full temple ensemble, composition, relative positions and architectural scale, original asymmetrical silhouette, the continuous cliff face, and the comfortable margins. Make the image visibly more beautiful through drawing quality, color relationships, material rendering and light.\nInput image 2: FACTUAL ARCHITECTURE REFERENCE, hanging-temple-detail-official.jpg. Use the photograph to guard the actual temple's timber pavilion forms, roof contours, galleries, slender supports and attachment to the rock. Do not copy tourists, signage, lettering or photographic surface noise. Retain existing-condition architecture.\nInput image 3: STYLE FAMILY REFERENCE ONLY, saigon-exterior.png. The same warm fine-line architectural travel picture-book world, transparent watercolor and subtle paper texture. Do not introduce the post office or any of its objects.\n\nRefinement direction:\n1. Elegant architectural craftsmanship. Draw the aged timber with exceptionally clean, delicate warm sepia lines, naturally varying line weight, precise little railings, layered brackets under the eaves, restrained wood grain, graceful tile rhythms, thin roof ridge ornaments and richly legible recesses. The building is the focal point. Avoid thick outlines, flat vector edges, generically repeated details, overdecorating, gilding or invented extra storeys.\n2. More sophisticated color and light. Replace the overall uniformly yellow cast with a luminous palette of pale warm limestone, some cool pearl-gray and muted lavender rock shadows, soft ochre highlights, aged cinnabar and reddish-brown wood, understated mineral gray-green and ochre roof tiles, and sage/olive plants. Keep warmth without orange saturation. Gentle angled daylight caresses eaves and rock ledges, giving delicate translucent shadows and subtle reflected light inside the timber galleries. The dark wood has color and depth, never featureless black.\n3. Controlled texture and spatial hierarchy. The first version has similarly busy scratches everywhere on the cliff. Group rock into convincing large geological planes with fine, selective fractures; give some surfaces broad soft watercolor washes and let delicate detail gather near the temple. Preserve the same massive real cliff. Vary hard and soft edges deliberately: refined crisp architecture, quieter less contrasty distant rock, beautifully but sparingly described foreground stone and vegetation. Natural atmospheric separation, no fog curtain or fading-away buildings. No coarse stipple, scratchy filter, gritty texture, uniform repeated marks, or oversharpened HDR.\n4. Fine watercolor finish. Smooth transparent glazing and subtle mineral pigment blooms, light ivory paper showing through, delicate chromatic transitions, modest paper tooth. Beautiful local detail integrated into a coherent hand-painted image. Finish like a lovingly crafted collectible architectural travel print with the clarity of a premium illustrated book. Watercolor must look intentional, clean and luminous rather than muddy, unfinished, photorealistic, plastic, or painterly blur.\n5. Foreground. Keep the existing rocky slope and sparse shrubs in their current general locations, but draw plant silhouettes with more natural variation, delicate twig/leaf detail and gentle greens; avoid large identical dark blobs. Let the plants frame the architecture unobtrusively. Add no new objects.\n\nStrict invariants: The entire existing temple remains visible; no newly invented structures, no duplicated buildings, no fantasy pagodas, no palace conversion, no change in landmark. Maintain visually slender supports and visibly cliff-hung wooden galleries. Keep full-bleed 16:9, opaque background. No border, no text or logos, no people or game characters, no UI, no reference sheet, no split screen, no montage. Produce a single substantially polished revision of the existing scene.",
+  "visual_review": "已目视检查生成图：完整单场景、建筑布局延续第一版、木构与色彩更加清楚，不含人物或界面。正式生产前仍需建筑细节核对。",
+  "original_generated_file": "C:\\Users\\Sophia\\.codex\\generated_images\\01a162b9-c0df-7a90-8ef8-ca92aa2739d2\\exec-fd8197a1-b485-4578-afe5-d7ab6773f4b4.png",
+  "user_approval": "可以 按照这个吧"
+}

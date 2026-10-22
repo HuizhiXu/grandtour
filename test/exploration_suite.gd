@@ -25,6 +25,7 @@ func _run() -> void:
 	_check(str(main.get("_scene_id")) == "outdoor", "starts in the exterior street")
 	var traveler := main.get("_traveler") as Traveler
 	var ui := main.get("_ui") as ExplorationUI
+	ui.close_modal()
 	_check(traveler != null, "player traveler exists")
 	_check(ui != null, "travel UI exists")
 	if traveler == null or ui == null:

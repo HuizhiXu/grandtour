@@ -80,7 +80,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       // No saved game preference is visible here: follow the browser's preferred language.
       const zh = String((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase().startsWith('zh');
       document.documentElement.lang = zh ? 'zh-CN' : 'en';
-      status.textContent = zh ? '正在加载…' : 'Loading…';
+      status.textContent = zh ? '正在连接资源服务器…' : 'Connecting to game downloads…';
       retry.textContent = zh ? '重试' : 'Retry';
       progress.setAttribute('aria-label', zh ? '下载进度' : 'Download progress');
       retry.addEventListener('click', () => window.location.reload());
@@ -95,7 +95,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         notice.hidden = false;
         retry.hidden = false;
         const message = performance.now() - lastProgressAt >= 30000
-          ? (zh ? '暂未看到新的加载进度。可以继续等待，或重试。' : 'No recent loading progress. You can keep waiting or retry.')
+          ? (zh ? '资源连接暂时没有进展，正在尝试恢复。也可以点击重试。' : 'The download connection has stalled. Trying to recover; you can also retry.')
           : (zh ? '仍在加载。可以继续等待，或重试。' : 'Still loading. You can keep waiting or retry.');
         if (notice.textContent !== message) notice.textContent = message;
       };
@@ -122,7 +122,10 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           : 'startup';
         status.textContent = zh ? '游戏加载失败，请重试。' : 'Unable to load the game. Please retry.';
         notice.hidden = false;
-        notice.textContent = (zh ? '错误类型：' : 'Error category: ') + category + ' · ' + details;
+        const hint = category === 'network'
+          ? (zh ? '资源下载中断或连接超时，请重试，或切换网络后再打开。' : 'A download was interrupted or timed out. Retry, or try another network.')
+          : '';
+        notice.textContent = hint + (hint ? ' ' : '') + (zh ? '错误类型：' : 'Error category: ') + category + ' · ' + details;
         notice.setAttribute('role', 'alert');
         progress.hidden = true;
         retry.hidden = false;
@@ -132,10 +135,10 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       window.addEventListener('unhandledrejection', onUnhandledRejection);
       const onProgress = (current, total) => {
         if (failed || ready) return;
-        // Repeated/unknown totals do not renew liveness; growing byte counts do.
-        if (Number.isFinite(current) && current > downloadedBytes) {
+        // A retry can reset byte counts; repeated/unknown totals are not progress.
+        if (Number.isFinite(current) && current >= 0) {
+          if (current > downloadedBytes) lastProgressAt = performance.now();
           downloadedBytes = current;
-          lastProgressAt = performance.now();
         }
         if (!downloadComplete && Number.isFinite(total) && total > 0 && Number.isFinite(current) && current >= total) {
           downloadComplete = true;
@@ -144,14 +147,19 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         updateNotice();
         if (!Number.isFinite(total) || total <= 0 || !Number.isFinite(current) || current < 0) {
           progress.removeAttribute('value');
-          status.textContent = zh ? '正在加载…' : 'Loading…';
+          status.textContent = current > 0
+            ? (zh ? `已下载 ${(current / 1048576).toFixed(1)} MiB…` : `Downloaded ${(current / 1048576).toFixed(1)} MiB…`)
+            : (zh ? '正在连接资源服务器…' : 'Connecting to game downloads…');
           return;
         }
         progress.max = total;
         progress.value = Math.min(current, total);
+        const bytes = `${(current / 1048576).toFixed(1)} / ${(total / 1048576).toFixed(1)} MiB`;
         status.textContent = current >= total
-          ? (zh ? '正在启动游戏…' : 'Starting game…')
-          : `${Math.floor(current / total * 100)}%`;
+          ? (zh ? '资源已下载，正在启动游戏…' : 'Downloads complete. Starting game…')
+          : current === 0
+            ? (zh ? `正在连接资源服务器…（共 ${(total / 1048576).toFixed(1)} MiB）` : `Connecting to game downloads… (${(total / 1048576).toFixed(1)} MiB)`)
+            : `${(current / total * 100).toFixed(1)}% · ${bytes}`;
       };
       const start = async () => {
         if (failed) return;
@@ -178,8 +186,15 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       };
       const script = document.createElement('script');
       script.src = '$GODOT_URL';
-      script.addEventListener('load', start, { once: true });
-      script.addEventListener('error', () => fail(new Error('Engine script could not be loaded')), { once: true });
+      const scriptTimeout = setTimeout(() => fail(new Error('Network connection timed out: engine script')), 30000);
+      script.addEventListener('load', () => {
+        clearTimeout(scriptTimeout);
+        start();
+      }, { once: true });
+      script.addEventListener('error', () => {
+        clearTimeout(scriptTimeout);
+        fail(new Error('Engine script could not be loaded'));
+      }, { once: true });
       document.head.appendChild(script);
     })();
   </script>

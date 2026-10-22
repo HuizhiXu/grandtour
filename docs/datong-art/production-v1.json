@@ -1,0 +1,127 @@
+{
+  "date": "2026-10-22",
+  "user_approval": "用户确认 hanging-temple-style-v2.png：可以 按照这个吧",
+  "generator": "built-in image_gen",
+  "status": "implemented_and_verified",
+  "style_reference": "docs/datong-art/previews/hanging-temple-style-v2.png",
+  "scenes": [
+    {
+      "id": "datong_huayan",
+      "title": "华严寺",
+      "ref": "huayan-official.jpg",
+      "source": "https://www.dt.gov.cn/dtszf/imagedatong/202411/70f13218f5a6484fbe3a4f1f953961b3.shtml",
+      "photo": "https://www.dt.gov.cn/dtszf/imagedatong/202411/70f13218f5a6484fbe3a4f1f953961b3/images/876d4688c6ff4a0caa03c79522a0b08b.jpg",
+      "prompt": "Use case: illustration-story. Create ONE complete full-bleed 16:9 landscape architectural travel illustration for The Grand Tour, Datong and surrounding region. Image 1 is the USER-APPROVED STYLE REFERENCE ONLY: refined tiny warm brown architectural ink lines, elegant precise beams/eaves/railings, luminous transparent watercolor, subtle ivory paper grain, pale warm stone with cool gray-lavender shadows, rich aged reddish timber, restrained mineral gray-green and ochre, naturally varied olive/sage foliage. Match its polished premium illustrated book finish and level of craftsmanship. Do not depict its Hanging Temple architecture or cliff unless present in the next photograph. Image 2 is the REAL SITE AND ARCHITECTURE reference. Follow its actual silhouette, scale, number of structures, distinctive details and their spatial relationships. Respect existing weathering, losses, repairs and modern surroundings; never invent a reconstruction. Preserve important foreground and background relationships rather than inventing a new site layout. Draw the site as an illustration, not a photo filter. Carefully control line weight and fine selective details, gentle bright daytime, understated chromatic washes, clear materials and depth; neither coarse scratches nor flat cartoon surfaces. No thick black contours, photorealism, 3D render, fantasy redesign, sepia-only wash or excessive yellow cast. Omit tourists and vehicles. No decorative titles, captions, logos, watermarks, game UI, frame, border, collage, or inserted characters. One seamless scene.\n\nSubject: Huayan Temple, Datong, as seen in the slightly elevated architectural overview photograph. The very large broad ochre-tiled hipped gable roof of the Great Buddha Hall at upper right is the primary subject, its reddish walls and modest doorways beneath. Retain the slender multi-tier timber pagoda at left, smaller gray-tiled courtyard roofs, quiet tree canopy, paths and enclosing walls at the photographed relative positions. The hall's roof must be broad and monumental, not converted into a multi-storey pagoda. Preserve the visible modern skyline far behind but render it quiet with light watercolor haze. Keep the architectural arrangement truthful; subtle enlargement of the hall for legibility is allowed, not architectural invention. Make the foreground roof planes and garden rich in delicate drawn craftsmanship and soft green shadows, with crisp hall silhouette. This is an observation panorama; do not create an imaginary open walking plaza.",
+      "generated_source": "C:\\Users\\Sophia\\.codex\\generated_images\\01a162b9-c0df-7a90-8ef8-ca92aa2739d2\\exec-4de82c73-7161-4834-804d-1ca511424cef.png",
+      "output": "assets/game/scenes/datong_huayan-v1.png",
+      "source_sha256": "000f88e4ee00762dbe4a45fe567684d2625872ed6778a433df7430b0fa2e104f",
+      "runtime": "assets/game/runtime/tour-datong_huayan.jpg",
+      "runtime_sha256": "2a7d60b5c584b8df9bb250bb3debf0444915b394dd9ee6d7ed02b5720ac619d2"
+    },
+    {
+      "id": "yingxian_wooden_pagoda",
+      "title": "应县木塔",
+      "ref": "yingxian-pagoda-official.png",
+      "source": "https://finance.sina.com.cn/jjxw/2026-03-12/doc-inhqtyyi4639470.shtml",
+      "photo": "https://n.sinaimg.cn/sinakd20260312s/697/w984h513/20260312/fa9a-edadbf932a8aa1b9d952b04700a0d542.png",
+      "attribution": "应县县委宣传部",
+      "prompt": "Use case: illustration-story. Create ONE complete full-bleed 16:9 landscape architectural travel illustration for The Grand Tour, Datong and surrounding region. Image 1 is the USER-APPROVED STYLE REFERENCE ONLY: refined tiny warm brown architectural ink lines, elegant precise beams/eaves/railings, luminous transparent watercolor, subtle ivory paper grain, pale warm stone with cool gray-lavender shadows, rich aged reddish timber, restrained mineral gray-green and ochre, naturally varied olive/sage foliage. Match its polished premium illustrated book finish and level of craftsmanship. Do not depict its Hanging Temple architecture or cliff unless present in the next photograph. Image 2 is the REAL SITE AND ARCHITECTURE reference. Follow its actual silhouette, scale, number of structures, distinctive details and their spatial relationships. Respect existing weathering, losses, repairs and modern surroundings; never invent a reconstruction. Preserve important foreground and background relationships rather than inventing a new site layout. Draw the site as an illustration, not a photo filter. Carefully control line weight and fine selective details, gentle bright daytime, understated chromatic washes, clear materials and depth; neither coarse scratches nor flat cartoon surfaces. No thick black contours, photorealism, 3D render, fantasy redesign, sepia-only wash or excessive yellow cast. Omit tourists and vehicles. No decorative titles, captions, logos, watermarks, game UI, frame, border, collage, or inserted characters. One seamless scene.\n\nSubject: Yingxian Wooden Pagoda / Fogong Temple Sakyamuni Pagoda, Ying County, Shuozhou, Shanxi. Use the photograph's elevated, slightly oblique full-tower view; preserve the octagonal tall timber mass, FIVE VISIBLE STOREYS with SIX EAVE ROOF LEVELS including the additional first-storey skirt eave, slender metal finial, broad low stone platform, open surrounding courtyard and enclosing subsidiary roofs. Carefully count and match the reference roof/eave layers; this is not a generic Chinese pagoda. Preserve the deep aged dark brown timber, muted gray tile, bracket stacks, slightly irregular existing form; no reconstruction into perfectly symmetric shiny red wood. Keep the entire finial, roof corners and base inside the frame with breathing space. Tower large and dominant near the center-right as in the photograph. Retain the quiet town rooftops and pale far mountains in back, becoming atmospheric instead of visually busy. A refined sunlit watercolor atmosphere, exquisite tiny carpentry and tile details. Observation panorama from the photographed viewpoint, do not invent a ground-level viewpoint or erase foreground roofs to make a walkable plaza.",
+      "generated_source": "C:\\Users\\Sophia\\.codex\\generated_images\\01a162b9-c0df-7a90-8ef8-ca92aa2739d2\\exec-193abc9e-7758-4275-90fd-33d54265cfeb.png",
+      "output": "assets/game/scenes/yingxian_wooden_pagoda-v1.png",
+      "source_sha256": "3bb3a2cd2b59a1d1752af938461b9496a289a292b612c9a8d7d14e846afa270e",
+      "runtime": "assets/game/runtime/tour-yingxian_wooden_pagoda.jpg",
+      "runtime_sha256": "6047d2ff567b23d1115939b57965b921bd0462d3b7a6f71b68d018b8c5acd6dc"
+    },
+    {
+      "id": "datong_yungang",
+      "title": "云冈石窟",
+      "ref": "yungang-20-official.png",
+      "source": "https://www.neac.gov.cn/seac/c103391/202306/1164735.shtml",
+      "photo": "https://www.neac.gov.cn/seac/c103391/202306/1164735/images/e9f2a553ae56431f861cebbba515bf72.png",
+      "prompt": "Use case: illustration-story. Create ONE complete full-bleed 16:9 landscape architectural travel illustration for The Grand Tour, Datong and surrounding region. Image 1 is the USER-APPROVED STYLE REFERENCE ONLY: refined tiny warm brown architectural ink lines, elegant precise beams/eaves/railings, luminous transparent watercolor, subtle ivory paper grain, pale warm stone with cool gray-lavender shadows, rich aged reddish timber, restrained mineral gray-green and ochre, naturally varied olive/sage foliage. Match its polished premium illustrated book finish and level of craftsmanship. Do not depict its Hanging Temple architecture or cliff unless present in the next photograph. Image 2 is the REAL SITE AND ARCHITECTURE reference. Follow its actual silhouette, scale, number of structures, distinctive details and their spatial relationships. Respect existing weathering, losses, repairs and modern surroundings; never invent a reconstruction. Preserve important foreground and background relationships rather than inventing a new site layout. Draw the site as an illustration, not a photo filter. Carefully control line weight and fine selective details, gentle bright daytime, understated chromatic washes, clear materials and depth; neither coarse scratches nor flat cartoon surfaces. No thick black contours, photorealism, 3D render, fantasy redesign, sepia-only wash or excessive yellow cast. Omit tourists and vehicles. No decorative titles, captions, logos, watermarks, game UI, frame, border, collage, or inserted characters. One seamless scene.\n\nSubject: Yungang Grottoes Cave 20 open-air Buddha, Datong. Follow the reference exactly: huge seated weathered Buddha within the open shallow rock alcove on the left, a smaller standing carved attendant to its right, irregular stratified sandstone rock facade with actual niches and openings continuing to the right; the leafy tree at the far right frames rather than obscures the sculpture. Preserve the Buddha's real broad serene features, shoulders, robe folds and actual weathered carved condition; no invented gold paint, no added hands or symmetrical attendants. Match the actual proportions of the seated statue and broken rock, no speculative restoration. The low protective barrier remains below the carvings. Retain a continuous clear paved visitor walkway across the bottom 17-20 percent of the picture below the barrier, gently widening toward the viewer, as in the photograph, suitable for the existing small game character to walk later. No painted people. Widen the photograph naturally to landscape 16:9 without cropping the head or terrace; do not turn protected sculpture bases into walking ground. Sunlit warm sandstone, cool recesses and soft sage green tree canopy, restrained expressive watercolor and delicate archaeological surface details.",
+      "generated_source": "C:\\Users\\Sophia\\.codex\\generated_images\\01a162b9-c0df-7a90-8ef8-ca92aa2739d2\\exec-b045ecfe-7e36-47b3-a8ed-669769eda492.png",
+      "output": "assets/game/scenes/datong_yungang-v1.png",
+      "source_sha256": "d8476d7d23b9b14d59896ad16836a88020379f5f9b712329a41f36ffa35abecf",
+      "runtime": "assets/game/runtime/tour-datong_yungang.jpg",
+      "runtime_sha256": "abe6690756fc1ff83c494f1209a9d1f282dfa7a048c4652ecb76376d70cbd993"
+    },
+    {
+      "id": "datong_shanhua",
+      "title": "善化寺",
+      "ref": "shanhua-official.jpg",
+      "source": "https://www.dt.gov.cn/english/placestovisit/202501/cd7de7ad65f34e00a8003945cc0c4e54.shtml",
+      "photo": "https://www.dt.gov.cn/english/placestovisit/202501/cd7de7ad65f34e00a8003945cc0c4e54/images/ef4d52a4b89d4808ac59f4c32c7e67d2.jpg",
+      "prompt": "Use case: illustration-story. Create ONE complete full-bleed 16:9 landscape architectural travel illustration for The Grand Tour, Datong and surrounding region. Image 1 is the USER-APPROVED STYLE REFERENCE ONLY: refined tiny warm brown architectural ink lines, elegant precise beams/eaves/railings, luminous transparent watercolor, subtle ivory paper grain, pale warm stone with cool gray-lavender shadows, rich aged reddish timber, restrained mineral gray-green and ochre, naturally varied olive/sage foliage. Match its polished premium illustrated book finish and level of craftsmanship. Do not depict its Hanging Temple architecture or cliff unless present in the next photograph. Image 2 is the REAL SITE AND ARCHITECTURE reference. Follow its actual silhouette, scale, number of structures, distinctive details and their spatial relationships. Respect existing weathering, losses, repairs and modern surroundings; never invent a reconstruction. Preserve important foreground and background relationships rather than inventing a new site layout. Draw the site as an illustration, not a photo filter. Carefully control line weight and fine selective details, gentle bright daytime, understated chromatic washes, clear materials and depth; neither coarse scratches nor flat cartoon surfaces. No thick black contours, photorealism, 3D render, fantasy redesign, sepia-only wash or excessive yellow cast. Omit tourists and vehicles. No decorative titles, captions, logos, watermarks, game UI, frame, border, collage, or inserted characters. One seamless scene.\n\nSubject: Shanhua Temple WEST GARDEN pond-side view, not an invented ancient main hall. Follow the reference photograph's genuine garden: water fills foreground; at left a traditional gray-roofed pavilion with an elevated little roof behind it, linked by a very long low covered walkway to a smaller pavilion on the right. Keep the pale stone balustrade around the far edge, restrained green trees, light hanging willow leaves at upper left and the real temple garden's layout. The pond's architecture reflections are painted as fine rippled translucent blue-green washes. Emphasize tranquil luminous water and elegant fine railings, turned roof corners, narrow columns and covered walkway detail; the palette should be related to Image 1 rather than harsh saturated photo greens. Natural pale sky gives breathing room while buildings remain large enough to appreciate. This is observation only: keep foreground water as water, add no stepping stones, bridge, island or dry plaza.",
+      "generated_source": "C:\\Users\\Sophia\\.codex\\generated_images\\01a162b9-c0df-7a90-8ef8-ca92aa2739d2\\exec-1d0f6025-64e2-43e1-a7db-2bcfbf73978b.png",
+      "output": "assets/game/scenes/datong_shanhua-v1.png",
+      "source_sha256": "3f92263deebbcdbce440a5b4a6107a4d30fe4837799fbe98e067df36cc5f1664",
+      "runtime": "assets/game/runtime/tour-datong_shanhua.jpg",
+      "runtime_sha256": "9730ade843b33fe247a94d207dc5c0e012c17079d6eab620a31c81912481ce24"
+    },
+    {
+      "id": "datong_nine_dragon_wall",
+      "title": "九龙壁",
+      "ref": "nine-dragon-official.jpg",
+      "source": "https://www.dt.gov.cn/dtszf/bumdtq/202402/c1e83cd66d484af69540c8cb52c957e6.shtml",
+      "photo": "https://www.dt.gov.cn/dtszf/bumdtq/202402/c1e83cd66d484af69540c8cb52c957e6/images/9963c1248f354814a9351d771f36ed86.jpg",
+      "prompt": "Use case: illustration-story. Create ONE complete full-bleed 16:9 landscape architectural travel illustration for The Grand Tour, Datong and surrounding region. Image 1 is the USER-APPROVED STYLE REFERENCE ONLY: refined tiny warm brown architectural ink lines, elegant precise beams/eaves/railings, luminous transparent watercolor, subtle ivory paper grain, pale warm stone with cool gray-lavender shadows, rich aged reddish timber, restrained mineral gray-green and ochre, naturally varied olive/sage foliage. Match its polished premium illustrated book finish and level of craftsmanship. Do not depict its Hanging Temple architecture or cliff unless present in the next photograph. Image 2 is the REAL SITE AND ARCHITECTURE reference. Follow its actual silhouette, scale, number of structures, distinctive details and their spatial relationships. Respect existing weathering, losses, repairs and modern surroundings; never invent a reconstruction. Preserve important foreground and background relationships rather than inventing a new site layout. Draw the site as an illustration, not a photo filter. Carefully control line weight and fine selective details, gentle bright daytime, understated chromatic washes, clear materials and depth; neither coarse scratches nor flat cartoon surfaces. No thick black contours, photorealism, 3D render, fantasy redesign, sepia-only wash or excessive yellow cast. Omit tourists and vehicles. No decorative titles, captions, logos, watermarks, game UI, frame, border, collage, or inserted characters. One seamless scene.\n\nSubject: Datong Nine Dragon Wall, faithfully following the oblique full-length photo. It is ONE long low blue-green glazed ceramic screen wall, not a palace facade. Keep its actual long horizontal proportions, tiled gray-green roof cap, stone plinth, and exactly NINE LARGE DRAGONS arranged along its blue glazed surface. Preserve the reference color order and poses including central yellow dragon; do not substitute a generic repeating wallpaper. Delicate relief shapes, ceramic highlights and individual tile joins, with brilliant but restrained mineral turquoise, cobalt, ochre and terracotta. The photo shows the winter courtyard with some thin light snow patches: retain its cool quiet seasonal atmosphere and stone paving, without heavy snowfall or Christmas additions. Keep low protective posts and the narrow rectangular reflecting basin directly in front of the wall; water is not walkable. Retain clear paved foreground space below the basin in lower 15-20 percent for a small character to walk later. Do not add a wall inscription, reproduce a press watermark, or invent extra gateways. Wide enough to show the entire wall at an oblique angle.",
+      "generated_source": "C:\\Users\\Sophia\\.codex\\generated_images\\01a162b9-c0df-7a90-8ef8-ca92aa2739d2\\exec-254a7171-4fd8-4c65-aed3-036a61e762f7.png",
+      "output": "assets/game/scenes/datong_nine_dragon_wall-v1.png",
+      "source_sha256": "87f35b343bd7af9a558c8a3da2eabebb8282f7312644ce94039d60556220a941",
+      "runtime": "assets/game/runtime/tour-datong_nine_dragon_wall.jpg",
+      "runtime_sha256": "ba997ecc59dded1010c8f494536204516ee87786693369280ca442b62bb2c15d"
+    },
+    {
+      "id": "datong_city_wall",
+      "title": "大同古城墙",
+      "ref": "city-wall-official-1.jpg",
+      "source": "https://www.dt.gov.cn/dtszf/imagedatong/202302/2cf0908b7f7c4bff8ed7712a79aa08c2.shtml",
+      "photo": "https://www.dt.gov.cn/dtszf/imagedatong/202302/2cf0908b7f7c4bff8ed7712a79aa08c2/images/61d4b7e4b9794bc9ad8bb764c039d611.jpg",
+      "prompt": "Use case: illustration-story. Create ONE complete full-bleed 16:9 landscape architectural travel illustration for The Grand Tour, Datong and surrounding region. Image 1 is the USER-APPROVED STYLE REFERENCE ONLY: refined tiny warm brown architectural ink lines, elegant precise beams/eaves/railings, luminous transparent watercolor, subtle ivory paper grain, pale warm stone with cool gray-lavender shadows, rich aged reddish timber, restrained mineral gray-green and ochre, naturally varied olive/sage foliage. Match its polished premium illustrated book finish and level of craftsmanship. Do not depict its Hanging Temple architecture or cliff unless present in the next photograph. Image 2 is the REAL SITE AND ARCHITECTURE reference. Follow its actual silhouette, scale, number of structures, distinctive details and their spatial relationships. Respect existing weathering, losses, repairs and modern surroundings; never invent a reconstruction. Preserve important foreground and background relationships rather than inventing a new site layout. Draw the site as an illustration, not a photo filter. Carefully control line weight and fine selective details, gentle bright daytime, understated chromatic washes, clear materials and depth; neither coarse scratches nor flat cartoon surfaces. No thick black contours, photorealism, 3D render, fantasy redesign, sepia-only wash or excessive yellow cast. Omit tourists and vehicles. No decorative titles, captions, logos, watermarks, game UI, frame, border, collage, or inserted characters. One seamless scene.\n\nSubject: Datong restored ancient city wall and moat, matching the reference's outside oblique view. Long gray-beige brick defensive wall recedes left into the distance. The large square raised battlement at right supports a real gray-tiled gate/defensive tower with restrained wooden upper storey and decorative gable. Smaller towers repeat at their actual photographed intervals along the left wall, and the slender multi-tier stone pagoda visible beyond the wall remains in the reference location. Preserve the crenellations, drainage holes, real lower embankment path, willows, low planting and broad water foreground. Exquisite masonry rhythm, elegant fine roof brackets and natural soft foliage, pale luminous blue watercolor sky with airy clouds. No fantasy extra stacked gate roofs, no imperial palace decorations. This is a moat observation panorama: retain water and grass banks in foreground, do not invent a bridge or dry walking plaza.",
+      "generated_source": "C:\\Users\\Sophia\\.codex\\generated_images\\01a162b9-c0df-7a90-8ef8-ca92aa2739d2\\exec-b7c29abb-7da1-4b81-a7ae-66a3e55cfc97.png",
+      "output": "assets/game/scenes/datong_city_wall-v1.png",
+      "source_sha256": "c434f0535efc602154fe9c1f8049308427e6312ba08654ef4fea03a922f95fdf",
+      "runtime": "assets/game/runtime/tour-datong_city_wall.jpg",
+      "runtime_sha256": "ce4bbb03bc65afd2699011283e76cd91618a2f9e6fe6d35d9dd7990a444bb112"
+    },
+    {
+      "id": "datong_hengshan",
+      "title": "恒山",
+      "ref": "hengshan-temple-official.jpg",
+      "source": "https://www.byhs.net.cn/Product_detial/1.html",
+      "photo": "https://omo-oss-image.thefastimg.com/portal-saas/pg2024102815235340046/cms/image/ebc59541-8981-40a4-8d2b-5039fa3860fe.jpg",
+      "prompt": "Use case: illustration-story. Create ONE complete full-bleed 16:9 landscape architectural travel illustration for The Grand Tour, Datong and surrounding region. Image 1 is the USER-APPROVED STYLE REFERENCE ONLY: refined tiny warm brown architectural ink lines, elegant precise beams/eaves/railings, luminous transparent watercolor, subtle ivory paper grain, pale warm stone with cool gray-lavender shadows, rich aged reddish timber, restrained mineral gray-green and ochre, naturally varied olive/sage foliage. Match its polished premium illustrated book finish and level of craftsmanship. Do not depict its Hanging Temple architecture or cliff unless present in the next photograph. Image 2 is the REAL SITE AND ARCHITECTURE reference. Follow its actual silhouette, scale, number of structures, distinctive details and their spatial relationships. Respect existing weathering, losses, repairs and modern surroundings; never invent a reconstruction. Preserve important foreground and background relationships rather than inventing a new site layout. Draw the site as an illustration, not a photo filter. Carefully control line weight and fine selective details, gentle bright daytime, understated chromatic washes, clear materials and depth; neither coarse scratches nor flat cartoon surfaces. No thick black contours, photorealism, 3D render, fantasy redesign, sepia-only wash or excessive yellow cast. Omit tourists and vehicles. No decorative titles, captions, logos, watermarks, game UI, frame, border, collage, or inserted characters. One seamless scene.\n\nSubject: Hengshan's main temple complex / Hengzong Hall, Hunyuan. Match the reference photograph showing a sequence of actual red-walled and ochre/gray-tiled terraces rising against tall pale rock cliffs, with white stone balustrades, the main higher broad yellow roof, smaller flanking gray-tile buildings, deep green pine trees screening some buildings, and a lower yellow-roofed gate. Keep their layout and real cliff proportions; do not invent a soaring mountain summit palace or grand stairs absent from the photograph. The small existing red cliff inscriptions can be subtly indicated as weathered distant marks, no added graphic text or new lettering. Delicate tiny timber brackets, layered tile patterns, pale brick stonework and translucent natural pine foliage. The cliff has large calm washes with selective fractures and gentle cool shadows, matching the approved Hanging Temple art. Preserve the observation panorama and foreground forested slope; no invented walkable clearing, bridge, or empty plaza. Calm clear daytime.",
+      "generated_source": "C:\\Users\\Sophia\\.codex\\generated_images\\01a162b9-c0df-7a90-8ef8-ca92aa2739d2\\exec-9df945f5-8abc-4ce7-9f62-ee88b0c197a7.png",
+      "output": "assets/game/scenes/datong_hengshan-v1.png",
+      "source_sha256": "b27137af2e3e5f3cee286576a1c9a56c001b76cbac14da67c2bbb96fe33d6090",
+      "runtime": "assets/game/runtime/tour-datong_hengshan.jpg",
+      "runtime_sha256": "4d87dbdb970fd9b51e03c50e53d15b8f8ad38ade71ad0d3944cd1747604f455a"
+    }
+  ],
+  "approved_sample": {
+    "id": "datong_hanging_temple",
+    "output": "assets/game/scenes/datong_hanging_temple-v1.png",
+    "provenance": "docs/datong-art/style-study-v2.json"
+  },
+  "verification": {
+    "preview": "http://127.0.0.1:8790/",
+    "loader": "Node.js 22：下载、断流、重试、进度条回归通过",
+    "web_pack_bytes": 26815596,
+    "publication": "local preview only",
+    "licenses": "开源声明和四份字体许可验证通过",
+    "source_checks": {
+      "exploration": 75,
+      "postcard": 70,
+      "journey": 176,
+      "palace": 8,
+      "archie_animation": 12,
+      "tour": 1204,
+      "common": 178,
+      "total": 1769,
+      "ground": 46
+    },
+    "exported_pack": "隔离启动、资源、字体、源图排除检查通过",
+    "native_review": "三个旅程路线与大同八站的真实 OpenGL 画面已逐项查看",
+    "browser": "已实际点击画册、大同路线、悬空寺、景点介绍、下一站至应县木塔；刷新后保留木塔续游记录，控制台无错误。"
+  }
+}

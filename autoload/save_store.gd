@@ -23,6 +23,7 @@ func _default_data() -> Dictionary:
 		"postcard_quest": {},
 		"palace_visit": {},
 		"tour_progress": {},
+		"travel_bookmarks": {},
 	}
 
 
@@ -57,6 +58,11 @@ func _load() -> void:
 	var tour: Variant = candidate.get("tour_progress", {})
 	if tour is Dictionary:
 		_data.tour_progress = tour.duplicate(true)
+	var bookmarks: Variant = candidate.get("travel_bookmarks", {})
+	if bookmarks is Dictionary:
+		for key: Variant in bookmarks:
+			if key is String and bookmarks[key] is String:
+				_data.travel_bookmarks[key.left(64)] = str(bookmarks[key]).left(64)
 	var clean_rows: Array = []
 	var rows: Variant = candidate.get("leaderboard", [])
 	if rows is Array:
@@ -133,6 +139,19 @@ func get_tour_progress() -> Dictionary:
 
 func set_tour_progress(progress: Dictionary) -> bool:
 	_data.tour_progress = progress.duplicate(true)
+	return save()
+
+
+func get_travel_bookmarks() -> Dictionary:
+	return (_data.get("travel_bookmarks", {}) as Dictionary).duplicate(true)
+
+
+func set_travel_bookmark(journey_id: String, stop_id: String) -> bool:
+	if journey_id.is_empty() or stop_id.is_empty(): return false
+	var bookmarks: Dictionary = _data.get("travel_bookmarks", {})
+	if bookmarks.get(journey_id) == stop_id: return true
+	bookmarks[journey_id] = stop_id
+	_data.travel_bookmarks = bookmarks
 	return save()
 
 

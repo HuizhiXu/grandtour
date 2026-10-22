@@ -9,6 +9,8 @@ signal licenses_requested
 signal postcard_requested
 signal postcard_choice(choice_index: int)
 signal routes_requested
+signal journeys_requested
+signal journey_selected(id: String)
 signal route_selected(index: int)
 signal stop_selected(id: String)
 signal next_stop_requested
@@ -42,6 +44,7 @@ var _pause_scrim: ColorRect
 var _pause_panel: PanelContainer
 var _paused := false
 var _modal_open := false
+var _modal_centered := false
 var _quest_label: Label
 var _quest_progress: Label
 var _quest_panel: PanelContainer
@@ -179,18 +182,84 @@ func set_introduction_hint(panorama: bool) -> void:
 
 
 func set_route_progress(_count: int, has_next: bool, _total: int = 12) -> void:
-	_route_button.text = "旅行路线"
+	_route_button.text = "旅行画册"
 	_next_button.text = "下一站 →" if has_next else "查看旅行路线"
 
 
-func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: int, current_stop: String, completed: Dictionary) -> void:
+func show_journeys(journeys: Array[Dictionary], routes: Array[Dictionary], stops: Dictionary, bookmarks: Dictionary, current_stop: String) -> void:
+	_open_modal("THE GRAND TOUR · 旅行画册", "选一本旅程，从喜欢的风景开始。每一册都可以自由选站，也可以接着上次慢慢走。", 1120.0, true)
+	var shelf := HBoxContainer.new()
+	shelf.name = "JourneyShelf"
+	shelf.add_theme_constant_override("separation", 18)
+	_modal_actions.add_child(shelf)
+	for entry: Dictionary in journeys:
+		var selected := str(entry.id)
+		var card := _make_button("", false)
+		card.name = "Journey_" + selected
+		card.custom_minimum_size = Vector2(0, 338)
+		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		card.pressed.connect(func() -> void: journey_selected.emit(selected))
+		shelf.add_child(card)
+		var margin := MarginContainer.new()
+		margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		ScreenFactory.full_rect(margin)
+		for side: String in ["left", "right", "top", "bottom"]:
+			margin.add_theme_constant_override("margin_" + side, 14)
+		card.add_child(margin)
+		var content := VBoxContainer.new()
+		content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		content.add_theme_constant_override("separation", 9)
+		margin.add_child(content)
+		var cover := TextureRect.new()
+		cover.name = "Cover"
+		cover.texture = load(str(entry.cover)) as Texture2D
+		cover.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		cover.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		cover.custom_minimum_size = Vector2(0, 156)
+		cover.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		cover.clip_contents = true
+		content.add_child(cover)
+		var count := 0
+		for index: int in entry.routes: count += routes[index].stops.size()
+		var region := ScreenFactory.medium_label("%s  ·  %d 站" % [entry.region, count], 12, MUTED)
+		content.add_child(region)
+		var title := ScreenFactory.display_label(str(entry.title), 24, INK, "heading")
+		content.add_child(title)
+		var subtitle := ScreenFactory.medium_label(str(entry.subtitle), 14, GREEN)
+		content.add_child(subtitle)
+		var description := ScreenFactory.label(str(entry.description), 13, MUTED)
+		description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		content.add_child(description)
+		var saved_id := str(bookmarks.get(selected, ""))
+		var bookmark := ScreenFactory.medium_label("上次停在 · " + str(stops[saved_id].title) if stops.has(saved_id) else "打开这册旅程 →", 12, GOLD)
+		bookmark.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		content.add_child(bookmark)
+	_add_action_button("继续当前这一站 · " + str(stops.get(current_stop, {}).get("title", "西贡中央邮局")), close_modal, true)
+
+
+func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: int, current_stop: String, completed: Dictionary, journey: Dictionary = {}, resume_id: String = "") -> void:
 	var route: Dictionary = routes[selected_route]
-	_open_modal("旅行路线册 · " + str(route.title), route.subtitle + "\n\n" + route.note)
+	_open_modal("旅行路线册 · " + str(journey.get("title", route.title)), route.subtitle + "\n\n" + route.note)
+	var navigation := HBoxContainer.new()
+	navigation.add_theme_constant_override("separation", 10)
+	_modal_actions.add_child(navigation)
+	var back := _make_button("← 旅行画册", false)
+	back.custom_minimum_size = Vector2(180, 38)
+	back.pressed.connect(func() -> void: journeys_requested.emit())
+	navigation.add_child(back)
+	if stops.has(resume_id):
+		var resume := _make_button("继续旅程 · " + str(stops[resume_id].title), true)
+		resume.custom_minimum_size = Vector2(0, 38)
+		resume.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		resume.pressed.connect(func() -> void: stop_selected.emit(resume_id))
+		navigation.add_child(resume)
 	var tabs := HBoxContainer.new()
 	_modal_actions.add_child(tabs)
-	for index in range(routes.size()):
+	var route_indices: Array = journey.get("routes", range(routes.size()))
+	for index: int in route_indices:
+		if route_indices.size() == 1: break
 		var selected := index
-		var tab_title: String = routes[index].get("tab", "西贡 · 建筑" if index == 0 else "西贡 · 文化")
+		var tab_title: String = routes[index].get("tab", "建筑漫步" if index == 0 else "城市文化")
 		var button := _make_button(tab_title, index == selected_route)
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.pressed.connect(func() -> void: route_selected.emit(selected))
@@ -198,7 +267,7 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 	var scroll := ScrollContainer.new()
 	scroll.name = "RouteStops"
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.custom_minimum_size.y = minf(ceilf(route.stops.size() / 2.0) * 46.0 - 6.0, 300.0)
+	scroll.custom_minimum_size.y = minf(ceilf(route.stops.size() / 2.0) * 80.0 - 6.0, 340.0 if route.stops.size() <= 8 else 280.0)
 	scroll.follow_focus = true
 	_modal_actions.add_child(scroll)
 	var grid := GridContainer.new()
@@ -212,12 +281,21 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 		var suffix := "  ✓" if completed.get(id, false) else ""
 		if id == current_stop: suffix += "  · 当前"
 		var button := _make_button("%02d  %s%s" % [index + 1, stops[id].title, suffix], id == current_stop)
-		button.custom_minimum_size = Vector2(350, 40)
+		button.custom_minimum_size = Vector2(350, 74)
+		var thumbnail := "res://assets/game/runtime/tour-%s.jpg" % id
+		if id == "post_office": thumbnail = "res://assets/game/runtime/saigon-exterior.jpg"
+		if id == "palace": thumbnail = "res://assets/game/runtime/independence-palace.jpg"
+		button.icon = load(thumbnail) as Texture2D
+		button.expand_icon = true
+		button.add_theme_constant_override("icon_max_width", 82)
+		button.add_theme_constant_override("h_separation", 10)
+		button.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.pressed.connect(func() -> void: stop_selected.emit(id))
 		grid.add_child(button)
 		if id == current_stop: scroll.ensure_control_visible.call_deferred(button)
-	_add_action_button("继续观景" if _observation_only else "继续漫步", close_modal, false)
+	_add_action_button("返回当前风景", close_modal, false)
 
 
 func show_postcard(title: String, body: String, choices: Array[String] = []) -> void:
@@ -303,7 +381,7 @@ func _build_hud() -> void:
 	_route_button = _make_button("旅行路线  0 / 12", false)
 	_route_button.position = Vector2(930, 26)
 	_route_button.custom_minimum_size = Vector2(176, 42)
-	_route_button.pressed.connect(func() -> void: routes_requested.emit())
+	_route_button.pressed.connect(func() -> void: journeys_requested.emit())
 	add_child(_route_button)
 	_view_button = _make_button("切换视角", false)
 	_view_button.position = Vector2(730, 26)
@@ -432,8 +510,17 @@ func _build_pause() -> void:
 	content.add_child(licenses)
 
 
-func _open_modal(title: String, body: String) -> void:
+func _open_modal(title: String, body: String, width: float = 760.0, centered: bool = false) -> void:
 	_modal_open = true
+	_modal_centered = centered
+	_modal_panel.anchor_top = 0.5 if centered else 1.0
+	_modal_panel.anchor_bottom = _modal_panel.anchor_top
+	_modal_panel.custom_minimum_size.x = width
+	_modal_panel.offset_left = -width * 0.5
+	_modal_panel.offset_right = width * 0.5
+	_modal_body.custom_minimum_size.x = width - 32.0
+	_modal_title.add_theme_font_size_override("font_size", 26 if centered else 19)
+	_modal_scrim.color = Color(PAPER, 0.96) if centered else Color(0.12, 0.16, 0.12, 0.14)
 	_modal_title.text = title
 	_modal_body.text = body
 	for child in _modal_actions.get_children():
@@ -446,8 +533,8 @@ func _open_modal(title: String, body: String) -> void:
 
 func _fit_modal() -> void:
 	var height := maxf(180.0, _modal_panel.get_combined_minimum_size().y)
-	_modal_panel.offset_top = -22.0 - height
-	_modal_panel.offset_bottom = -22.0
+	_modal_panel.offset_top = -height * 0.5 if _modal_centered else -22.0 - height
+	_modal_panel.offset_bottom = height * 0.5 if _modal_centered else -22.0
 
 
 func _add_action_button(text: String, action: Callable, primary: bool) -> void:
