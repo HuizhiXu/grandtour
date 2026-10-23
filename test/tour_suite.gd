@@ -30,14 +30,14 @@ func _run() -> void:
 	await physics_frame
 	_ui = _main.get("_ui")
 	_ui.close_modal()
-	_check(Catalog.STOPS.size() == 65, "45 existing and 20 Hexi destinations remain available")
+	_check(Catalog.STOPS.size() == 74, "45 existing and 29 Hexi destinations remain available")
 	for route_index in range(Catalog.ROUTES.size()):
 		for id: String in Catalog.ROUTES[route_index].stops:
 			_main.set("_route_index", route_index)
 			_main.call("_show_routes")
 			await _layout()
 			_check(Rect2(0, 0, 1280, 720).encloses((_ui.get("_modal_panel") as Control).get_global_rect()), "route fits viewport: " + id)
-			var button := _stop_button(_ui.get("_modal_actions"), Catalog.STOPS[id].title)
+			var button := _stop_button(_ui.find_child("RouteStops", true, false), Catalog.STOPS[id].title)
 			_check(button != null, "route button exists: " + id)
 			if button == null: continue
 			button.pressed.emit()

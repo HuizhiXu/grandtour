@@ -31,6 +31,11 @@ func _run() -> void:
 		_main.set("_route_index", index)
 		_main.call("_show_routes")
 		await _capture("01-city-%d" % index)
+		if index == 5:
+			var scroll := (_main.get("_ui") as Control).find_child("RouteStops", true, false) as ScrollContainer
+			var grid := scroll.get_child(0)
+			scroll.ensure_control_visible(grid.get_child(grid.get_child_count() - 1) as Control)
+			await _capture("01-wuwei-last-stops")
 	for id: String in Catalog.Hexi.STOPS:
 		_main.call("_travel_to_stop", id)
 		while _main.get("_transitioning"): await process_frame

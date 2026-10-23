@@ -6,7 +6,7 @@ import json
 from PIL import Image, ImageOps, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / "docs/hexi-art/production-v1.json"
+MANIFEST = ROOT / "docs/hexi-art/production-v2.json"
 
 
 def digest(path):
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     parser.add_argument("--art-sheets", action="store_true")
     args = parser.parse_args()
     if args.reference_sheets:
-        entries = json.loads((ROOT / "docs/hexi-art/official-references.json").read_text())
+        entries = json.loads((ROOT / "docs/hexi-art/official-references-v2.json").read_text())
         official = [entry for entry in entries if not entry["id"].startswith("candidate-") and "reference" in entry]
         if not any(entry["id"] == "hexi_mogao" for entry in official):
             official.append({"id": "hexi_mogao", "reference": "docs/hexi-art/references/mogao-nine-storey.png"})

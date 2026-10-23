@@ -78,6 +78,9 @@ func _verify() -> void:
 			_check(not ResourceLoader.exists("res://assets/game/scenes/%s-v1.png" % id), "Datong source PNG excluded: " + id)
 		for id: String in TourCatalog.Hexi.STOPS:
 			_check(not ResourceLoader.exists("res://assets/game/scenes/%s-v1.png" % id), "Hexi source PNG excluded: " + id)
+		_check(TourCatalog.Hexi.STOPS.size() == 29, "pack includes the requested 29-stop itinerary")
+		for retired_id: String in ["hexi_baita_mountain", "hexi_yellow_river_mother", "hexi_leitai"]:
+			_check(not ResourceLoader.exists("res://assets/game/runtime/tour-%s.jpg" % retired_id), "retired Hexi texture excluded: " + retired_id)
 		_check(main.get("_traveler") is CharacterBody2D, "pack creates a controllable traveler")
 		var targets: Dictionary = main.get("_targets")
 		for target_id: String in ["post_office_info", "old_mailbox", "photographer", "post_office_door"]:

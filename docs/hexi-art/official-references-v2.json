@@ -1,0 +1,234 @@
+[
+  {
+    "id": "hexi_zhongshan_bridge",
+    "title": "中山桥",
+    "page": "https://www.gswbj.gov.cn/a/2026/08/28/29352.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20260828/1787899852105413.jpeg",
+    "reference": "docs/hexi-art/references/hexi_zhongshan_bridge-official.jpeg",
+    "reference_sha256": "41fd3e5e3f667dfea4a005151f630bbae36710e60d7582f175ad885eb2a73c48"
+  },
+  {
+    "id": "hexi_zhengning_market",
+    "title": "正宁路夜市",
+    "page": "https://www.gswbj.gov.cn/a/2024/09/21/22234.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20240921/1726929342617154.jpg",
+    "reference": "docs/hexi-art/references/hexi_zhengning_market-official.jpg",
+    "reference_sha256": "4de382e1a47e73ffc7e237f3c8efd60cdba7f290410de40146fbc14fa671a562"
+  },
+  {
+    "id": "hexi_gansu_museum",
+    "title": "甘肃省博物馆",
+    "page": "https://www.gswbj.gov.cn/a/2025/07/21/25398.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20250721/1753079678265835.jpg",
+    "reference": "docs/hexi-art/references/hexi_gansu_museum-official.jpg",
+    "reference_sha256": "7cac1ad260d207ea99f3bf67a45cde4eb1b782fa16db88725dd4ca77b13c63ed"
+  },
+  {
+    "id": "hexi_wushaoling",
+    "title": "乌鞘岭",
+    "page": "https://www.gswbj.gov.cn/a/2025/05/12/24774.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20250512/1747015621302299.jpg",
+    "reference": "docs/hexi-art/references/hexi_wushaoling-official.jpg",
+    "reference_sha256": "c24f09215653d56d0dfd2703aa08bf96330da7d15f4707a1a8bea7cfafe992a5"
+  },
+  {
+    "id": "hexi_tiantishan",
+    "title": "天梯山石窟",
+    "page": "https://www.gswbj.gov.cn/a/2026/06/08/28513.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20260608/1780887734950485.png",
+    "reference": "docs/hexi-art/references/hexi_tiantishan-official.png",
+    "reference_sha256": "91fc2a6e9efc1e23fd5c21974bbc91e11ce5d856c4fbd3308e4ca71f94f819e8"
+  },
+  {
+    "id": "hexi_baita_temple",
+    "title": "白塔寺",
+    "page": "https://www.gswbj.gov.cn/a/2024/03/15/19912.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20240315/1710483289469649.jpg",
+    "reference": "docs/hexi-art/references/hexi_baita_temple-official.jpg",
+    "reference_sha256": "f034bdbe736bc6064dfb9e0fef7e39fb745e657dca4b6b107003f7e3a8b5925b"
+  },
+  {
+    "id": "hexi_south_gate",
+    "title": "南城门楼",
+    "page": "https://www.gswbj.gov.cn/a/2024/02/02/19663.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20240202/1706869093260690.jpg",
+    "reference": "docs/hexi-art/references/hexi_south_gate-official.jpg",
+    "reference_sha256": "c1e799b5527a1eaec89632c438d920a16ce3a3271cee8d32c61289ec25d866dc"
+  },
+  {
+    "id": "hexi_kumarajiva_temple",
+    "title": "鸠摩罗什寺",
+    "page": "https://www.gswbj.gov.cn/a/2023/02/21/16521.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20230221/1676960252944649.jpg",
+    "reference": "docs/hexi-art/references/hexi_kumarajiva_temple-official.jpg",
+    "reference_sha256": "f7ec7a27122ba6e22e983e219a9bdb30896bf39a89d2742de7d2af5cb805b722"
+  },
+  {
+    "id": "hexi_xixia_museum",
+    "title": "西夏博物馆",
+    "page": "https://www.gswbj.gov.cn/a/2026/06/08/28513.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20260608/1780887733160430.png",
+    "reference": "docs/hexi-art/references/hexi_xixia_museum-official.png",
+    "reference_sha256": "d5031f4102316692783961e3e2ba810c2ac1318b3ae1df2770ca66b9771188b4"
+  },
+  {
+    "id": "hexi_wuwei_confucian_temple",
+    "title": "武威文庙",
+    "page": "https://www.gswbj.gov.cn/a/2026/05/22/28361.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20260522/1779442649375841.png",
+    "reference": "docs/hexi-art/references/hexi_wuwei_confucian_temple-official.png",
+    "reference_sha256": "2ee4e3565a4df85d285952a9b4cdae080d79b23b494f63856f9e570289f1de47"
+  },
+  {
+    "id": "hexi_dayun_bell_tower",
+    "title": "大云寺古钟楼",
+    "page": "https://www.gswbj.gov.cn/a/2025/04/02/24466.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20250402/1743583517417234.jpg",
+    "reference": "docs/hexi-art/references/hexi_dayun_bell_tower-official.jpg",
+    "reference_sha256": "992212f7a2e7980b01f5ef1664e4d718a7ec4a30df55330fc0c789effdce5333"
+  },
+  {
+    "id": "hexi_wuwei_museum",
+    "title": "武威市博物馆",
+    "page": "https://www.gswbj.gov.cn/a/2026/06/08/28513.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20260608/1780887733556670.png",
+    "reference": "docs/hexi-art/references/hexi_wuwei_museum-official.png",
+    "reference_sha256": "53da01fc5fd9ea27b426c4321f5cb360e272ace3c50dae4359820e57823ff08d"
+  },
+  {
+    "id": "hexi_haizang_temple",
+    "title": "海藏寺",
+    "page": "https://www.gswbj.gov.cn/a/2023/02/21/16521.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20230221/1676960252137402.jpg",
+    "reference": "docs/hexi-art/references/hexi_haizang_temple-official.jpg",
+    "reference_sha256": "6c1365905f0c4d5d810061a68937f58c228b42b7f1efe591f2bf086313652b23"
+  },
+  {
+    "id": "hexi_mati_temple",
+    "title": "马蹄寺",
+    "page": "https://www.zhangye.gov.cn/chzy/zyly/ajjq/202303/t20230318_1007464.html",
+    "photo": "https://www.zhangye.gov.cn/chzy/zyly/ajjq/202303/W020230318398057317340.png",
+    "reference": "docs/hexi-art/references/hexi_mati_temple-official.png",
+    "reference_sha256": "d0a66d27a18c454b7dc4747097bb4234af94bfdcde4ca6a9c9410e646eaf39d3"
+  },
+  {
+    "id": "hexi_jinta_temple",
+    "title": "金塔寺",
+    "page": "https://www.gswbj.gov.cn/a/2026/07/13/28857.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20260713/1783936802846302.jpeg",
+    "reference": "docs/hexi-art/references/hexi_jinta_temple-official.jpeg",
+    "reference_sha256": "12ad2d9623442c1fc2c26d064e7827ce2edaa3561bbe791e503d7fbe95abfdb5"
+  },
+  {
+    "id": "hexi_zhenyuan_tower",
+    "title": "镇远楼",
+    "page": "https://www.zhangye.gov.cn/dzdt/xqdt/gzq_2543/202610/t20261009_1593256.html",
+    "photo": "https://www.gzxw.com.cn/ueditor/php/upload/image/20261007/d68e2f116b15cd92d07d57b1c955c45c.jpg&isOrigin=true",
+    "reference": "docs/hexi-art/references/hexi_zhenyuan_tower-official.jpg",
+    "reference_sha256": "e37356ec155f6a1550007a6fffca56ad5fa35cb0e261776a0bde07855a82400d"
+  },
+  {
+    "id": "hexi_pingshanhu",
+    "title": "平山湖大峡谷",
+    "page": "https://www.gswbj.gov.cn/a/2025/05/16/24816.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20250516/1747379079444034.jpg",
+    "reference": "docs/hexi-art/references/hexi_pingshanhu-official.jpg",
+    "reference_sha256": "0a6eba2eb3a62c45bbea79c8a1a657bf7c6e4e63bcadb5f3d56d69071a5d185f"
+  },
+  {
+    "id": "hexi_rainbow_danxia",
+    "title": "七彩丹霞",
+    "page": "https://www.zhangye.gov.cn/chzy/zyly/ajjq/202303/t20230318_1007476.html",
+    "photo": "https://www.zhangye.gov.cn/chzy/zyly/ajjq/202303/W020230318390014496939.png",
+    "reference": "docs/hexi-art/references/hexi_rainbow_danxia-official.png",
+    "reference_sha256": "fa7f5399ddefc559485f81f82df896ab85ee6d02348a1e482f119c633a8b427e"
+  },
+  {
+    "id": "hexi_zhangye_dafo",
+    "title": "大佛寺",
+    "page": "https://www.zhangye.gov.cn/chzy/zyly/ajjq/202303/t20230318_1007459.html",
+    "photo": "https://www.zhangye.gov.cn/chzy/zyly/ajjq/202303/W020230318399293317124.png",
+    "reference": "docs/hexi-art/references/hexi_zhangye_dafo-official.png",
+    "reference_sha256": "9be48aedf0731802528aec3fcf1f4690faebff7cb7f49420c43f1af7c815d65a"
+  },
+  {
+    "id": "hexi_jiayuguan_fortress",
+    "title": "嘉峪关",
+    "page": "https://zwfw.gansu.gov.cn/jiayuguan/tsfw/lyzq/lyzx/jdjs/art/2022/art_e1e7ae8fb95145368ae63372ac4be280.html",
+    "photo": "https://zwfw.gansu.gov.cn/cms_files/filemanager/178203542/picture/20222/fe260db4485245c3a6105ef0d9c3d61b.jpeg",
+    "reference": "docs/hexi-art/references/hexi_jiayuguan_fortress-official.jpeg",
+    "reference_sha256": "56ef12ea57b5c635150b61956afd57ab0d4c455a1fefebfe0493d50645728e2d"
+  },
+  {
+    "id": "hexi_first_beacon",
+    "title": "长城第一墩",
+    "page": "https://zwfw.gansu.gov.cn/jiayuguan/tsfw/lyzq/lyzx/jdjs/art/2022/art_e1e7ae8fb95145368ae63372ac4be280.html",
+    "photo": "https://zwfw.gansu.gov.cn/cms_files/filemanager/178203542/picture/20222/9b56682971e042eca8887e5742aea48f.jpeg",
+    "reference": "docs/hexi-art/references/hexi_first_beacon-official.jpeg",
+    "reference_sha256": "288524af83e24b6fab017143d800d6baa52ca08e26972d2f6c61422d66f42287"
+  },
+  {
+    "id": "hexi_overhanging_wall",
+    "title": "悬壁长城",
+    "page": "https://zwfw.gansu.gov.cn/jiayuguan/tsfw/lyzq/lyzx/jdjs/art/2022/art_e1e7ae8fb95145368ae63372ac4be280.html",
+    "photo": "https://zwfw.gansu.gov.cn/cms_files/filemanager/178203542/picture/20222/0d5e3b1a830e49c6b0d559eb93831b5e.jpeg",
+    "reference": "docs/hexi-art/references/hexi_overhanging_wall-official.jpeg",
+    "reference_sha256": "1884c33e3f2c3167c68fb26917ba7a31144825ce1896400b1d0418f35558297d"
+  },
+  {
+    "id": "hexi_mogao",
+    "title": "莫高窟",
+    "page": "https://www.dha.ac.cn/info/1425/3648.htm",
+    "photo": "https://www.dha.ac.cn/__local/5/F2/44/DC2D6A0268E2AF8133F301D7D4D_F0D93E28_CD142.png",
+    "reference": "docs/hexi-art/references/mogao-nine-storey.png",
+    "reference_sha256": "db372051638dd8def9b23f365e9870975620edebb4188b010ee55a30f45e904b"
+  },
+  {
+    "id": "hexi_crescent_lake",
+    "title": "鸣沙山月牙泉",
+    "page": "https://www.gswbj.gov.cn/a/2024/10/22/22894.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20241022/1729562292912531.jpg",
+    "reference": "docs/hexi-art/references/hexi_crescent_lake-official.jpg",
+    "reference_sha256": "8eec3fea44c70d2208ef1e205d62bbc4dcbcc867b3b560fb073b4967127dcc70"
+  },
+  {
+    "id": "hexi_dunhuang_market",
+    "title": "敦煌夜市",
+    "page": "https://www.gswbj.gov.cn/a/2026/07/29/29045.html",
+    "photo": "https://x0.ifengimg.com/ucms/2026_31/C1D89100B9B3C5D6716812B89B9B78EA343E3856_size1140_w854_h480.png",
+    "reference": "docs/hexi-art/references/hexi_dunhuang_market-official.png",
+    "reference_sha256": "19d08b14cc09da3b249f41df8be01adc39d874ed3640cb25089fc753b38e9af6"
+  },
+  {
+    "id": "hexi_west_thousand_buddha",
+    "title": "西千佛洞",
+    "page": "https://www.dha.ac.cn/info/1427/3694.htm",
+    "photo": "https://www.dha.ac.cn/__local/8/5B/C5/AF0721D92C50FDF8347AC1B1123_48F357CF_16EF22.png",
+    "reference": "docs/hexi-art/references/hexi_west_thousand_buddha-official.png",
+    "reference_sha256": "3828b0a776cd217c9a8cd7dd35504ae2a8f1252c1596bce9a30ba045372c236d"
+  },
+  {
+    "id": "hexi_yang_pass",
+    "title": "阳关",
+    "page": "https://www.gswbj.gov.cn/a/2024/09/02/21885.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/2024/0902/20240902035005738.jpg",
+    "reference": "docs/hexi-art/references/hexi_yang_pass-official.jpg",
+    "reference_sha256": "2d6270f6704fac186eaf5867a9bec5b67434760d5c4093462fca8d86067f2cf9"
+  },
+  {
+    "id": "hexi_yumen_pass",
+    "title": "玉门关",
+    "page": "https://www.gswbj.gov.cn/a/2026/03/19/27769.html",
+    "photo": "https://www.gswbj.gov.cn/uploadfile/20260319/1773906089715897.png",
+    "reference": "docs/hexi-art/references/hexi_yumen_pass-official.png",
+    "reference_sha256": "60ff54ca4af9f8071757fd63c3ebc8576e3785e4be956b812c2b13161d9796df"
+  },
+  {
+    "id": "hexi_yadan",
+    "title": "雅丹魔鬼城",
+    "page": "https://www.gswbj.gov.cn/a/2026/08/14/29196.html",
+    "photo": "https://x0.ifengimg.com/ucms/2026_33/26D23EC96ECEBA50860B3B071113163B6DBEE977_size735_w1007_h564.png",
+    "reference": "docs/hexi-art/references/hexi_yadan-official.png",
+    "reference_sha256": "0ae12542f39151eb38591ee39b4a7d202d4d7836f9825aa96d58dfb14d259861"
+  }
+]

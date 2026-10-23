@@ -8,7 +8,7 @@ const JOURNEYS: Array[Dictionary] = [
 	{"id": "saigon", "title": "西贡漫步", "region": "越南 · 胡志明市", "subtitle": "街道、建筑与城市日常", "description": "从老邮局的第一张明信片出发。", "cover": "res://assets/game/runtime/saigon-exterior.jpg", "start": "post_office", "routes": [0, 1]},
 	{"id": "angkor", "title": "吴哥寻迹", "region": "柬埔寨 · 暹粒", "subtitle": "在树林与石刻之间慢慢走", "description": "沿着石道，翻开古寺与湖畔的风景。", "cover": "res://assets/game/runtime/tour-angkor_wat.jpg", "start": "angkor_south_gate", "routes": [2]},
 	{"id": "datong", "title": "大同及周边", "region": "中国 · 山西", "subtitle": "一册晋北古建之旅", "description": "从古城、石窟走向悬空寺与应县木塔。", "cover": "res://assets/game/runtime/tour-datong_hanging_temple.jpg", "start": "datong_city_wall", "routes": [3]},
-	{"id": "hexi", "title": "河西走廊", "region": "中国 · 甘肃", "subtitle": "从兰州出发，一路向西", "description": "五座城市，二十处黄河、石窟与边塞风景。", "cover": "res://assets/game/runtime/tour-hexi_crescent_lake.jpg", "start": "hexi_gansu_museum", "routes": [4, 5, 6, 7, 8], "continue_routes": true},
+	{"id": "hexi", "title": "河西走廊", "region": "中国 · 甘肃", "subtitle": "从兰州出发，一路向西", "description": "五座城市，二十九处山河、古建与市井风景。", "cover": "res://assets/game/runtime/tour-hexi_crescent_lake.jpg", "start": "hexi_zhongshan_bridge", "routes": [4, 5, 6, 7, 8], "continue_routes": true},
 ]
 const ROUTES: Array[Dictionary] = [
 	{"title": "经典建筑与城市漫步", "subtitle": "独立宫 → 红教堂 → 中央邮局 → 书街 → 市政厅 → 歌剧院 → 阮惠步行街 → 咖啡公寓", "note": "沿城市中心慢慢走，从历史建筑走向当代街头。教堂、市政厅和歌剧院以外观欣赏为主。", "stops": ["palace", "cathedral", "post_office", "book_street", "city_hall", "opera", "nguyen_hue", "cafe_apartments"]},
