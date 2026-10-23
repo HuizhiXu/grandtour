@@ -1,0 +1,305 @@
+{
+  "date": "2026-10-23",
+  "journey": "土耳其",
+  "basis": "User-supplied four-region, 30-stop itinerary, preserving names and order. 老皇宫 is interpreted as Topkapı Palace; 阿波罗神庙 is the temple at Side; 市中心钟楼 is İzmir's Konak Clock Tower.",
+  "regions": [
+    {
+      "title": "伊斯坦布尔市内游览",
+      "tab": "伊斯坦布尔",
+      "note": "从博斯普鲁斯海峡出发，翻阅历史半岛、铁路与文学记忆，再到独立大街、加拉太塔和如梅利堡垒。老皇宫在本册指托普卡帕宫。共十站，可滚动选看。",
+      "stops": [
+        {
+          "id": "turkey_bosphorus",
+          "title": "博斯普鲁斯海峡",
+          "area": "伊斯坦布尔 · 博斯普鲁斯海峡",
+          "info": "博斯普鲁斯海峡连接黑海与马尔马拉海，两岸分别属于欧洲和亚洲。渡轮、沿岸宅邸与跨海峡大桥，把伊斯坦布尔的城市生活连在一起。",
+          "reference_page": "bosphorus",
+          "reference_alt": "Content Image",
+          "walk": false
+        },
+        {
+          "id": "turkey_hagia_sophia",
+          "title": "圣索菲亚大教堂",
+          "area": "伊斯坦布尔 · 历史半岛",
+          "info": "圣索菲亚始建为拜占庭教堂，巨大的穹顶与层层支撑结构见证了伊斯坦布尔的历史变迁。今天它是一座清真寺；本册保留常用中文名称，从外观认识这座建筑。",
+          "reference_page": "istanbul",
+          "reference_alt": "Hagia Sophia",
+          "walk": false
+        },
+        {
+          "id": "turkey_topkapi",
+          "title": "老皇宫",
+          "area": "伊斯坦布尔 · 历史半岛",
+          "info": "老皇宫在这里指托普卡帕宫（Topkapı Palace），曾是奥斯曼帝国的宫廷与行政中心。庭院、门楼和宫殿沿半岛展开，与博斯普鲁斯海峡相望。",
+          "reference_page": "topkapi",
+          "reference_alt": "Content Image",
+          "walk": false
+        },
+        {
+          "id": "turkey_blue_mosque",
+          "title": "蓝色清真寺",
+          "area": "伊斯坦布尔 · 历史半岛",
+          "info": "蓝色清真寺又名苏丹艾哈迈德清真寺，以层叠穹顶和六座宣礼塔形成醒目的轮廓。它与圣索菲亚隔广场相望，名称源于内部著名的蓝色瓷砖装饰。",
+          "reference_page": "istanbul",
+          "reference_alt": "Blue Mosque",
+          "walk": false
+        },
+        {
+          "id": "turkey_hippodrome",
+          "title": "君士坦丁堡竞技场遗址",
+          "area": "伊斯坦布尔 · 历史半岛",
+          "info": "今天的苏丹艾哈迈德广场保留着古代君士坦丁堡竞技场的历史痕迹。方尖碑与蛇柱等遗存提示着这里曾经的公共生活；本册呈现现存广场，不复原已消失的看台。",
+          "reference_page": "istanbul",
+          "reference_alt": "Hippodrome",
+          "walk": true
+        },
+        {
+          "id": "turkey_sirkeci",
+          "title": "锡尔凯吉火车站",
+          "area": "伊斯坦布尔 · 锡尔凯吉",
+          "info": "锡尔凯吉火车站位于伊斯坦布尔欧洲一侧，承载着东方快车时代的铁路记忆。老站房的拱窗与立面装饰，让抵达与远行成为这座城市故事的一部分。本幅以机构保存的历史站房照片为线索，呈现铁路记忆中的立面；色彩为绘本诠释。",
+          "reference_page": "sirkeci",
+          "reference_alt": "",
+          "walk": false
+        },
+        {
+          "id": "turkey_innocence",
+          "title": "纯真博物馆",
+          "area": "伊斯坦布尔 · 楚库尔朱马",
+          "info": "纯真博物馆由作家奥尔罕·帕慕克创建，与他的同名小说相互呼应。日常物件、橱窗与记忆在这里交织，把文学故事放回伊斯坦布尔的街巷生活。",
+          "reference_page": "innocence",
+          "reference_alt": "",
+          "walk": true
+        },
+        {
+          "id": "turkey_istiklal",
+          "title": "独立大街",
+          "area": "伊斯坦布尔 · 贝伊奥卢",
+          "info": "独立大街位于贝伊奥卢，历史楼房、商店与文化空间沿街展开。红色怀旧电车穿行其间，与来往行人一起构成伊斯坦布尔熟悉的街景。",
+          "reference_page": "istiklal",
+          "reference_alt": "Content Image",
+          "walk": true
+        },
+        {
+          "id": "turkey_galata",
+          "title": "加拉太塔",
+          "area": "伊斯坦布尔 · 加拉太",
+          "info": "加拉太塔以圆筒石砌塔身和锥形屋顶，从周围街区的屋顶间升起。这座历史塔楼是认识金角湾与伊斯坦布尔城市轮廓的一处地标。",
+          "reference_page": "istanbul",
+          "reference_alt": "Galata Tower",
+          "walk": false
+        },
+        {
+          "id": "turkey_rumeli",
+          "title": "如梅利堡垒",
+          "area": "伊斯坦布尔 · 博斯普鲁斯西岸",
+          "info": "如梅利堡垒（Rumeli Fortress）建在博斯普鲁斯海峡欧洲一侧的山坡上。厚重圆塔和连接山势的城墙，体现了这处海峡要地的防御格局。",
+          "reference_page": "rumeli",
+          "reference_alt": "Content Image",
+          "walk": false
+        }
+      ]
+    },
+    {
+      "title": "卡帕多奇亚地区",
+      "tab": "卡帕多奇亚",
+      "note": "按清单顺序，从安纳托利亚高原翻到格雷梅、内夫谢希尔与地下城，再看山谷、岩堡、露天博物馆和陶艺小镇。安纳托利亚高原是一片广阔地理区域，本站以卡帕多奇亚一带的高原地貌作为窗口。",
+      "stops": [
+        {
+          "id": "turkey_anatolian_plateau",
+          "title": "安纳托利亚高原",
+          "area": "卡帕多奇亚 · 安纳托利亚高原",
+          "info": "安纳托利亚高原覆盖土耳其中部的广阔地区，卡帕多奇亚是其中一片独特的火山地貌区域。本册从这里的高原景观认识凝灰岩台地、沟谷与风化岩柱，随后走向具体城镇。",
+          "reference_page": "nevsehir",
+          "reference_alt": "Göreme National Park and Rock Sites",
+          "walk": false
+        },
+        {
+          "id": "turkey_goreme",
+          "title": "格雷梅",
+          "area": "卡帕多奇亚 · 格雷梅",
+          "info": "格雷梅坐落在卡帕多奇亚的凝灰岩地貌之间，石屋与岩柱共同构成小镇的轮廓。这里既是一座有人生活的城镇，也是一扇认识周围山谷与岩窟文化的窗口。",
+          "reference_page": "cappadocia",
+          "reference_alt": "Göreme",
+          "walk": false
+        },
+        {
+          "id": "turkey_nevsehir",
+          "title": "内夫谢希尔",
+          "area": "卡帕多奇亚 · 内夫谢希尔",
+          "info": "内夫谢希尔是卡帕多奇亚地区的重要城市，山丘上的城堡与周围聚落记录着不同年代的生活。本站以城市与城堡外观为线索，与格雷梅的山谷小镇景观分别呈现。",
+          "reference_page": "nevsehir-castle",
+          "reference_alt": "",
+          "walk": false
+        },
+        {
+          "id": "turkey_kaymakli",
+          "title": "凯马克利",
+          "area": "卡帕多奇亚 · 凯马克利",
+          "info": "凯马克利以地下城闻名，岩层中开凿的通道与房间连接着储藏、居住和公共空间。顺着有限的光线观察岩壁，可以体会人们利用地质条件组织生活与庇护空间的方式。",
+          "reference_page": "cappadocia",
+          "reference_alt": "Kaymaklı Underground City",
+          "walk": false
+        },
+        {
+          "id": "turkey_pigeon_valley",
+          "title": "鸽子谷",
+          "area": "卡帕多奇亚 · 鸽子谷",
+          "info": "鸽子谷位于格雷梅与乌奇萨尔之间，谷壁上可见人工开凿的鸽舍。浅色凝灰岩、绿地与岩壁孔洞，让自然侵蚀和当地农业生活的痕迹同时进入视野。",
+          "reference_page": "pigeon-valley",
+          "reference_alt": "",
+          "walk": false
+        },
+        {
+          "id": "turkey_uchisar",
+          "title": "乌奇萨尔",
+          "area": "卡帕多奇亚 · 乌奇萨尔",
+          "info": "乌奇萨尔的巨大岩堡从周围聚落间拔起，岩体中保留着开凿的洞室与孔洞。它与山坡上的石屋相连，是卡帕多奇亚容易辨认的地标之一。",
+          "reference_page": "cappadocia",
+          "reference_alt": "Üçhisar",
+          "walk": false
+        },
+        {
+          "id": "turkey_goreme_museum",
+          "title": "格雷梅露天博物馆",
+          "area": "卡帕多奇亚 · 格雷梅露天博物馆",
+          "info": "格雷梅露天博物馆保存了开凿在岩石中的教堂与修道空间。岩壁、入口和内部壁画共同讲述拜占庭时期的宗教生活；本幅从窟群外景认识它们与地貌的关系。",
+          "reference_page": "cappadocia",
+          "reference_alt": "Göreme Open Air Museum",
+          "walk": false
+        },
+        {
+          "id": "turkey_avanos",
+          "title": "阿瓦诺斯",
+          "area": "卡帕多奇亚 · 阿瓦诺斯",
+          "info": "阿瓦诺斯位于克孜勒河畔，以陶艺传统闻名。河流带来的红色黏土与当地工坊相连，让陶器成为认识这座小镇日常生活的一条线索。",
+          "reference_page": "cappadocia",
+          "reference_alt": "Göreme Avanos",
+          "walk": false
+        },
+        {
+          "id": "turkey_red_valley",
+          "title": "红谷",
+          "area": "卡帕多奇亚 · 红谷",
+          "info": "红谷（Kızılçukur）的凝灰岩层呈现红、粉与赭色，在光线变化中显出不同层次。沟谷与岩壁间保留着岩窟活动的痕迹，本站以山谷全景观赏为主。",
+          "reference_page": "red-valley",
+          "reference_alt": "",
+          "walk": false
+        }
+      ]
+    },
+    {
+      "title": "伊兹密尔周边",
+      "tab": "伊兹密尔",
+      "note": "先看塞尔丘克与以弗所，再翻向切什梅、阿拉恰特，最后回到伊兹密尔市区的大电梯与钟楼。市中心钟楼在本册指科纳克广场的伊兹密尔钟楼。",
+      "stops": [
+        {
+          "id": "turkey_selcuk",
+          "title": "塞尔丘克（Selçuk）",
+          "area": "伊兹密尔 · 塞尔丘克",
+          "info": "塞尔丘克是认识以弗所及周边历史的重要城镇。阿亚苏鲁克山上的城堡与圣约翰教堂遗址，把不同历史时期的建筑痕迹带入今天的城镇景观。",
+          "reference_page": "izmir",
+          "reference_alt": "St. Johns Basilica",
+          "walk": true
+        },
+        {
+          "id": "turkey_ephesus",
+          "title": "以弗所古城（Ephesus）",
+          "area": "伊兹密尔 · 塞尔丘克",
+          "info": "以弗所曾是一座重要的古代港口城市，如今遗址位于塞尔丘克一带。街道、剧场与公共建筑的遗存，让人从石柱和建筑细部中阅读古城的生活层次。",
+          "reference_page": "izmir",
+          "reference_alt": "Ephesus Hadrian Temple",
+          "walk": true
+        },
+        {
+          "id": "turkey_cesme",
+          "title": "切什梅（Çeşme）",
+          "area": "伊兹密尔 · 切什梅半岛",
+          "info": "切什梅位于伊兹密尔半岛西端，港湾、海岸与历史城堡共同构成小城的风景。沿着海边远望，爱琴海的蓝色与石砌城墙形成鲜明对照。",
+          "reference_page": "cesme",
+          "reference_alt": "Çeşme Kalesi",
+          "walk": false
+        },
+        {
+          "id": "turkey_alacati",
+          "title": "阿拉恰特（Alaçatı）",
+          "area": "伊兹密尔 · 切什梅半岛",
+          "info": "阿拉恰特以石屋、窄街和周边的风车景观闻名。店铺与院落沿街展开，保留着爱琴海沿岸小镇的建筑尺度与生活气息。",
+          "reference_page": "cesme",
+          "reference_alt": "Alaçatı",
+          "walk": true
+        },
+        {
+          "id": "turkey_asansor",
+          "title": "大电梯",
+          "area": "伊兹密尔 · 科纳克",
+          "info": "伊兹密尔的历史大电梯（Asansör）建于 1907 年，用来连接高差明显的街道。砖砌塔身与上方露台，将邻里通行和眺望海湾的城市风景联系起来。",
+          "reference_page": "izmir",
+          "reference_alt": "Historical Elevator",
+          "walk": false
+        },
+        {
+          "id": "turkey_clock_tower",
+          "title": "市中心钟楼",
+          "area": "伊兹密尔 · 科纳克广场",
+          "info": "市中心钟楼指科纳克广场上的伊兹密尔钟楼，建于 1901 年。纤细塔身、拱券与底部喷泉构成精致的轮廓，是这座爱琴海城市的标志性建筑。",
+          "reference_page": "izmir",
+          "reference_alt": "İzmir Clock Tower",
+          "walk": false
+        }
+      ]
+    },
+    {
+      "title": "安塔利亚周边",
+      "tab": "安塔利亚",
+      "note": "从安塔利亚机场翻开地中海沿岸篇章，依次前往西代、阿波罗神庙、阿斯潘多斯古剧场与佩尔格古城。阿波罗神庙是西代海边的遗址，与西代城镇分别设站。",
+      "stops": [
+        {
+          "id": "turkey_antalya_airport",
+          "title": "安塔利亚机场",
+          "area": "安塔利亚 · 机场",
+          "info": "安塔利亚机场位于市中心东北方向，是抵达土耳其地中海沿岸的重要门户。本册把机场单独设为抵达站，再依照清单翻向周边古城与海岸景观。",
+          "reference_page": "airport",
+          "reference_alt": "",
+          "walk": false
+        },
+        {
+          "id": "turkey_side",
+          "title": "西代 / Side",
+          "area": "安塔利亚 · 西代",
+          "info": "西代位于伸向地中海的半岛上，古代城市遗迹与今天的港湾、街区相互交织。本幅从现存柱廊街道认识古城，沿中央地面慢慢走；下一站再走近海边的阿波罗神庙。",
+          "reference_page": "side",
+          "reference_alt": "",
+          "walk": true
+        },
+        {
+          "id": "turkey_apollo",
+          "title": "阿波罗神庙",
+          "area": "安塔利亚 · 西代",
+          "info": "本册的阿波罗神庙位于西代海岸，现存石柱与残留梁饰面向地中海。它是古代神庙遗址的一部分；画面保留遗址状态，不补建已经消失的殿堂。",
+          "reference_page": "antalya",
+          "reference_alt": "Side",
+          "walk": false
+        },
+        {
+          "id": "turkey_aspendos",
+          "title": "阿斯潘多斯古剧场（Aspendos）",
+          "area": "安塔利亚 · 塞里克",
+          "info": "阿斯潘多斯古剧场保存了层层看台与高大的舞台建筑，是认识罗马剧场结构的重要实例。从看台望向舞台，可以观察半圆形空间如何围合演出区域。",
+          "reference_page": "antalya",
+          "reference_alt": "Aspendos",
+          "walk": false
+        },
+        {
+          "id": "turkey_perge",
+          "title": "佩尔格古城（Perge）",
+          "area": "安塔利亚 · 阿克苏",
+          "info": "佩尔格位于安塔利亚附近的阿克苏一带，保存着柱廊街道、浴场、体育场等遗存。沿着石柱和水道的方向，能够辨认古代公共空间的组织方式。",
+          "reference_page": "perge",
+          "reference_alt": "",
+          "walk": false
+        }
+      ]
+    }
+  ]
+}

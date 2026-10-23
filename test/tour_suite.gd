@@ -30,7 +30,7 @@ func _run() -> void:
 	await physics_frame
 	_ui = _main.get("_ui")
 	_ui.close_modal()
-	_check(Catalog.STOPS.size() == 74, "45 existing and 29 Hexi destinations remain available")
+	_check(Catalog.STOPS.size() == 104, "74 existing and 30 Turkey destinations remain available")
 	for route_index in range(Catalog.ROUTES.size()):
 		for id: String in Catalog.ROUTES[route_index].stops:
 			_main.set("_route_index", route_index)

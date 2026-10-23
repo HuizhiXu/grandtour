@@ -12,7 +12,7 @@ boot_splash/use_filter=true
 boot_splash/bg_color=Color(0.96863, 0.94902, 0.90588, 1)
 
 config/name="The Grand Tour"
-config/description="翻开西贡、吴哥与大同及周边的旅行画册，在水彩风景中漫步与观景。"
+config/description="翻开西贡、吴哥、大同及周边、河西走廊与土耳其的旅行画册，在水彩风景中漫步与观景。"
 config/version="0.1.0"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")

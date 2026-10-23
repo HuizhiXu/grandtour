@@ -1,6 +1,11 @@
 .godot/
 dist/
 captures/
+__pycache__/
+# Turkey reference discovery is reproducible; curated source URLs and photos are retained.
+docs/turkey-art/references/*-page.html
+docs/turkey-art/references/*-images.json
+docs/turkey-art/approved-receipts.jsonl
 node_modules/
 .manus-logs/
 # --- injected at scaffold time (see gitignore.project in the template) ---

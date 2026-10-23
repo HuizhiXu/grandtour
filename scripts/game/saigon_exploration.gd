@@ -385,6 +385,8 @@ func _travel_to_stop(id: String) -> void:
 		by_car = false
 	elif TourCatalog.journey_for_stop(id).id in ["datong", "hexi"]:
 		by_car = TourCatalog.STOPS[id].area != TourCatalog.STOPS[from_stop].area
+	elif TourCatalog.journey_for_stop(id).id == "turkey":
+		heading = "翻页转场 · "
 	if by_car: heading = "乘车转场 · "
 	_ui.show_feedback(heading + str(TourCatalog.STOPS[id].title))
 

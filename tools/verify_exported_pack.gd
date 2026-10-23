@@ -71,6 +71,7 @@ func _verify() -> void:
 		_check(library_ui.call("has_modal"), "pack opens the travel library")
 		_check(library_ui.find_child("Journey_datong", true, false) != null, "pack includes the Datong cover")
 		_check(library_ui.find_child("Journey_hexi", true, false) != null, "pack includes the five-city Hexi cover")
+		_check(library_ui.find_child("Journey_turkey", true, false) != null, "pack includes the four-region Turkey cover")
 		library_ui.call("close_modal")
 		for journey: Dictionary in TourCatalog.JOURNEYS:
 			_check(ResourceLoader.exists(str(journey.cover)), "exported journey cover: " + str(journey.id))
@@ -79,6 +80,12 @@ func _verify() -> void:
 		for id: String in TourCatalog.Hexi.STOPS:
 			_check(not ResourceLoader.exists("res://assets/game/scenes/%s-v1.png" % id), "Hexi source PNG excluded: " + id)
 		_check(TourCatalog.Hexi.STOPS.size() == 29, "pack includes the requested 29-stop itinerary")
+		_check(TourCatalog.Turkey.STOPS.size() == 30, "pack includes all 30 Turkey stops")
+		for id: String in TourCatalog.Turkey.STOPS:
+			_check(not ResourceLoader.exists("res://assets/game/scenes/%s-v2.png" % id), "Turkey source PNG excluded: " + id)
+		var turkey_font := load("res://assets/template/fonts/ui_regular.tres") as Font
+		for character: String in "Selçuk Çeşme Alaçatı Aspendos Göreme Uçhisar":
+			_check(turkey_font.has_char(character.unicode_at(0)), "exported Turkish glyph: " + character)
 		for retired_id: String in ["hexi_baita_mountain", "hexi_yellow_river_mother", "hexi_leitai"]:
 			_check(not ResourceLoader.exists("res://assets/game/runtime/tour-%s.jpg" % retired_id), "retired Hexi texture excluded: " + retired_id)
 		_check(main.get("_traveler") is CharacterBody2D, "pack creates a controllable traveler")

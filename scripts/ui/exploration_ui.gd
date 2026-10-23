@@ -216,16 +216,19 @@ func show_journeys(journeys: Array[Dictionary], routes: Array[Dictionary], stops
 		cover.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		cover.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		cover.custom_minimum_size = Vector2(0, 156)
+		if journeys.size() > 4: cover.custom_minimum_size.y = 124
 		cover.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cover.clip_contents = true
 		content.add_child(cover)
 		var count := 0
 		for index: int in entry.routes: count += routes[index].stops.size()
 		var region := ScreenFactory.medium_label("%s  ·  %d 站" % [entry.region, count], 12, MUTED)
+		region.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		content.add_child(region)
 		var title := ScreenFactory.display_label(str(entry.title), 24, INK, "heading")
 		content.add_child(title)
 		var subtitle := ScreenFactory.medium_label(str(entry.subtitle), 14, GREEN)
+		subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		content.add_child(subtitle)
 		var description := ScreenFactory.label(str(entry.description), 13, MUTED)
 		description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

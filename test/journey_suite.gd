@@ -10,6 +10,12 @@ const HEXI_NAMES := [
 	["嘉峪关", "长城第一墩", "悬壁长城"],
 	["莫高窟", "鸣沙山月牙泉", "敦煌夜市", "西千佛洞", "阳关", "玉门关", "雅丹魔鬼城"],
 ]
+const TURKEY_NAMES := [
+	["博斯普鲁斯海峡", "圣索菲亚大教堂", "老皇宫", "蓝色清真寺", "君士坦丁堡竞技场遗址", "锡尔凯吉火车站", "纯真博物馆", "独立大街", "加拉太塔", "如梅利堡垒"],
+	["安纳托利亚高原", "格雷梅", "内夫谢希尔", "凯马克利", "鸽子谷", "乌奇萨尔", "格雷梅露天博物馆", "阿瓦诺斯", "红谷"],
+	["塞尔丘克（Selçuk）", "以弗所古城（Ephesus）", "切什梅（Çeşme）", "阿拉恰特（Alaçatı）", "大电梯", "市中心钟楼"],
+	["安塔利亚机场", "西代 / Side", "阿波罗神庙", "阿斯潘多斯古剧场（Aspendos）", "佩尔格古城（Perge）"],
+]
 var _checks := 0
 var _failures: Array[String] = []
 var _main: Node
@@ -32,7 +38,7 @@ func _run() -> void:
 	_check((_main.get("_journey_bookmarks") as Dictionary).get("hexi", "") == "", "retired Hexi stop bookmark ignored")
 	_check((_main.get("_journey_bookmarks") as Dictionary).get("angkor") == "angkor_bayon", "valid bookmark restored")
 	var shelf := _ui.find_child("JourneyShelf", true, false)
-	_check(shelf != null and shelf.get_child_count() == 4, "four separate journey covers")
+	_check(shelf != null and shelf.get_child_count() == 5, "five separate journey covers")
 	_check(_on_screen(_ui.get("_modal_panel")), "travel library fits viewport")
 	var owned := {}
 	for journey: Dictionary in Catalog.JOURNEYS:
@@ -167,6 +173,82 @@ func _run() -> void:
 	await _layout()
 	_check(_find_button(_ui.get("_modal_actions"), "继续旅程 · 雅丹魔鬼城") != null, "Hexi resume point survives city navigation")
 	_check((_main.get("_journey_bookmarks") as Dictionary).get("angkor") == "angkor_bayon", "Hexi travel preserves Angkor bookmark")
+	_ui.close_modal()
+	(_main.get("_journey_bookmarks") as Dictionary)["turkey"] = "turkey_alacati"
+	_main.call("_select_journey", "turkey")
+	await _layout()
+	_check(Catalog.Turkey.STOPS.size() == 30, "Turkey includes all requested 30 stops")
+	_check(Catalog.journey("turkey").start == "turkey_bosphorus", "Turkey starts at the Bosphorus")
+	_check("土耳其" in (_ui.get("_modal_title") as Label).text, "Turkey cover opens its own book")
+	_check(_find_button(_ui.get("_modal_actions"), "继续旅程 · 阿拉恰特（Alaçatı）") != null, "Turkey restores its own bookmark")
+	for region_index in range(TURKEY_NAMES.size()):
+		var names: Array = []
+		for id: String in Catalog.Turkey.ROUTES[region_index].stops:
+			names.append(Catalog.STOPS[id].title)
+		_check(names == TURKEY_NAMES[region_index], "Turkey region matches names and order: %d" % region_index)
+		var route_index: int = Catalog.journey("turkey").routes[region_index]
+		var region_tab := _ui.find_child("JourneyRoute_%d" % route_index, true, false) as Button
+		_check(region_tab != null and _on_screen(region_tab), "Turkey region tab visible: %d" % region_index)
+		if region_tab != null:
+			region_tab.pressed.emit()
+			await _layout()
+			_check(_main.get("_route_index") == route_index, "Turkey region tab selects correct region")
+			_check(_on_screen(_ui.get("_modal_panel")), "Turkey region route fits viewport")
+			var scroll := _ui.find_child("RouteStops", true, false) as ScrollContainer
+			var last_title: String = TURKEY_NAMES[region_index].back()
+			var last := _find_button(scroll, last_title)
+			_check(last != null, "Turkey region includes its last stop")
+			if last != null:
+				scroll.ensure_control_visible(last)
+				await _layout()
+				_check(scroll.get_global_rect().encloses(last.get_global_rect()), "Turkey last stop fully accessible")
+	_ui.close_modal()
+	for boundary: Array in [["turkey_rumeli", "turkey_anatolian_plateau"], ["turkey_red_valley", "turkey_selcuk"], ["turkey_clock_tower", "turkey_antalya_airport"]]:
+		_main.call("_travel_to_stop", str(boundary[0]))
+		await _settle()
+		_check(_main.call("_next_stop_id") == boundary[1], "Turkey next stop crosses region boundary")
+		(_ui.get("_next_button") as Button).pressed.emit()
+		await _settle()
+		_check(_main.get("_scene_id") == boundary[1], "Turkey next button reaches following region")
+		_check("翻页转场" in (_ui.get("_feedback_label") as Label).text, "Turkey distant travel uses page transition")
+	_main.call("_travel_to_stop", "turkey_perge")
+	await _settle()
+	_check(_main.call("_next_stop_id") == "", "Perge ends Turkey without crossing to another country")
+	(_ui.get("_next_button") as Button).pressed.emit()
+	await _layout()
+	_check(_ui.has_modal() and "土耳其" in (_ui.get("_modal_title") as Label).text, "Turkey last stop returns to its own route")
+	_ui.close_modal()
+	_check(store.get_travel_bookmarks().get("turkey") == "turkey_perge", "Turkey latest stop persisted")
+	store.call("_load")
+	_check(store.get_travel_bookmarks().get("turkey") == "turkey_perge", "Turkey bookmark survives disk reload")
+	_check(store.get_travel_bookmarks().get("hexi") == "hexi_yadan", "Turkey preserves Hexi bookmark")
+	_check(store.get_travel_bookmarks().get("angkor") == "angkor_bayon", "Turkey preserves Angkor bookmark")
+	_main.call("_return_to_start")
+	await _settle()
+	_check(_main.get("_scene_id") == "turkey_bosphorus", "Turkey restart returns to its own beginning")
+	var walking_count := 0
+	for id: String in Catalog.Turkey.STOPS:
+		var ground: Dictionary = World.layout(id)
+		if ground.panorama: continue
+		walking_count += 1
+		_main.call("_travel_to_stop", id)
+		await _settle()
+		var traveler := _main.get("_traveler") as Traveler
+		var pathfinder := _main.get("_pathfinder") as IsoPathfinder
+		var origin := traveler.global_position
+		_check(traveler.visible, "Turkey walking actor visible: " + id)
+		_check(pathfinder.is_world_walkable(origin), "Turkey spawn is on reachable ground: " + id)
+		_check(not (_ui.get("_hint_panel") as Control).get_global_rect().has_point(origin), "Turkey spawn clear of hint panel: " + id)
+		var route := pathfinder.find_path(origin, Vector2(640, 260))
+		_check(not route.is_empty(), "Turkey monument click resolves to safe ground: " + id)
+		for point: Vector2 in route:
+			_check(Geometry2D.is_point_in_polygon(point, ground.floor), "Turkey route stays on ground: " + id)
+		var destination: Vector2 = ground.floor[0].lerp(ground.floor[1], 0.5).lerp(origin, 0.25)
+		_main.call("_request_walk", destination)
+		for frame in range(20): await physics_frame
+		_check(traveler.global_position.distance_to(origin) > 1.0, "Turkey actor actually walks: " + id)
+		_check(Geometry2D.is_point_in_polygon(traveler.global_position, ground.floor), "Turkey actor stays in the calibrated ground: " + id)
+	_check(walking_count == 7, "Turkey has seven calibrated walking scenes")
 	store.set("_data", original)
 	store.save()
 	_main.queue_free()
