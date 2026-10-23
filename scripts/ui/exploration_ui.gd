@@ -196,7 +196,7 @@ func show_journeys(journeys: Array[Dictionary], routes: Array[Dictionary], stops
 		var selected := str(entry.id)
 		var card := _make_button("", false)
 		card.name = "Journey_" + selected
-		card.custom_minimum_size = Vector2(0, 338)
+		card.custom_minimum_size = Vector2(0, 374)
 		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		card.pressed.connect(func() -> void: journey_selected.emit(selected))
 		shelf.add_child(card)
@@ -232,6 +232,7 @@ func show_journeys(journeys: Array[Dictionary], routes: Array[Dictionary], stops
 		content.add_child(description)
 		var saved_id := str(bookmarks.get(selected, ""))
 		var bookmark := ScreenFactory.medium_label("上次停在 · " + str(stops[saved_id].title) if stops.has(saved_id) else "打开这册旅程 →", 12, GOLD)
+		bookmark.name = "Bookmark"
 		bookmark.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		content.add_child(bookmark)
 	_add_action_button("继续当前这一站 · " + str(stops.get(current_stop, {}).get("title", "西贡中央邮局")), close_modal, true)
@@ -254,6 +255,7 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 		resume.pressed.connect(func() -> void: stop_selected.emit(resume_id))
 		navigation.add_child(resume)
 	var tabs := HBoxContainer.new()
+	tabs.name = "JourneyRouteTabs"
 	_modal_actions.add_child(tabs)
 	var route_indices: Array = journey.get("routes", range(routes.size()))
 	for index: int in route_indices:
@@ -261,6 +263,8 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 		var selected := index
 		var tab_title: String = routes[index].get("tab", "建筑漫步" if index == 0 else "城市文化")
 		var button := _make_button(tab_title, index == selected_route)
+		button.name = "JourneyRoute_%d" % index
+		button.custom_minimum_size.x = 0.0
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.pressed.connect(func() -> void: route_selected.emit(selected))
 		tabs.add_child(button)

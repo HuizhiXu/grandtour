@@ -24,13 +24,14 @@ func _run() -> void:
 	_check((_main.get("_journey_bookmarks") as Dictionary).get("datong", "") == "", "removed stop bookmark ignored")
 	_check((_main.get("_journey_bookmarks") as Dictionary).get("angkor") == "angkor_bayon", "valid bookmark restored")
 	var shelf := _ui.find_child("JourneyShelf", true, false)
-	_check(shelf != null and shelf.get_child_count() == 3, "three separate journey covers")
+	_check(shelf != null and shelf.get_child_count() == 4, "four separate journey covers")
 	_check(_on_screen(_ui.get("_modal_panel")), "travel library fits viewport")
 	var owned := {}
 	for journey: Dictionary in Catalog.JOURNEYS:
 		var card := _ui.find_child("Journey_" + str(journey.id), true, false) as Button
 		_check(card != null and _on_screen(card), "cover visible: " + str(journey.id))
 		_check((card.find_child("Cover", true, false) as TextureRect).texture != null, "cover image loads: " + str(journey.id))
+		_check(card.get_global_rect().encloses((card.find_child("Bookmark", true, false) as Control).get_global_rect()), "bookmark stays inside journey cover: " + str(journey.id))
 		for route_index: int in journey.routes:
 			for id: String in Catalog.ROUTES[route_index].stops:
 				_check(not owned.has(id), "stop has one owner: " + id)
@@ -105,6 +106,39 @@ func _run() -> void:
 		resume.pressed.emit()
 		await _settle()
 		_check(_main.get("_scene_id") == "angkor_bayon", "resume returns to saved Angkor stop")
+	# Hexi's city tabs form one continuous journey, with a bookmark in each book.
+	_ui.close_modal()
+	_main.call("_select_journey", "hexi")
+	await _layout()
+	_check("河西走廊" in (_ui.get("_modal_title") as Label).text, "Hexi cover opens its own city routes")
+	for route_index: int in Catalog.journey("hexi").routes:
+		var city_tab := _ui.find_child("JourneyRoute_%d" % route_index, true, false) as Button
+		_check(city_tab != null and _on_screen(city_tab), "city tab fits viewport: " + str(route_index))
+		if city_tab != null:
+			city_tab.pressed.emit()
+			await _layout()
+			_check(_main.get("_route_index") == route_index, "city tab selects its own route")
+	_check(_on_screen(_ui.get("_modal_panel")), "five-city route fits viewport")
+	_ui.close_modal()
+	for boundary: Array in [["hexi_yellow_river_mother", "hexi_leitai"], ["hexi_wuwei_museum", "hexi_rainbow_danxia"], ["hexi_zhangye_dafo", "hexi_jiayuguan_fortress"], ["hexi_first_beacon", "hexi_mogao"]]:
+		_main.call("_travel_to_stop", str(boundary[0]))
+		await _settle()
+		_check(_main.call("_next_stop_id") == boundary[1], "next stop continues across city boundary: " + str(boundary[0]))
+		(_ui.get("_next_button") as Button).pressed.emit()
+		await _settle()
+		_check(_main.get("_scene_id") == boundary[1], "next button reaches next city: " + str(boundary[1]))
+		_check("乘车转场" in (_ui.get("_feedback_label") as Label).text, "cross-city transfer is labelled")
+	_main.call("_travel_to_stop", "hexi_yadan")
+	await _settle()
+	_check(_main.call("_next_stop_id") == "", "Dunhuang ends the five-city journey")
+	(_ui.get("_next_button") as Button).pressed.emit()
+	await _layout()
+	_check("河西走廊" in (_ui.get("_modal_title") as Label).text, "last Hexi stop returns to own book")
+	_ui.close_modal()
+	_main.call("_select_journey", "hexi")
+	await _layout()
+	_check(_find_button(_ui.get("_modal_actions"), "继续旅程 · 敦煌雅丹") != null, "Hexi resume point survives city navigation")
+	_check((_main.get("_journey_bookmarks") as Dictionary).get("angkor") == "angkor_bayon", "Hexi travel preserves Angkor bookmark")
 	store.set("_data", original)
 	store.save()
 	_main.queue_free()

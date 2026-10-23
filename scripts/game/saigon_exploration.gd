@@ -383,7 +383,7 @@ func _travel_to_stop(id: String) -> void:
 	if TourCatalog.journey_for_stop(id).id != TourCatalog.journey_for_stop(from_stop).id:
 		heading = "翻开新旅程 · "
 		by_car = false
-	elif TourCatalog.journey_for_stop(id).id == "datong":
+	elif TourCatalog.journey_for_stop(id).id in ["datong", "hexi"]:
 		by_car = TourCatalog.STOPS[id].area != TourCatalog.STOPS[from_stop].area
 	if by_car: heading = "乘车转场 · "
 	_ui.show_feedback(heading + str(TourCatalog.STOPS[id].title))
@@ -393,7 +393,15 @@ func _next_stop_id() -> String:
 	var current := TourCatalog.stop_for_scene(_scene_id)
 	var route: Dictionary = TourCatalog.ROUTES[TourCatalog.route_for_stop(current)]
 	var index: int = route.stops.find(current)
-	return str(route.stops[index + 1]) if index >= 0 and index + 1 < route.stops.size() else ""
+	if index >= 0 and index + 1 < route.stops.size():
+		return str(route.stops[index + 1])
+	var journey := TourCatalog.journey_for_stop(current)
+	if index >= 0 and journey.get("continue_routes", false):
+		var routes: Array = journey.routes
+		var city_index := routes.find(TourCatalog.route_for_stop(current))
+		if city_index >= 0 and city_index + 1 < routes.size():
+			return str(TourCatalog.ROUTES[routes[city_index + 1]].stops[0])
+	return ""
 
 
 func _travel_next() -> void:

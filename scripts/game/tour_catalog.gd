@@ -3,19 +3,26 @@ extends RefCounted
 
 const Angkor := preload("res://scripts/game/angkor_catalog.gd")
 const Datong := preload("res://scripts/game/datong_catalog.gd")
+const Hexi := preload("res://scripts/game/hexi_catalog.gd")
 const JOURNEYS: Array[Dictionary] = [
 	{"id": "saigon", "title": "西贡漫步", "region": "越南 · 胡志明市", "subtitle": "街道、建筑与城市日常", "description": "从老邮局的第一张明信片出发。", "cover": "res://assets/game/runtime/saigon-exterior.jpg", "start": "post_office", "routes": [0, 1]},
 	{"id": "angkor", "title": "吴哥寻迹", "region": "柬埔寨 · 暹粒", "subtitle": "在树林与石刻之间慢慢走", "description": "沿着石道，翻开古寺与湖畔的风景。", "cover": "res://assets/game/runtime/tour-angkor_wat.jpg", "start": "angkor_south_gate", "routes": [2]},
 	{"id": "datong", "title": "大同及周边", "region": "中国 · 山西", "subtitle": "一册晋北古建之旅", "description": "从古城、石窟走向悬空寺与应县木塔。", "cover": "res://assets/game/runtime/tour-datong_hanging_temple.jpg", "start": "datong_city_wall", "routes": [3]},
+	{"id": "hexi", "title": "河西走廊", "region": "中国 · 甘肃", "subtitle": "从兰州出发，一路向西", "description": "五座城市，二十处黄河、石窟与边塞风景。", "cover": "res://assets/game/runtime/tour-hexi_crescent_lake.jpg", "start": "hexi_gansu_museum", "routes": [4, 5, 6, 7, 8], "continue_routes": true},
 ]
 const ROUTES: Array[Dictionary] = [
 	{"title": "经典建筑与城市漫步", "subtitle": "独立宫 → 红教堂 → 中央邮局 → 书街 → 市政厅 → 歌剧院 → 阮惠步行街 → 咖啡公寓", "note": "沿城市中心慢慢走，从历史建筑走向当代街头。教堂、市政厅和歌剧院以外观欣赏为主。", "stops": ["palace", "cathedral", "post_office", "book_street", "city_hall", "opera", "nguyen_hue", "cafe_apartments"]},
 	{"title": "市场、艺术与历史", "subtitle": "滨城市场 → 美术馆 → 粉红教堂 → 战争遗迹博物馆", "note": "市场与美术馆相邻；粉红教堂较远，可乘车前往。可自由选站，也可把战争遗迹博物馆与独立宫一起参观，减少折返。", "stops": ["ben_thanh", "fine_arts", "pink_church", "war_museum"]},
 	Angkor.ROUTE,
 	Datong.ROUTE,
+	Hexi.ROUTES[0],
+	Hexi.ROUTES[1],
+	Hexi.ROUTES[2],
+	Hexi.ROUTES[3],
+	Hexi.ROUTES[4],
 ]
 
-static var STOPS: Dictionary = SAIGON_STOPS.merged(Angkor.STOPS).merged(Datong.STOPS)
+static var STOPS: Dictionary = SAIGON_STOPS.merged(Angkor.STOPS).merged(Datong.STOPS).merged(Hexi.STOPS)
 
 const SAIGON_STOPS: Dictionary = {
 	"palace": {"title": "独立宫", "scene": "palace_garden", "info": "独立宫由建筑师吴曰树（Ngô Viết Thụ）设计，于 1966 年落成。横向舒展的楼体与立面遮阳构件，将现代建筑语言与东方意象结合在一起。"},

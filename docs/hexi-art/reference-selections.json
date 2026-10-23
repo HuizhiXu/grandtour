@@ -1,0 +1,177 @@
+[
+  {
+    "id": "hexi_gansu_museum",
+    "page_key": "gansu-museum",
+    "index": 0
+  },
+  {
+    "id": "hexi_zhongshan_bridge",
+    "page_key": "lanzhou-river",
+    "index": 3
+  },
+  {
+    "id": "hexi_baita_mountain",
+    "page_key": "baita",
+    "index": 0
+  },
+  {
+    "id": "hexi_yellow_river_mother",
+    "page_key": "yellow-mother",
+    "index": 0
+  },
+  {
+    "id": "hexi_leitai",
+    "page_key": "wuwei-museums",
+    "index": 2
+  },
+  {
+    "id": "hexi_wuwei_confucian_temple",
+    "page_key": "wuwei-romance",
+    "index": 3
+  },
+  {
+    "id": "hexi_tiantishan",
+    "page_key": "wuwei-museums",
+    "index": 4
+  },
+  {
+    "id": "hexi_wuwei_museum",
+    "page_key": "wuwei-museums",
+    "index": 0
+  },
+  {
+    "id": "hexi_rainbow_danxia",
+    "page_key": "danxia",
+    "index": 19
+  },
+  {
+    "id": "hexi_pingshanhu",
+    "page_key": "pingshan-landscape",
+    "index": 0
+  },
+  {
+    "id": "hexi_mati_temple",
+    "page_key": "mati",
+    "index": 19
+  },
+  {
+    "id": "hexi_zhangye_dafo",
+    "page_key": "dafo",
+    "index": 19
+  },
+  {
+    "id": "hexi_jiayuguan_fortress",
+    "page_key": "jiayuguan",
+    "index": 6
+  },
+  {
+    "id": "hexi_overhanging_wall",
+    "page_key": "jiayuguan",
+    "index": 8
+  },
+  {
+    "id": "hexi_first_beacon",
+    "page_key": "jiayuguan",
+    "index": 9
+  },
+  {
+    "id": "hexi_crescent_lake",
+    "page_key": "crescent",
+    "index": 0
+  },
+  {
+    "id": "hexi_yumen_pass",
+    "page_key": "passes",
+    "index": 2
+  },
+  {
+    "id": "hexi_yang_pass",
+    "page_key": "yang-beacon",
+    "index": 5
+  },
+  {
+    "id": "hexi_yadan",
+    "page_key": "yadan",
+    "index": 1
+  },
+  {
+    "id": "candidate-passes0",
+    "page_key": "passes",
+    "index": 0
+  },
+  {
+    "id": "candidate-passes1",
+    "page_key": "passes",
+    "index": 1
+  },
+  {
+    "id": "candidate-passes4",
+    "page_key": "passes",
+    "index": 4
+  },
+  {
+    "id": "candidate-passes5",
+    "page_key": "passes",
+    "index": 5
+  },
+  {
+    "id": "candidate-yadan0",
+    "page_key": "yadan",
+    "index": 0
+  },
+  {
+    "id": "candidate-yadan2",
+    "page_key": "yadan",
+    "index": 2
+  },
+  {
+    "id": "candidate-yadan3",
+    "page_key": "yadan",
+    "index": 3
+  },
+  {
+    "id": "candidate-dafo19",
+    "page_key": "dafo-visit",
+    "index": 19
+  },
+  {
+    "id": "candidate-dafo20",
+    "page_key": "dafo-visit",
+    "index": 20
+  },
+  {
+    "id": "candidate-dafo21",
+    "page_key": "dafo-visit",
+    "index": 21
+  },
+  {
+    "id": "candidate-dafo22",
+    "page_key": "dafo-visit",
+    "index": 22
+  },
+  {
+    "id": "candidate-dafo23",
+    "page_key": "dafo-visit",
+    "index": 23
+  },
+  {
+    "id": "candidate-dafo24",
+    "page_key": "dafo-visit",
+    "index": 24
+  },
+  {
+    "id": "candidate-dafo25",
+    "page_key": "dafo-visit",
+    "index": 25
+  },
+  {
+    "id": "candidate-dafo26",
+    "page_key": "dafo-visit",
+    "index": 26
+  },
+  {
+    "id": "candidate-dafo27",
+    "page_key": "dafo-visit",
+    "index": 27
+  }
+]

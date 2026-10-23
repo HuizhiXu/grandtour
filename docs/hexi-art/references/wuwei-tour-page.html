@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            background: #f3f5f8;
+            line-height: 1.7;
+        }
+        a { text-decoration: none; color: #333; }
+        a:hover { color: #c0620d; }
+        img { display: block; max-width: 100%; }
+
+        /* ============ 顶部 Banner ============ */
+        .hero {
+            position: relative;
+            height: 420px;
+            overflow: hidden;
+            color: #fff;
+        }
+        .hero img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(6,44,82,0.35) 0%, rgba(6,44,82,0.15) 35%, rgba(6,44,82,0.75) 100%);
+        }
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 90px 20px 60px;
+        }
+        .hero .crumb {
+            font-size: 13px;
+            opacity: 0.92;
+            margin-bottom: 18px;
+        }
+        .hero .crumb a { color: #fff; }
+        .hero .crumb span { margin: 0 6px; opacity: 0.7; }
+        .hero h1 {
+            font-size: 44px;
+            font-weight: bold;
+            letter-spacing: 6px;
+            text-shadow: 0 2px 16px rgba(0,0,0,0.45);
+        }
+        .hero .slogan {
+            font-size: 18px;
+            margin-top: 18px;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 8px rgba(0,0,0,0.45);
+        }
+        .hero .tag-row {
+            margin-top: 26px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .hero .tag {
+            display: inline-block;
+            padding: 5px 14px;
+            font-size: 13px;
+            border: 1px solid rgba(255,255,255,0.55);
+            border-radius: 20px;
+            background: rgba(255,255,255,0.10);
+            backdrop-filter: blur(2px);
+        }
+
+        /* ============ 通用容器 ============ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .section { padding: 36px 0; }
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+        .section-head .left {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .section-head h2 {
+            font-size: 24px;
+            color: #1a1a1a;
+            font-weight: bold;
+            position: relative;
+            padding-left: 14px;
+        }
+        .section-head h2::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 6px; bottom: 6px;
+            width: 4px;
+            background: linear-gradient(180deg, #c0620d, #e8a33d);
+            border-radius: 2px;
+        }
+        .section-head .en {
+            font-size: 13px;
+            color: #aaa;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .section-head .more {
+            font-size: 13px;
+            color: #999;
+        }
+        .section-head .more:hover { color: #c0620d; }
+
+        /* ============ 栏目快捷入口 ============ */
+        .quick-nav {
+            background: #fff;
+            padding: 18px 0;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        .quick-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+        .quick-nav a {
+            flex: 1;
+            text-align: center;
+            padding: 12px 6px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .quick-nav a:hover {
+            background: #fff7ed;
+            transform: translateY(-2px);
+        }
+        .quick-nav .icon {
+            width: 44px;
+            height: 44px;
+            line-height: 44px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            color: #c0620d;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .quick-nav .name {
+            font-size: 14px;
+            color: #444;
+        }
+
+        /* ============ 城市简介 ============ */
+        .intro-box {
+            background: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            display: flex;
+        }
+        .intro-box .pic { flex: 0 0 380px; height: 240px; overflow: hidden; }
+        .intro-box .pic img { width: 100%; height: 100%; object-fit: cover; }
+        .intro-box .text { flex: 1; padding: 26px 30px; }
+        .intro-box .text h3 {
+            font-size: 20px;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+        .intro-box .text p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            text-indent: 2em;
+        }
+        .intro-box .text .meta {
+            margin-top: 14px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding-top: 14px;
+            border-top: 1px dashed #eee;
+        }
+        .intro-box .text .meta .item {
+            font-size: 13px;
+            color: #888;
+        }
+        .intro-box .text .meta .item b { color: #c0620d; font-size: 16px; }
+
+        /* ============ 景区卡片 ============ */
+        .scenic-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .scenic-card {
+            background: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            transition: all 0.25s;
+        }
+        .scenic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .scenic-card .pic {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        .scenic-card .pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        .scenic-card:hover .pic img { transform: scale(1.06); }
+        .scenic-card .level {
+            position: absolute;
+            top: 10px; left: 10px;
+            padding: 2px 10px;
+            font-size: 12px;
+            color: #fff;
+            background: rgba(192,98,13,0.92);
+            border-radius: 2px;
+        }
+        .scenic-card .body { padding: 14px 16px 16px; }
+        .scenic-card .body h4 {
+            font-size: 17px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+        .scenic-card .body p {
+            font-size: 13px;
+            color: #888;
+            height: 44px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .scenic-card .info {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #999;
+        }
+        .scenic-card .info .price { color: #c0620d; font-weight: bold; font-size: 14px; }
+
+        /* ============ 政策福利 ============ */
+        .policy-wrap {
+            background: linear-gradient(135deg, #fff7ed 0%, #fff 100%);
+            border: 1px solid #ffe0b2;
+            border-radius: 6px;
+            padding: 26px 30px;
+        }
+        .policy-wrap .p-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .policy-wrap .p-head .dot {
+            width: 8px; height: 8px;
+            background: #c0620d;
+            border-radius: 50%;
+        }
+        .policy-wrap .p-head h3 {
+            font-size: 17px;
+            color: #c0620d;
+        }
+        .policy-wrap .p-head .time {
+            font-size: 12px;
+            color: #999;
+            margin-left: auto;
+        }
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .policy-card {
+            background: #fff;
+            border-radius: 6px;
+            padding: 18px 16px;
+            text-align: center;
+            box-shadow: 0 1px 6px rgba(192,98,13,0.10);
+            border: 1px solid #fff;
+            transition: all 0.2s;
+        }
+        .policy-card:hover {
+            border-color: #e8a33d;
+            transform: translateY(-3px);
+        }
+        .policy-card .p-icon {
+            width: 48px; height: 48px;
+            line-height: 48px;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c0620d, #e8a33d);
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .policy-card h4 {
+            font-size: 15px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+        .policy-card p {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.6;
+        }
+        .policy-extra {
+            margin-top: 18px;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.6);
+            border-left: 3px solid #c0620d;
+            border-radius: 2px;
+            font-size: 13px;
+            color: #7a4a0a;
+        }
+
+        /* ============ 精品线路 ============ */
+        .route-list { display: flex; flex-direction: column; gap: 16px; }
+        .route-item {
+            background: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: stretch;
+        }
+        .route-item .pic { flex: 0 0 240px; height: 150px; overflow: hidden; }
+        .route-item .pic img { width: 100%; height: 100%; object-fit: cover; }
+        .route-item .body { flex: 1; padding: 18px 24px; display: flex; flex-direction: column; justify-content: center; }
+        .route-item .tag {
+            display: inline-block;
+            padding: 2px 10px;
+            font-size: 12px;
+            color: #c0620d;
+            background: #fff3e0;
+            border-radius: 2px;
+            margin-bottom: 8px;
+            align-self: flex-start;
+        }
+        .route-item h4 { font-size: 17px; color: #1a1a1a; margin-bottom: 8px; }
+        .route-item .stops {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.7;
+        }
+        .route-item .stops b { color: #c0620d; }
+        .route-item .meta {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #999;
+            display: flex;
+            gap: 18px;
+        }
+
+        /* ============ 双栏：新闻 + 美食 ============ */
+        .dual-col { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+        .panel {
+            background: #fff;
+            border-radius: 6px;
+            padding: 22px 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .panel-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+        }
+        .panel-head h3 { font-size: 18px; color: #1a1a1a; position: relative; padding-left: 12px; }
+        .panel-head h3::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 5px; bottom: 5px;
+            width: 4px;
+            background: #c0620d;
+            border-radius: 2px;
+        }
+        .panel-head .more { font-size: 12px; color: #999; }
+
+        /* 新闻列表 */
+        .news-list { list-style: none; }
+        .news-list li {
+            display: flex;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px dashed #f0f0f0;
+        }
+        .news-list li:last-child { border-bottom: none; }
+        .news-list .dot {
+            width: 5px; height: 5px;
+            background: #c0620d;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .news-list a {
+            flex: 1;
+            font-size: 14px;
+            color: #444;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .news-list .date {
+            font-size: 12px;
+            color: #aaa;
+            margin-left: 12px;
+            flex-shrink: 0;
+        }
+
+        /* 美食网格 */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .food-card {
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 110px;
+        }
+        .food-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .food-card:hover img { transform: scale(1.08); }
+        .food-card .mask {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%);
+            display: flex;
+            align-items: flex-end;
+            padding: 8px 12px;
+        }
+        .food-card .mask span {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* ============ 非遗文化 ============ */
+        .heritage-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .heritage-card {
+            background: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .heritage-card .pic { height: 130px; overflow: hidden; }
+        .heritage-card .pic img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .heritage-card:hover .pic img { transform: scale(1.08); }
+        .heritage-card .body { padding: 10px 14px 14px; }
+        .heritage-card h4 { font-size: 14px; color: #1a1a1a; margin-bottom: 4px; }
+        .heritage-card p { font-size: 12px; color: #999; }
+
+        /* ============ 底部说明 ============ */
+        .bottom-tip {
+            background: #fff;
+            border-top: 2px solid #c0620d;
+            padding: 22px 0;
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        .bottom-tip b { color: #c0620d; }
+    </style>
+</meta></meta><script src="/cms_files/default/script/jslib/jquery.js"></script>
+ <script src="/cms_files/default/script/jslib/jquery.cookie.js"></script>
+ <script src="/cms_files/default/script/layui/layui.all.js"></script>
+ <script src="/cms_files/default/script/layui/layer/layer.js"></script>
+ <script src="/script/webglobal.js"></script>
+ <script src="/plugins/libs/require.js"></script>
+ <script src="/plugins/libs/load.js"></script>
+ <script src="/script/webgray.js"></script>
+ <script src="/script/webgray_RuddEhAR82uvLezPg44Ny.js"></script>
+ <link rel="stylesheet" href="/cms_files/default/css/iconfont.css" />
+<link rel="stylesheet" href="/cms_files/default/script/layui/css/layui.css" />
+<title>武威特色旅游专区</title>
+<meta name="ColId" content="RuddEhAR82uvLezPg44Ny">
+<meta name="SiteName" content="武威市政务服务网">
+<meta name="SiteDomain" content="https://zwfw.gansu.gov.cnwuwei">
+<meta name="SiteIDCode" content="6206000045">
+<meta name="ColumnName" content="武威特色旅游专区">
+<meta name="ColumnType" content="武威特色旅游专区">
+<meta name="ColumnDescription" content="">
+<meta name="ColumnKeywords" content="武威特色旅游专区">
+<meta name="server" content="https://zwfw.gansu.gov.cn/wuwei/wwtslyzq/index.html">
+<meta name="MakeTime" content="2026-08-18 15:59:45">
+
+<meta name="SiteID" content="3b4f9cada4d6465fa4ed7f9b52c80554">
+
+<meta id="pagetype" content="2">
+</meta></meta></meta></meta></meta></meta></meta></meta></meta></meta></meta></meta></head>
+<body><div id='barrierfree_container'>
+<script src="https://zwfw.gansu.gov.cn/cms_files/filemanager/111603494/script/20217/bc1cfe0691c34ead987e22155897f754.js" type="text/javascript" charset="utf-8"></script>
+<!-- ============ 顶部 Banner ============ -->
+<div class="hero">
+    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威雷台汉墓铜奔马雕塑与祁连山雪山全景，丝绸之路古城风光，金色夕阳，历史厚重感，宽幅横幅构图&image_size=landscape_16_9" alt="武威旅游banner">
+    <div class="hero-inner">
+        <h1>天马行空 · 自在武威</h1>
+        <div class="slogan">中国旅游标志之都 · 丝绸之路黄金旅游目的地</div>
+        <div class="tag-row">
+            <span class="tag">马踏飞燕出土地</span>
+            <span class="tag">五凉古都</span>
+            <span class="tag">河西走廊东大门</span>
+            <span class="tag">葡萄酒故乡</span>
+        </div>
+    </div>
+</img></div>
+
+<!-- ============ 栏目快捷入口 ============ -->
+<div class="quick-nav">
+    <div class="quick-nav-inner">
+        <a href="#scenic"><div class="icon">景</div><div class="name">景区景点</div></a>
+        <a href="#route"><div class="icon">线</div><div class="name">精品线路</div></a>
+        <a href="#news"><div class="icon">闻</div><div class="name">文旅新闻</div></a>
+        <a href="#food"><div class="icon">味</div><div class="name">特色美食</div></a>
+        <a href="#heritage"><div class="icon">遗</div><div class="name">非遗文化</div></a>
+        <a href="#intro"><div class="icon">城</div><div class="name">城市简介</div></a>
+    </div>
+</div>
+
+<!-- ============ 城市简介 ============ -->
+<div class="section" id="intro">
+    <div class="container">
+        <div class="section-head">
+            <div class="left">
+                <h2>走进武威</h2>
+            </div>
+        </div>
+        <div class="intro-box">
+            <div class="pic">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威凉州古城南城门楼夜景，五凉文化博物馆，金色灯光，丝路古城，雄伟壮观&image_size=landscape_4_3" alt="武威南城门楼">
+            </img></div>
+            <div class="text">
+                <h3>中国旅游标志发源地 · 丝路要冲 天马故乡</h3>
+                <p>武威，古称凉州，地处河西走廊东端、祁连山北麓，是西汉河西四郡之一，丝绸之路重镇。汉武帝元封五年（公元前106年）设立武威郡，取"武功军威"之意。这里出土的"马踏飞燕"被定为中国旅游标志，是闻名中外的稀世珍宝。</p>
+                <p>武威富集除海洋以外所有地貌景观，雪山冰川、森林草原、绿洲田园、大漠戈壁交相辉映。天马文化、五凉文化、西夏文化、佛教文化、民族民俗文化底蕴深厚，被誉为"五凉京华·河西都会"。</p>
+                <div class="meta">
+                    <div class="item">行政区域：<b>一区三县</b></div>
+                    <div class="item">城市定位：<b>丝路黄金旅游目的地</b></div>
+                    <div class="item">文旅品牌：<b>天马行空·自在武威</b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 景区景点 ============ -->
+<div class="section" id="scenic" style="background:#fff;">
+    <div class="container">
+        <div class="section-head">
+            <div class="left">
+                <h2>优游武威</h2>
+            </div>
+        </div>
+        <div class="scenic-grid">
+            <div class="scenic-card">
+                <div class="pic">
+                    <span class="level">AAAA</span>
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威雷台汉墓景区，汉代铜车马仪仗俑阵列与古墓建筑，蓝天金阳，历史遗迹，丝路精品旅游景区&image_size=landscape_4_3" alt="雷台景区">
+                </img></div>
+                <div class="body">
+                    <h4>雷台景区</h4>
+                    <p>中国旅游标志"马踏飞燕"出土地，全国重点文物保护单位，出土99件铜车马仪仗俑。</p>
+                    <div class="info">
+                        <span>凉州区北关中路257号</span>
+                        <span class="price">¥45</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scenic-card">
+                <div class="pic">
+                    <span class="level">AAAA</span>
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威文庙古建筑群全景，红墙灰瓦，古柏参天，明清牌匾悬挂，西北最大孔庙，陇右学宫之冠&image_size=landscape_4_3" alt="武威文庙">
+                </img></div>
+                <div class="body">
+                    <h4>武威文庙</h4>
+                    <p>西北地区规模最大、保存最完好的文庙建筑群，享有"陇右学宫之冠"美名，珍藏44块明清匾额。</p>
+                    <div class="info">
+                        <span>凉州区崇文巷</span>
+                        <span class="price">¥30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scenic-card">
+                <div class="pic">
+                    <span class="level">全国重点</span>
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威天梯山石窟大佛，28米高大佛依山而建，河西走廊石窟鼻祖，黄羊河水库，祁连山脚下&image_size=landscape_4_3" alt="天梯山石窟">
+                </img></div>
+                <div class="body">
+                    <h4>天梯山石窟</h4>
+                    <p>中国"石窟鼻祖"，开凿早于莫高窟约百年，第13窟大佛高达28米，比龙门卢舍那大佛高11米。</p>
+                    <div class="info">
+                        <span>凉州区张义镇</span>
+                        <span class="price">¥30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scenic-card">
+                <div class="pic">
+                    <span class="level">免费</span>
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威鸠摩罗什寺舌舍利塔，古寺古树，佛塔金顶，佛经翻译鼻祖纪念寺院，宁静庄严&image_size=landscape_4_3" alt="鸠摩罗什寺">
+                </img></div>
+                <div class="body">
+                    <h4>鸠摩罗什寺</h4>
+                    <p>武威最古老寺院，佛教四大翻译家之首鸠摩罗什驻凉17年译经之地，供奉舌舍利塔。</p>
+                    <div class="info">
+                        <span>凉州区北大街53号</span>
+                        <span class="price">免费</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scenic-card">
+                <div class="pic">
+                    <span class="level">纪念馆</span>
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威白塔寺凉州会盟遗址，白色佛塔群，藏传佛教寺庙，西藏归属中国历史见证地&image_size=landscape_4_3" alt="凉州会盟纪念馆">
+                </img></div>
+                <div class="body">
+                    <h4>凉州会盟纪念馆</h4>
+                    <p>元代阔端与萨班"凉州会谈"遗址，西藏正式纳入中央政府行政管辖的历史见证地。</p>
+                    <div class="info">
+                        <span>凉州区武南镇</span>
+                        <span class="price">¥20</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scenic-card">
+                <div class="pic">
+                    <span class="level">国家级</span>
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威河西都会景区夜景，灯火辉煌，汉服游客游览，国家级夜间文旅消费集聚区，科技文化融合&image_size=landscape_4_3" alt="河西都会">
+                </img></div>
+                <div class="body">
+                    <h4>河西都会</h4>
+                    <p>第三批国家级夜间文化和旅游消费集聚区，"科技+文化+商业"融合，含大汉赋、凉州词、天马歌三大场馆。</p>
+                    <div class="info">
+                        <span>凉州区雷台东侧</span>
+                        <span class="price">¥50起</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 精品线路 ============ -->
+<div class="section" id="route" style="background:#fff;">
+    <div class="container">
+        <div class="section-head">
+            <div class="left">
+                <h2>精品线路</h2>
+            </div>
+        </div>
+        <div class="route-list">
+            <div class="route-item">
+                <div class="pic">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威历史文化游线路，雷台汉墓铜奔马与文庙古建筑组合，丝绸之路文化之旅，厚重历史&image_size=landscape_4_3" alt="历史文化游">
+                </img></div>
+                <div class="body">
+                    <span class="tag">历史文化游</span>
+                    <h4>天马故乡 · 五凉京华一日游</h4>
+                    <div class="stops"><b>线路：</b>李铭汉故居 → 五凉文化博物馆 → 雷台景区 → 武威市博物馆 → 海藏寺</div>
+                    <div class="meta"><span>时长：约8小时</span><span>主题：汉代文物 · 五凉文化</span><span>适合：文化研学</span></div>
+                </div>
+            </div>
+            <div class="route-item">
+                <div class="pic">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威冰雪温泉康养冬季旅游，祁连山雪景与温泉度假村，乌鞘岭滑雪场，冬日暖阳&image_size=landscape_4_3" alt="冰雪温泉康养">
+                </img></div>
+                <div class="body">
+                    <span class="tag">冰雪温泉康养</span>
+                    <h4>冰雪趣玩 + 温泉康养 + 千年文脉精华游</h4>
+                    <div class="stops"><b>线路：</b>乌鞘岭国际滑雪场 → 武威温泉度假村 → 河西都会 → 凉州十七巷</div>
+                    <div class="meta"><span>时长：2日</span><span>主题：冰雪运动 · 温泉康养</span><span>适合：冬春季家庭游</span></div>
+                </div>
+            </div>
+            <div class="route-item">
+                <div class="pic">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威沙漠生态民俗全景游，民勤腾格里沙漠与苏武景区，沙漠星空露营，大漠风光&image_size=landscape_4_3" alt="沙漠生态全景">
+                </img></div>
+                <div class="body">
+                    <span class="tag">沙漠生态全景游</span>
+                    <h4>沙漠冰雪生态 + 民俗体验 + 温泉舒缓</h4>
+                    <div class="stops"><b>线路：</b>民勤苏武沙漠景区 → 红崖山水库 → 古浪八步沙"两山"基地 → 武威温泉度假村</div>
+                    <div class="meta"><span>时长：2日</span><span>主题：沙漠生态 · 治沙精神</span><span>适合：亲子研学</span></div>
+                </div>
+            </div>
+            <div class="route-item">
+                <div class="pic">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威天祝藏乡高原滑雪深度游，祁连山冰沟河天池，藏族风情，雪山草原，高原星空露营&image_size=landscape_4_3" alt="藏乡深度游">
+                </img></div>
+                <div class="body">
+                    <span class="tag">高原滑雪深度游</span>
+                    <h4>高原滑雪 + 藏地风情 + 生态励志</h4>
+                    <div class="stops"><b>线路：</b>天祝冰沟河景区 → 松山古城 → 乌鞘岭国际滑雪场 → 天祝民族赛马会</div>
+                    <div class="meta"><span>时长：2-3日</span><span>主题：藏地风情 · 高原生态</span><span>适合：户外探险</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 文旅新闻 + 特色美食 ============ -->
+<div class="section">
+    <div class="container">
+        <div class="dual-col">
+            <!-- 新闻 -->
+            <div class="panel" id="news">
+                <div class="panel-head">
+                    <h3>文旅新闻</h3>
+                </div>
+                <ul class="news-list">
+                    <li><span class="dot"></span><a href="#">2023年，武威文旅这样走过</a><span class="date">2023-12-30</span></li>
+                    <li><span class="dot"></span><a href="#">中秋国庆假期武威旅游市场持续活跃 文博热兴起</a><span class="date">2023-10-05</span></li>
+                    <li><span class="dot"></span><a href="#">多个景区官宣优惠政策，在武威来一场说走就走的旅行</a><span class="date">2023-06-16</span></li>
+                    <li><span class="dot"></span><a href="#">"五一"假期圆满收官 武威旅游市场人气爆棚 接待游客68万人次</a><span class="date">2023-05-03</span></li>
+                    <li><span class="dot"></span><a href="#">文化搭台 旅游唱戏——2023年武威春节旅游文化活动综述</a><span class="date">2023-03-03</span></li>
+                    <li><span class="dot"></span><a href="#">国庆假期武威文旅活动丰富多彩 系列主题社教活动寓教于游</a><span class="date">2022-10-07</span></li>
+                    <li><span class="dot"></span><a href="#">武威：国庆假期家门口"微度假"受热捧 22家A级景区接待超同期</a><span class="date">2022-10-02</span></li>
+                    <li><span class="dot"></span><a href="#">【十一去哪High】凉州城里活动多！精品旅游线路推荐</a><span class="date">2022-09-27</span></li>
+                </ul>
+            </div>
+            <!-- 美食 -->
+            <div class="panel" id="food">
+                <div class="panel-head">
+                    <h3>特色美食</h3>
+                </div>
+                <div class="food-grid">
+                    <div class="food-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威特色美食三套车，西北地方传统小吃，面食腊肉茯茶组合，热气腾腾&image_size=landscape_4_3" alt="三套车">
+                        <div class="mask"><span>凉州三套车</span></div>
+                    </img></div>
+                    <div class="food-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威面皮子特色小吃，金黄面皮浇辣椒油，西北凉菜，传统地方风味&image_size=landscape_4_3" alt="面皮子">
+                        <div class="mask"><span>武威面皮子</span></div>
+                    </img></div>
+                    <div class="food-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威沙米凉粉，沙漠沙米制作凉粉，晶莹剔透，浇蒜泥辣椒油，夏日小吃&image_size=landscape_4_3" alt="沙米凉粉">
+                        <div class="mask"><span>沙米凉粉</span></div>
+                    </img></div>
+                    <div class="food-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威米汤油馓子，金黄油炸馓子配米汤，西北传统早餐，地方风味&image_size=landscape_4_3" alt="米汤油馓">
+                        <div class="mask"><span>米汤油馓</span></div>
+                    </img></div>
+                    <div class="food-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威特色搓鱼面面条，手工搓制面食，浇臊子，西北面食传统&image_size=landscape_4_3" alt="搓鱼面">
+                        <div class="mask"><span>武威搓鱼面</span></div>
+                    </img></div>
+                    <div class="food-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威人参果特色水果，金黄果实新鲜采摘，民勤沙地种植，清甜多汁&image_size=landscape_4_3" alt="人参果">
+                        <div class="mask"><span>民勤人参果</span></div>
+                    </img></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ 非遗文化 ============ -->
+<div class="section" id="heritage" style="background:#fff;">
+    <div class="container">
+        <div class="section-head">
+            <div class="left">
+                <h2>非遗武威</h2>
+            </div>
+        </div>
+        <div class="heritage-grid">
+            <div class="heritage-card">
+                <div class="pic"><img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威凉州攻鼓子非遗民俗表演，鼓手击鼓舞蹈，威武雄壮，西北民间艺术&image_size=landscape_4_3" alt="凉州攻鼓子" /></div>
+                <div class="body">
+                    <h4>凉州攻鼓子</h4>
+                    <p>国家级非遗 · 民间鼓舞</p>
+                </div>
+            </div>
+            <div class="heritage-card">
+                <div class="pic"><img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威凉州贤孝弹唱表演，盲艺人三弦弹唱民间曲艺，西北说唱艺术&image_size=landscape_4_3" alt="凉州贤孝" /></div>
+                <div class="body">
+                    <h4>凉州贤孝</h4>
+                    <p>国家级非遗 · 民间说唱</p>
+                </div>
+            </div>
+            <div class="heritage-card">
+                <div class="pic"><img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威河西宝卷民间讲唱艺术，传统经卷说唱，西北民俗文化表演&image_size=landscape_4_3" alt="河西宝卷" /></div>
+                <div class="body">
+                    <h4>河西宝卷</h4>
+                    <p>国家级非遗 · 民间文学</p>
+                </div>
+            </div>
+            <div class="heritage-card">
+                <div class="pic"><img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威凉州社火民俗表演队伍，春节闹社火，红绸彩衣，喜庆热闹&image_size=landscape_4_3" alt="凉州社火" /></div>
+                <div class="body">
+                    <h4>凉州社火</h4>
+                    <p>省级非遗 · 春节民俗</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://zwfw.gansu.gov.cn/cms_files/filemanager/111603494/script/20217/ff8118e005514463b6ba11fa4b932d4e.js" type="text/javascript" charset="utf-8"></script>
+</div></body>
+</html>

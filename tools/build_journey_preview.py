@@ -10,7 +10,7 @@ if __name__ == "__main__":
     engine = os.environ.get("GODOT_BIN", "godot")
     settings = {path: path.read_bytes() for path in (ROOT / "assets/game/runtime").glob("*.jpg.import")}
     environment = os.environ.copy()
-    environment["GAME_OUTPUT_DIR"] = str(ROOT / "dist/datong-preview")
+    environment.setdefault("GAME_OUTPUT_DIR", str(ROOT / "dist/datong-preview"))
     environment.setdefault("GAME_BUILD_ID", "datong-20261022")
     try:
         subprocess.run([sys.executable, str(ROOT / "tools/optimize_web_textures.py")], check=True)

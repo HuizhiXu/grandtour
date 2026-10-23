@@ -1,0 +1,139 @@
+{
+  "key": "wuwei-tour",
+  "page": "https://zwfw.gansu.gov.cn/wuwei/wwtslyzq/index.html",
+  "title": "武威特色旅游专区",
+  "photos": [
+    {
+      "index": 0,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威雷台汉墓铜奔马雕塑与祁连山雪山全景，丝绸之路古城风光，金色夕阳，历史厚重感，宽幅横幅构图&image_size=landscape_16_9",
+      "alt": "武威旅游banner",
+      "context": "天马行空 · 自在武威 中国旅游标志之都 · 丝绸之路黄金旅游目的地 马踏飞燕出土地 五凉古都 河西走廊东大门 葡萄酒故乡"
+    },
+    {
+      "index": 1,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威凉州古城南城门楼夜景，五凉文化博物馆，金色灯光，丝路古城，雄伟壮观&image_size=landscape_4_3",
+      "alt": "武威南城门楼",
+      "context": "中国旅游标志发源地 · 丝路要冲 天马故乡 武威，古称凉州，地处河西走廊东端、祁连山北麓，是西汉河西四郡之一，丝绸之路重镇。汉武帝元封五年（公元前106年）设立武威郡，取\"武功军威\"之意。这里出土的\"马踏飞燕\"被定为中国旅游标志，是闻名中外的稀世珍宝。 武威富集除海洋以外所有地貌景观，雪山冰川、森林草原、绿洲田园、大漠戈壁交相辉映。天马文化、五凉文化、西夏文化、佛教文化、民族民俗文化底蕴深厚，被誉为\"五凉京华·河西都会\"。 行政区域： 一区三县 城市定位： 丝路黄金旅游目的地 文旅品牌： 天马行空·自在武威"
+    },
+    {
+      "index": 2,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威雷台汉墓景区，汉代铜车马仪仗俑阵列与古墓建筑，蓝天金阳，历史遗迹，丝路精品旅游景区&image_size=landscape_4_3",
+      "alt": "雷台景区",
+      "context": "AAAA 雷台景区 中国旅游标志\"马踏飞燕\"出土地，全国重点文物保护单位，出土99件铜车马仪仗俑。 凉州区北关中路257号 ¥45"
+    },
+    {
+      "index": 3,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威文庙古建筑群全景，红墙灰瓦，古柏参天，明清牌匾悬挂，西北最大孔庙，陇右学宫之冠&image_size=landscape_4_3",
+      "alt": "武威文庙",
+      "context": "AAAA 武威文庙 西北地区规模最大、保存最完好的文庙建筑群，享有\"陇右学宫之冠\"美名，珍藏44块明清匾额。 凉州区崇文巷 ¥30"
+    },
+    {
+      "index": 4,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威天梯山石窟大佛，28米高大佛依山而建，河西走廊石窟鼻祖，黄羊河水库，祁连山脚下&image_size=landscape_4_3",
+      "alt": "天梯山石窟",
+      "context": "全国重点 天梯山石窟 中国\"石窟鼻祖\"，开凿早于莫高窟约百年，第13窟大佛高达28米，比龙门卢舍那大佛高11米。 凉州区张义镇 ¥30"
+    },
+    {
+      "index": 5,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威鸠摩罗什寺舌舍利塔，古寺古树，佛塔金顶，佛经翻译鼻祖纪念寺院，宁静庄严&image_size=landscape_4_3",
+      "alt": "鸠摩罗什寺",
+      "context": "免费 鸠摩罗什寺 武威最古老寺院，佛教四大翻译家之首鸠摩罗什驻凉17年译经之地，供奉舌舍利塔。 凉州区北大街53号 免费"
+    },
+    {
+      "index": 6,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威白塔寺凉州会盟遗址，白色佛塔群，藏传佛教寺庙，西藏归属中国历史见证地&image_size=landscape_4_3",
+      "alt": "凉州会盟纪念馆",
+      "context": "纪念馆 凉州会盟纪念馆 元代阔端与萨班\"凉州会谈\"遗址，西藏正式纳入中央政府行政管辖的历史见证地。 凉州区武南镇 ¥20"
+    },
+    {
+      "index": 7,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威河西都会景区夜景，灯火辉煌，汉服游客游览，国家级夜间文旅消费集聚区，科技文化融合&image_size=landscape_4_3",
+      "alt": "河西都会",
+      "context": "国家级 河西都会 第三批国家级夜间文化和旅游消费集聚区，\"科技+文化+商业\"融合，含大汉赋、凉州词、天马歌三大场馆。 凉州区雷台东侧 ¥50起"
+    },
+    {
+      "index": 8,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威历史文化游线路，雷台汉墓铜奔马与文庙古建筑组合，丝绸之路文化之旅，厚重历史&image_size=landscape_4_3",
+      "alt": "历史文化游",
+      "context": "历史文化游 天马故乡 · 五凉京华一日游 线路： 李铭汉故居 → 五凉文化博物馆 → 雷台景区 → 武威市博物馆 → 海藏寺 时长：约8小时 主题：汉代文物 · 五凉文化 适合：文化研学"
+    },
+    {
+      "index": 9,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威冰雪温泉康养冬季旅游，祁连山雪景与温泉度假村，乌鞘岭滑雪场，冬日暖阳&image_size=landscape_4_3",
+      "alt": "冰雪温泉康养",
+      "context": "冰雪温泉康养 冰雪趣玩 + 温泉康养 + 千年文脉精华游 线路： 乌鞘岭国际滑雪场 → 武威温泉度假村 → 河西都会 → 凉州十七巷 时长：2日 主题：冰雪运动 · 温泉康养 适合：冬春季家庭游"
+    },
+    {
+      "index": 10,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威沙漠生态民俗全景游，民勤腾格里沙漠与苏武景区，沙漠星空露营，大漠风光&image_size=landscape_4_3",
+      "alt": "沙漠生态全景",
+      "context": "沙漠生态全景游 沙漠冰雪生态 + 民俗体验 + 温泉舒缓 线路： 民勤苏武沙漠景区 → 红崖山水库 → 古浪八步沙\"两山\"基地 → 武威温泉度假村 时长：2日 主题：沙漠生态 · 治沙精神 适合：亲子研学"
+    },
+    {
+      "index": 11,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威天祝藏乡高原滑雪深度游，祁连山冰沟河天池，藏族风情，雪山草原，高原星空露营&image_size=landscape_4_3",
+      "alt": "藏乡深度游",
+      "context": "高原滑雪深度游 高原滑雪 + 藏地风情 + 生态励志 线路： 天祝冰沟河景区 → 松山古城 → 乌鞘岭国际滑雪场 → 天祝民族赛马会 时长：2-3日 主题：藏地风情 · 高原生态 适合：户外探险"
+    },
+    {
+      "index": 12,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威特色美食三套车，西北地方传统小吃，面食腊肉茯茶组合，热气腾腾&image_size=landscape_4_3",
+      "alt": "三套车",
+      "context": "凉州三套车 武威面皮子 沙米凉粉 米汤油馓 武威搓鱼面 民勤人参果"
+    },
+    {
+      "index": 13,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威面皮子特色小吃，金黄面皮浇辣椒油，西北凉菜，传统地方风味&image_size=landscape_4_3",
+      "alt": "面皮子",
+      "context": "凉州三套车 武威面皮子 沙米凉粉 米汤油馓 武威搓鱼面 民勤人参果"
+    },
+    {
+      "index": 14,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威沙米凉粉，沙漠沙米制作凉粉，晶莹剔透，浇蒜泥辣椒油，夏日小吃&image_size=landscape_4_3",
+      "alt": "沙米凉粉",
+      "context": "凉州三套车 武威面皮子 沙米凉粉 米汤油馓 武威搓鱼面 民勤人参果"
+    },
+    {
+      "index": 15,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威米汤油馓子，金黄油炸馓子配米汤，西北传统早餐，地方风味&image_size=landscape_4_3",
+      "alt": "米汤油馓",
+      "context": "凉州三套车 武威面皮子 沙米凉粉 米汤油馓 武威搓鱼面 民勤人参果"
+    },
+    {
+      "index": 16,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威特色搓鱼面面条，手工搓制面食，浇臊子，西北面食传统&image_size=landscape_4_3",
+      "alt": "搓鱼面",
+      "context": "凉州三套车 武威面皮子 沙米凉粉 米汤油馓 武威搓鱼面 民勤人参果"
+    },
+    {
+      "index": 17,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威人参果特色水果，金黄果实新鲜采摘，民勤沙地种植，清甜多汁&image_size=landscape_4_3",
+      "alt": "人参果",
+      "context": "凉州三套车 武威面皮子 沙米凉粉 米汤油馓 武威搓鱼面 民勤人参果"
+    },
+    {
+      "index": 18,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威凉州攻鼓子非遗民俗表演，鼓手击鼓舞蹈，威武雄壮，西北民间艺术&image_size=landscape_4_3",
+      "alt": "凉州攻鼓子",
+      "context": "凉州攻鼓子 国家级非遗 · 民间鼓舞"
+    },
+    {
+      "index": 19,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威凉州贤孝弹唱表演，盲艺人三弦弹唱民间曲艺，西北说唱艺术&image_size=landscape_4_3",
+      "alt": "凉州贤孝",
+      "context": "凉州贤孝 国家级非遗 · 民间说唱"
+    },
+    {
+      "index": 20,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威河西宝卷民间讲唱艺术，传统经卷说唱，西北民俗文化表演&image_size=landscape_4_3",
+      "alt": "河西宝卷",
+      "context": "河西宝卷 国家级非遗 · 民间文学"
+    },
+    {
+      "index": 21,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=甘肃武威凉州社火民俗表演队伍，春节闹社火，红绸彩衣，喜庆热闹&image_size=landscape_4_3",
+      "alt": "凉州社火",
+      "context": "凉州社火 省级非遗 · 春节民俗"
+    }
+  ]
+}
