@@ -10,6 +10,8 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	var original: Dictionary = root.get_node("SaveStore").get("_data").duplicate(true)
+	root.get_node("SaveStore").get("_data")["last_travel_stop"] = ""
 	var main := MAIN.instantiate()
 	root.add_child(main)
 	await physics_frame
@@ -59,6 +61,7 @@ func _run() -> void:
 	await _capture(main, "hall-floor-boundary", floor)
 	main.queue_free()
 	await process_frame
+	root.get_node("SaveStore").set("_data", original)
 	if _failures.is_empty():
 		print("[ground-tests] PASS: %d shared-floor, recorded-route and collision checks" % _checks)
 		quit(0)

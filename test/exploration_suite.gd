@@ -9,7 +9,7 @@ const REPLY_B := "那你来对地方了。西贡的每一条街道，似乎都�
 
 var _checks := 0
 var _failures: Array[String] = []
-var _original_postcard_progress: Dictionary
+var _original_save: Dictionary
 
 
 func _initialize() -> void:
@@ -17,7 +17,8 @@ func _initialize() -> void:
 
 
 func _run() -> void:
-	_original_postcard_progress = root.get_node("SaveStore").get_postcard_progress()
+	_original_save = root.get_node("SaveStore").get("_data").duplicate(true)
+	root.get_node("SaveStore").get("_data")["last_travel_stop"] = ""
 	var main := MAIN_SCENE.instantiate()
 	root.add_child(main)
 	await process_frame
@@ -263,7 +264,8 @@ func _check(condition: bool, context: String) -> void:
 
 
 func _finish(main: Node) -> void:
-	root.get_node("SaveStore").set_postcard_progress(_original_postcard_progress)
+	root.get_node("SaveStore").set("_data", _original_save)
+	root.get_node("SaveStore").save()
 	main.queue_free()
 	await process_frame
 	if _failures.is_empty():

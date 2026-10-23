@@ -66,7 +66,14 @@ func _ready() -> void:
 	_build_world_layers()
 	_build_ui()
 	_build_traveler()
-	_setup_scene("outdoor", Vector2(640.0, 622.0))
+	var last_stop := str(save_store.call("get_last_travel_stop")) if save_store != null else ""
+	if TourCatalog.STOPS.has(last_stop):
+		_route_index = TourCatalog.route_for_stop(last_stop)
+		var spawn := Vector2(640, 640) if last_stop == "palace" else Vector2(640, 622)
+		if TourCatalog.is_new_stop(last_stop): spawn = TourWorld.layout(last_stop).spawn
+		_setup_scene(str(TourCatalog.STOPS[last_stop].scene), spawn)
+	else:
+		_setup_scene("outdoor", Vector2(640.0, 622.0))
 	var tuning_store := get_node_or_null("/root/TuningStore")
 	if tuning_store != null:
 		tuning_store.connect("value_changed", _on_tuning_changed)
@@ -92,8 +99,14 @@ func _process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_H:
+		if not _paused and not _ui.has_modal(): _ui.toggle_scenery()
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("pause"):
-		if _ui.has_modal():
+		if _ui.is_scenery_only():
+			_ui.set_scenery_only(false)
+		elif _ui.has_modal():
 			_ui.close_modal()
 		elif _paused:
 			_set_paused(false)
@@ -169,7 +182,7 @@ func _build_ui() -> void:
 	_ui.dialogue_choice.connect(_on_dialogue_choice)
 	_ui.postcard_requested.connect(_show_current_journey)
 	_ui.postcard_choice.connect(_on_postcard_choice)
-	_ui.routes_requested.connect(_show_routes)
+	_ui.routes_requested.connect(_show_book_directory)
 	_ui.journeys_requested.connect(_show_journeys)
 	_ui.journey_selected.connect(_select_journey)
 	_ui.route_selected.connect(func(index: int) -> void:
@@ -178,6 +191,7 @@ func _build_ui() -> void:
 	)
 	_ui.stop_selected.connect(_travel_to_stop)
 	_ui.next_stop_requested.connect(_travel_next)
+	_ui.previous_stop_requested.connect(_travel_previous)
 	_ui.views_requested.connect(_show_views)
 	_ui.view_selected.connect(_select_view)
 	_ui.ground_view_requested.connect(_return_to_ground)
@@ -314,7 +328,15 @@ func _show_routes() -> void:
 	_postcard_context = "routes"
 	var journey := TourCatalog.journey_for_route(_route_index)
 	var resume_id := str(_journey_bookmarks.get(journey.id, journey.start))
-	_ui.show_routes(TourCatalog.ROUTES, TourCatalog.STOPS, _route_index, TourCatalog.stop_for_scene(_scene_id), _completed_stops(), journey, resume_id)
+	var walking_stops := {}
+	for id: String in TourCatalog.ROUTES[_route_index].stops:
+		walking_stops[id] = not TourCatalog.is_new_stop(id) or not TourWorld.layout(id).get("panorama", false)
+	_ui.show_routes(TourCatalog.ROUTES, TourCatalog.STOPS, _route_index, TourCatalog.stop_for_scene(_scene_id), _completed_stops(), journey, resume_id, walking_stops)
+
+
+func _show_book_directory() -> void:
+	_route_index = TourCatalog.route_for_stop(TourCatalog.stop_for_scene(_scene_id))
+	_show_routes()
 
 
 func _show_journeys() -> void:
@@ -392,18 +414,17 @@ func _travel_to_stop(id: String) -> void:
 
 
 func _next_stop_id() -> String:
-	var current := TourCatalog.stop_for_scene(_scene_id)
-	var route: Dictionary = TourCatalog.ROUTES[TourCatalog.route_for_stop(current)]
-	var index: int = route.stops.find(current)
-	if index >= 0 and index + 1 < route.stops.size():
-		return str(route.stops[index + 1])
-	var journey := TourCatalog.journey_for_stop(current)
-	if index >= 0 and journey.get("continue_routes", false):
-		var routes: Array = journey.routes
-		var city_index := routes.find(TourCatalog.route_for_stop(current))
-		if city_index >= 0 and city_index + 1 < routes.size():
-			return str(TourCatalog.ROUTES[routes[city_index + 1]].stops[0])
-	return ""
+	return TourCatalog.neighbor_stop(TourCatalog.stop_for_scene(_scene_id), 1)
+
+
+func _previous_stop_id() -> String:
+	return TourCatalog.neighbor_stop(TourCatalog.stop_for_scene(_scene_id), -1)
+
+
+func _travel_previous() -> void:
+	if _paused or _transitioning: return
+	var id := _previous_stop_id()
+	if not id.is_empty(): _travel_to_stop(id)
 
 
 func _travel_next() -> void:
@@ -658,10 +679,10 @@ func _update_postcard_hud() -> void:
 		if _postcard.sent:
 			hint = "第一张明信片已寄出。点击「下一站」前往阮文平书街，或打开路线册自由选站。"
 		_ui.set_quest_progress(_postcard.stage(), hint)
-	var count := 0
-	for completed: bool in _completed_stops().values():
-		if completed: count += 1
-	_ui.set_route_progress(count, not _next_stop_id().is_empty(), TourCatalog.STOPS.size())
+	var book := TourCatalog.journey_for_stop(stop_id)
+	var book_stops: Array = []
+	for index: int in book.routes: book_stops.append_array(TourCatalog.ROUTES[index].stops)
+	_ui.set_navigation(str(TourCatalog.STOPS.get(_previous_stop_id(), {}).get("title", "")), str(TourCatalog.STOPS.get(_next_stop_id(), {}).get("title", "")), str(book.title), book_stops.find(stop_id) + 1, book_stops.size())
 	_ui.set_views(TourCatalog.views(_scene_id).size(), _view_index, _panorama, _is_observation_stop())
 	_ui.set_exploration_action("")
 	if introduction_only:
@@ -765,6 +786,7 @@ func _transition_to(next_scene: String, view_index: int = 0) -> void:
 	if next_scene == "outdoor" and _scene_id == "palace_garden":
 		spawn = Vector2(938, 620)
 	_setup_scene(next_scene, spawn, view_index)
+	_remember_stop(TourCatalog.stop_for_scene(next_scene))
 	await get_tree().process_frame
 	var fade_in := create_tween()
 	fade_in.tween_property(_fade, "color:a", 0.0, 0.22).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

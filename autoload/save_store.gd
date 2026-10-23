@@ -24,6 +24,7 @@ func _default_data() -> Dictionary:
 		"palace_visit": {},
 		"tour_progress": {},
 		"travel_bookmarks": {},
+		"last_travel_stop": "",
 	}
 
 
@@ -63,6 +64,9 @@ func _load() -> void:
 		for key: Variant in bookmarks:
 			if key is String and bookmarks[key] is String:
 				_data.travel_bookmarks[key.left(64)] = str(bookmarks[key]).left(64)
+	var last_stop: Variant = candidate.get("last_travel_stop", "")
+	if last_stop is String:
+		_data.last_travel_stop = last_stop.left(64)
 	var clean_rows: Array = []
 	var rows: Variant = candidate.get("leaderboard", [])
 	if rows is Array:
@@ -149,10 +153,15 @@ func get_travel_bookmarks() -> Dictionary:
 func set_travel_bookmark(journey_id: String, stop_id: String) -> bool:
 	if journey_id.is_empty() or stop_id.is_empty(): return false
 	var bookmarks: Dictionary = _data.get("travel_bookmarks", {})
-	if bookmarks.get(journey_id) == stop_id: return true
+	if bookmarks.get(journey_id) == stop_id and get_last_travel_stop() == stop_id: return true
 	bookmarks[journey_id] = stop_id
 	_data.travel_bookmarks = bookmarks
+	_data.last_travel_stop = stop_id
 	return save()
+
+
+func get_last_travel_stop() -> String:
+	return str(_data.get("last_travel_stop", ""))
 
 
 func record_result(player_name: String, result: Dictionary) -> bool:

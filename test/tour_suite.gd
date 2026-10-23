@@ -17,6 +17,7 @@ func _run() -> void:
 	var old_palace: Dictionary = store.get_palace_progress().duplicate(true)
 	var old_postcard: Dictionary = store.get_postcard_progress().duplicate(true)
 	var old_bookmarks: Dictionary = store.get_travel_bookmarks()
+	var old_last_stop: String = store.get_last_travel_stop()
 	var legacy_tour := {"cathedral": {"read": true, "choice": 2, "recorded": true}, "angkor_wat": {"read": true, "choice": 0, "recorded": false}}
 	var legacy_palace := {"architecture": true, "garden": true, "exhibit": true, "souvenir": true}
 	store.set_tour_progress(legacy_tour)
@@ -68,6 +69,7 @@ func _run() -> void:
 	store.set_tour_progress(old_tour)
 	store.set_palace_progress(old_palace)
 	store.get("_data")["travel_bookmarks"] = old_bookmarks
+	store.get("_data")["last_travel_stop"] = old_last_stop
 	store.save()
 	_main.queue_free()
 	await process_frame
@@ -94,6 +96,11 @@ func _check_introduction(id: String) -> void:
 	_check((_ui.get("_modal_actions") as VBoxContainer).get_child_count() == 1, "introduction has only close action: " + id)
 	_check(Rect2(0, 0, 1280, 720).encloses((_ui.get("_modal_panel") as Control).get_global_rect()), "introduction fits viewport: " + id)
 	_ui.close_modal()
+	if not bool(_main.get("_panorama")):
+		var feet: Vector2 = (_main.get("_traveler") as Node2D).global_position
+		var actor_rect := Rect2(feet - Vector2(30, 90), Vector2(60, 92))
+		for key: String in ["_previous_button", "_next_button"]:
+			_check(not (_ui.get(key) as Control).get_global_rect().intersects(actor_rect), "paging does not cover arriving actor: " + id + "/" + key)
 
 func _settle() -> void:
 	for frame in range(120):

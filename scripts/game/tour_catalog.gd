@@ -114,3 +114,19 @@ static func journey_for_route(route_index: int) -> Dictionary:
 
 static func journey_for_stop(id: String) -> Dictionary:
 	return journey_for_route(route_for_stop(id))
+
+
+static func neighbor_stop(id: String, direction: int) -> String:
+	if not STOPS.has(id) or direction not in [-1, 1]: return ""
+	var route_index := route_for_stop(id)
+	var route: Dictionary = ROUTES[route_index]
+	var next_index: int = route.stops.find(id) + direction
+	if next_index >= 0 and next_index < route.stops.size():
+		return str(route.stops[next_index])
+	var book := journey_for_stop(id)
+	if book.get("continue_routes", false):
+		var region_index: int = book.routes.find(route_index) + direction
+		if region_index >= 0 and region_index < book.routes.size():
+			var neighbors: Array = ROUTES[book.routes[region_index]].stops
+			return str(neighbors[0] if direction == 1 else neighbors.back())
+	return ""

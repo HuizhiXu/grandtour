@@ -14,6 +14,7 @@ signal journey_selected(id: String)
 signal route_selected(index: int)
 signal stop_selected(id: String)
 signal next_stop_requested
+signal previous_stop_requested
 signal views_requested
 signal view_selected(index: int)
 signal ground_view_requested
@@ -27,6 +28,13 @@ const GREEN := Color("456754")
 const GOLD := Color("b68b46")
 
 var _identity: PanelContainer
+var _hud_root: Control
+var _journey_label: Label
+var _mode_label: Label
+var _library_button: Button
+var _previous_button: Button
+var _scenery_button: Button
+var _scenery_only := false
 var _location_label: Label
 var _hint_panel: PanelContainer
 var _hint_label: Label
@@ -62,6 +70,10 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_hud_root = Control.new()
+	_hud_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ScreenFactory.full_rect(_hud_root)
+	add_child(_hud_root)
 	_build_hud()
 	_build_modal()
 	_build_pause()
@@ -110,11 +122,29 @@ func has_modal() -> bool:
 
 func is_pointer_over_panel() -> bool:
 	var pointer := get_global_mouse_position()
-	return _identity.get_global_rect().has_point(pointer) or _quest_panel.get_global_rect().has_point(pointer) or pointer.x > 920.0 and pointer.y < 85.0 or _next_button.get_global_rect().has_point(pointer) or _view_button.visible and _view_button.get_global_rect().has_point(pointer)
+	for control: Control in [_identity, _quest_panel, _route_button, _library_button, _previous_button, _next_button, _view_button, _scenery_button]:
+		if control.is_visible_in_tree() and control.get_global_rect().has_point(pointer): return true
+	return false
+
+
+func is_scenery_only() -> bool:
+	return _scenery_only
+
+
+func toggle_scenery() -> void:
+	set_scenery_only(not _scenery_only)
+
+
+func set_scenery_only(hidden: bool) -> void:
+	_scenery_only = hidden
+	_hud_root.visible = not hidden
+	_scenery_button.text = "显示界面 · H" if hidden else "隐藏界面 · H"
+	_scenery_button.position.y = 26.0 if hidden else 82.0
 
 
 func set_views(count: int, selected: int, panorama: bool, observation_only: bool = false) -> void:
 	_observation_only = observation_only
+	_mode_label.text = "静静观景" if panorama else "可漫步 · 点击空地"
 	_view_button.visible = count > 1
 	_view_button.text = "切换视角  %d / %d" % [selected + 1, count]
 	_ground_button.visible = panorama and not observation_only
@@ -164,6 +194,8 @@ func show_dialogue(first_line: String) -> void:
 
 
 func set_quest_progress(stage: int, hint: String) -> void:
+	_quest_panel.visible = true
+	_hint_panel.visible = true
 	_quest_progress.text = "旅途小事  ·  %d / 4" % stage if stage < 4 else "旅途小事  ·  已完成 ✓"
 	_quest_label.text = hint
 	_quest_title.text = "寄出西贡的第一张明信片"
@@ -171,6 +203,8 @@ func set_quest_progress(stage: int, hint: String) -> void:
 
 
 func set_introduction(title: String) -> void:
+	_quest_panel.visible = false
+	_hint_panel.visible = false
 	_quest_progress.text = "景点介绍"
 	_quest_title.text = title
 	_quest_label.text = "了解这一站的故事，自由欣赏眼前的风景。"
@@ -181,9 +215,13 @@ func set_introduction_hint(panorama: bool) -> void:
 	_hint_label.text = "静静欣赏眼前的风景 · 点击「景点介绍」了解这一站" if panorama else "点击空地带 Archie 漫步 · 点击「景点介绍」了解这一站"
 
 
-func set_route_progress(_count: int, has_next: bool, _total: int = 12) -> void:
-	_route_button.text = "旅行画册"
-	_next_button.text = "下一站 →" if has_next else "查看旅行路线"
+func set_navigation(previous_title: String, next_title: String, book_title: String, position_in_book: int, total: int) -> void:
+	_journey_label.text = "%s · %d / %d" % [book_title, position_in_book, total]
+	_previous_button.disabled = previous_title.is_empty()
+	_previous_button.text = "← 上一站：" + previous_title if not previous_title.is_empty() else "当前路线起点"
+	_previous_button.tooltip_text = _previous_button.text
+	_next_button.text = "下一站：" + next_title + " →" if not next_title.is_empty() else "打开本册目录 →"
+	_next_button.tooltip_text = _next_button.text
 
 
 func show_journeys(journeys: Array[Dictionary], routes: Array[Dictionary], stops: Dictionary, bookmarks: Dictionary, current_stop: String) -> void:
@@ -238,17 +276,17 @@ func show_journeys(journeys: Array[Dictionary], routes: Array[Dictionary], stops
 		bookmark.name = "Bookmark"
 		bookmark.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		content.add_child(bookmark)
-	_add_action_button("继续当前这一站 · " + str(stops.get(current_stop, {}).get("title", "西贡中央邮局")), close_modal, true)
+	_add_action_button("继续旅程 · " + str(stops.get(current_stop, {}).get("title", "西贡中央邮局")), close_modal, true)
 
 
-func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: int, current_stop: String, completed: Dictionary, journey: Dictionary = {}, resume_id: String = "") -> void:
+func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: int, current_stop: String, completed: Dictionary, journey: Dictionary = {}, resume_id: String = "", walking_stops: Dictionary = {}) -> void:
 	var route: Dictionary = routes[selected_route]
-	_open_modal("旅行路线册 · " + str(journey.get("title", route.title)), route.subtitle + "\n\n" + route.note)
+	_open_modal("旅行路线册 · " + str(journey.get("title", route.title)), "%s · %d 站 · 自由选站" % [route.title, route.stops.size()])
 	var navigation := HBoxContainer.new()
 	navigation.add_theme_constant_override("separation", 10)
 	_modal_actions.add_child(navigation)
 	var back := _make_button("← 旅行画册", false)
-	back.custom_minimum_size = Vector2(180, 38)
+	back.custom_minimum_size = Vector2(130, 38)
 	back.pressed.connect(func() -> void: journeys_requested.emit())
 	navigation.add_child(back)
 	if stops.has(resume_id):
@@ -257,6 +295,10 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 		resume.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		resume.pressed.connect(func() -> void: stop_selected.emit(resume_id))
 		navigation.add_child(resume)
+	var details_button := _make_button("路线说明 +", false)
+	details_button.name = "RouteDetailsToggle"
+	details_button.custom_minimum_size = Vector2(112, 38)
+	navigation.add_child(details_button)
 	var tabs := HBoxContainer.new()
 	tabs.name = "JourneyRouteTabs"
 	_modal_actions.add_child(tabs)
@@ -271,10 +313,26 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.pressed.connect(func() -> void: route_selected.emit(selected))
 		tabs.add_child(button)
+	var details := ScrollContainer.new()
+	details.name = "RouteDetails"
+	details.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	details.custom_minimum_size.y = 104
+	details.visible = false
+	_modal_actions.add_child(details)
+	var note := ScreenFactory.label(str(route.subtitle) + "\n" + str(route.note), 13, MUTED)
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	details.add_child(note)
 	var scroll := ScrollContainer.new()
 	scroll.name = "RouteStops"
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.custom_minimum_size.y = minf(ceilf(route.stops.size() / 2.0) * 80.0 - 6.0, 340.0 if route.stops.size() <= 8 else 280.0)
+	var list_height := minf(ceilf(route.stops.size() / 2.0) * 74.0 - 6.0, 372.0)
+	scroll.custom_minimum_size.y = list_height
+	details_button.pressed.connect(func() -> void:
+		details.visible = not details.visible
+		details_button.text = "收起说明 -" if details.visible else "路线说明 +"
+		scroll.custom_minimum_size.y = maxf(74.0, list_height - 110.0) if details.visible else list_height
+	)
 	scroll.follow_focus = true
 	_modal_actions.add_child(scroll)
 	var grid := GridContainer.new()
@@ -287,8 +345,13 @@ func show_routes(routes: Array[Dictionary], stops: Dictionary, selected_route: i
 		var id: String = route.stops[index]
 		var suffix := "  ✓" if completed.get(id, false) else ""
 		if id == current_stop: suffix += "  · 当前"
-		var button := _make_button("%02d  %s%s" % [index + 1, stops[id].title, suffix], id == current_stop)
-		button.custom_minimum_size = Vector2(350, 74)
+		var mode := "可漫步" if walking_stops.get(id, true) else "观景"
+		var button := _make_button("%02d  %s%s\n%s" % [index + 1, stops[id].title, suffix, mode], id == current_stop)
+		button.name = "Stop_" + id
+		button.custom_minimum_size = Vector2(350, 68)
+		button.clip_text = true
+		button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		button.tooltip_text = str(stops[id].title) + " · " + mode
 		var thumbnail := "res://assets/game/runtime/tour-%s.jpg" % id
 		if id == "post_office": thumbnail = "res://assets/game/runtime/saigon-exterior.jpg"
 		if id == "palace": thumbnail = "res://assets/game/runtime/independence-palace.jpg"
@@ -329,6 +392,7 @@ func close_modal() -> void:
 
 
 func set_paused(paused: bool) -> void:
+	if paused: set_scenery_only(false)
 	_paused = paused
 	_pause_scrim.visible = paused
 	_pause_panel.visible = paused
@@ -342,20 +406,29 @@ func set_panel_opacity(value: float) -> void:
 
 
 func _build_hud() -> void:
-	_identity = _paper_panel(Vector2(365.0, 82.0), Vector2(26.0, 24.0))
-	add_child(_identity)
+	_identity = _paper_panel(Vector2(470.0, 0.0), Vector2(26.0, 24.0))
+	_hud_root.add_child(_identity)
 	var identity_content := VBoxContainer.new()
-	identity_content.add_theme_constant_override("separation", 2)
+	identity_content.add_theme_constant_override("separation", 5)
 	_identity.add_child(identity_content)
-	var wordmark := ScreenFactory.display_label("THE GRAND TOUR", 17, INK, "heading")
+	var identity_header := HBoxContainer.new()
+	identity_content.add_child(identity_header)
+	var wordmark := ScreenFactory.display_label("THE GRAND TOUR", 12, INK, "heading")
 	wordmark.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	identity_content.add_child(wordmark)
-	_location_label = ScreenFactory.medium_label("胡志明市 · 西贡中央邮局", 14, GREEN)
+	wordmark.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	identity_header.add_child(wordmark)
+	_journey_label = ScreenFactory.medium_label("", 12, MUTED)
+	identity_header.add_child(_journey_label)
+	_location_label = ScreenFactory.medium_label("胡志明市 · 西贡中央邮局", 15, GREEN)
+	_location_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_location_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	identity_content.add_child(_location_label)
+	var identity_actions := HBoxContainer.new()
+	identity_actions.add_theme_constant_override("separation", 8)
+	identity_content.add_child(identity_actions)
 
-	_quest_panel = _paper_panel(Vector2(365.0, 0.0), Vector2(26.0, 118.0))
-	add_child(_quest_panel)
+	_quest_panel = _paper_panel(Vector2(365.0, 0.0), Vector2(26.0, 148.0))
+	_hud_root.add_child(_quest_panel)
 	var quest_content := VBoxContainer.new()
 	quest_content.add_theme_constant_override("separation", 7)
 	_quest_panel.add_child(quest_content)
@@ -368,56 +441,88 @@ func _build_hud() -> void:
 	_quest_label.custom_minimum_size.x = 333.0
 	quest_content.add_child(_quest_label)
 	_ground_button = _make_button("返回地面漫步", true)
+	_ground_button.custom_minimum_size = Vector2(150, 32)
 	_ground_button.visible = false
 	_ground_button.pressed.connect(func() -> void: ground_view_requested.emit())
-	quest_content.add_child(_ground_button)
+	identity_actions.add_child(_ground_button)
 	_exploration_button = _make_button("", true)
 	_exploration_button.visible = false
 	_exploration_button.pressed.connect(func() -> void: exploration_action_requested.emit())
-	quest_content.add_child(_exploration_button)
+	identity_actions.add_child(_exploration_button)
 	_quest_button = _make_button("查看明信片", false)
-	_quest_button.custom_minimum_size = Vector2(0, 32)
+	_quest_button.custom_minimum_size = Vector2(120, 32)
 	_quest_button.pressed.connect(func() -> void: postcard_requested.emit())
-	quest_content.add_child(_quest_button)
+	identity_actions.add_child(_quest_button)
+	_mode_label = ScreenFactory.medium_label("可漫步 · 点击空地", 12, MUTED)
+	_mode_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_mode_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_mode_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	identity_actions.add_child(_mode_label)
 
+	var navigation := HBoxContainer.new()
+	navigation.position = Vector2(686, 26)
+	navigation.size = Vector2(566, 42)
+	navigation.alignment = BoxContainer.ALIGNMENT_END
+	navigation.add_theme_constant_override("separation", 10)
+	_hud_root.add_child(navigation)
 	var pause_button := _make_button("暂停  Esc", true)
-	pause_button.position = Vector2(1120.0, 26.0)
-	pause_button.custom_minimum_size = Vector2(132.0, 42.0)
+	pause_button.custom_minimum_size = Vector2(112.0, 42.0)
 	pause_button.pressed.connect(func() -> void: pause_requested.emit())
-	add_child(pause_button)
-	_route_button = _make_button("旅行路线  0 / 12", false)
-	_route_button.position = Vector2(930, 26)
-	_route_button.custom_minimum_size = Vector2(176, 42)
-	_route_button.pressed.connect(func() -> void: journeys_requested.emit())
-	add_child(_route_button)
+	_route_button = _make_button("本册目录", false)
+	_route_button.custom_minimum_size = Vector2(132, 42)
+	_route_button.pressed.connect(func() -> void: routes_requested.emit())
+	_library_button = _make_button("旅行画册", false)
+	_library_button.custom_minimum_size = Vector2(128, 42)
+	_library_button.pressed.connect(func() -> void: journeys_requested.emit())
 	_view_button = _make_button("切换视角", false)
-	_view_button.position = Vector2(730, 26)
-	_view_button.custom_minimum_size = Vector2(184, 42)
+	_view_button.custom_minimum_size = Vector2(164, 42)
 	_view_button.visible = false
 	_view_button.pressed.connect(func() -> void: views_requested.emit())
-	add_child(_view_button)
+	for button: Button in [_view_button, _route_button, _library_button, pause_button]: navigation.add_child(button)
+	_scenery_button = _make_button("隐藏界面 · H", false)
+	_scenery_button.position = Vector2(1084, 82)
+	_scenery_button.custom_minimum_size = Vector2(168, 32)
+	_scenery_button.pressed.connect(toggle_scenery)
+	add_child(_scenery_button)
+	var paging := HBoxContainer.new()
+	paging.position = Vector2(26, 656)
+	paging.size = Vector2(1226, 44)
+	paging.add_theme_constant_override("separation", 12)
+	_hud_root.add_child(paging)
+	_previous_button = _make_button("上一站", false)
+	_previous_button.custom_minimum_size = Vector2(240, 44)
+	_previous_button.pressed.connect(func() -> void: previous_stop_requested.emit())
+	paging.add_child(_previous_button)
+	var paging_space := Control.new()
+	paging_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	paging_space.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	paging.add_child(paging_space)
 	_next_button = _make_button("下一站 →", true)
-	_next_button.position = Vector2(1080, 656)
-	_next_button.custom_minimum_size = Vector2(172, 44)
+	_next_button.custom_minimum_size = Vector2(240, 44)
 	_next_button.pressed.connect(func() -> void: next_stop_requested.emit())
-	add_child(_next_button)
+	paging.add_child(_next_button)
+	for button: Button in [_previous_button, _next_button]:
+		button.add_theme_font_size_override("font_size", 13)
+		button.clip_text = true
+		button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 
-	_hint_panel = _paper_panel(Vector2(500.0, 44.0), Vector2(24.0, 656.0))
+	_hint_panel = _paper_panel(Vector2(365.0, 44.0), Vector2(26.0, 300.0))
 	_hint_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_hint_panel)
+	_hud_root.add_child(_hint_panel)
 	_hint_label = ScreenFactory.medium_label("点击空地带 Archie 漫步 · 点击人物或物件后，她会先走近再互动", 13, MUTED)
+	_hint_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_hint_panel.add_child(_hint_label)
 
 	_feedback_label = ScreenFactory.medium_label("", 14, Color("fff7e7"))
 	# Keep transient messages below the top-row view selector.
-	_feedback_label.position = Vector2(412.0, 82.0)
+	_feedback_label.position = Vector2(510.0, 118.0)
 	_feedback_label.custom_minimum_size = Vector2(456.0, 30.0)
 	_feedback_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_feedback_label.visible = false
 	_feedback_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_feedback_label.add_theme_stylebox_override("normal", _style(Color(GREEN, 0.92), GREEN, 10, 1))
-	add_child(_feedback_label)
+	_hud_root.add_child(_feedback_label)
 
 	_npc_tag = _paper_panel(Vector2(126.0, 31.0), Vector2.ZERO)
 	_npc_tag.visible = false
@@ -426,7 +531,7 @@ func _build_hud() -> void:
 	npc_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	npc_name.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_npc_tag.add_child(npc_name)
-	add_child(_npc_tag)
+	_hud_root.add_child(_npc_tag)
 
 	_destination_tag = _paper_panel(Vector2(74.0, 29.0), Vector2.ZERO)
 	_destination_tag.visible = false
@@ -435,7 +540,7 @@ func _build_hud() -> void:
 	destination_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	destination_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_destination_tag.add_child(destination_text)
-	add_child(_destination_tag)
+	_hud_root.add_child(_destination_tag)
 
 
 func _build_modal() -> void:
@@ -503,13 +608,13 @@ func _build_pause() -> void:
 	content.add_theme_constant_override("separation", 12)
 	content.alignment = BoxContainer.ALIGNMENT_CENTER
 	_pause_panel.add_child(content)
-	var heading := ScreenFactory.display_label("漫步暂停", 25, INK, "heading")
+	var heading := ScreenFactory.display_label("旅程暂停", 25, INK, "heading")
 	heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(heading)
-	var resume := _make_button("继续漫步", true)
+	var resume := _make_button("继续旅程", true)
 	resume.pressed.connect(func() -> void: pause_requested.emit())
 	content.add_child(resume)
-	var reset := _make_button("回到街区入口", false)
+	var reset := _make_button("回到本册起点", false)
 	reset.pressed.connect(func() -> void: return_to_start_requested.emit())
 	content.add_child(reset)
 	var licenses := _make_button("开源软件声明", false)
@@ -518,6 +623,7 @@ func _build_pause() -> void:
 
 
 func _open_modal(title: String, body: String, width: float = 760.0, centered: bool = false) -> void:
+	set_scenery_only(false)
 	_modal_open = true
 	_modal_centered = centered
 	_modal_panel.anchor_top = 0.5 if centered else 1.0

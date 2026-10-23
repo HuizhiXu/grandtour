@@ -27,6 +27,7 @@ func _initialize() -> void:
 func _run() -> void:
 	var store := root.get_node("SaveStore")
 	var original: Dictionary = store.get("_data").duplicate(true)
+	store.get("_data")["last_travel_stop"] = "retired_stop"
 	# Existing saves may still point to the removed Hengshan stop.
 	store.get("_data")["travel_bookmarks"] = {"datong": "datong_hengshan", "angkor": "angkor_bayon", "hexi": "hexi_leitai"}
 	_main = MAIN.instantiate()
@@ -150,8 +151,7 @@ func _run() -> void:
 				if last != null:
 					scroll.ensure_control_visible(last)
 					await _layout()
-					_check(scroll.scroll_vertical > 0, "Wuwei list scrolls to the tenth stop")
-					_check(scroll.get_global_rect().encloses(last.get_global_rect()), "Wuwei last stop is fully visible after scrolling")
+					_check(scroll.get_global_rect().encloses(last.get_global_rect()), "Wuwei tenth stop is fully accessible in compact list")
 	_check(_on_screen(_ui.get("_modal_panel")), "five-city route fits viewport")
 	_ui.close_modal()
 	for boundary: Array in [["hexi_gansu_museum", "hexi_wushaoling"], ["hexi_haizang_temple", "hexi_mati_temple"], ["hexi_zhangye_dafo", "hexi_jiayuguan_fortress"], ["hexi_overhanging_wall", "hexi_mogao"]]:
@@ -249,6 +249,7 @@ func _run() -> void:
 		_check(traveler.global_position.distance_to(origin) > 1.0, "Turkey actor actually walks: " + id)
 		_check(Geometry2D.is_point_in_polygon(traveler.global_position, ground.floor), "Turkey actor stays in the calibrated ground: " + id)
 	_check(walking_count == 7, "Turkey has seven calibrated walking scenes")
+	await _check_navigation_polish(store)
 	store.set("_data", original)
 	store.save()
 	_main.queue_free()
@@ -256,6 +257,85 @@ func _run() -> void:
 	for failure: String in _failures: push_error(failure)
 	if _failures.is_empty(): print("[journey-tests] PASS: %d library, route, Datong, navigation and bookmark checks" % _checks)
 	quit(0 if _failures.is_empty() else 1)
+
+func _check_navigation_polish(store: Node) -> void:
+	_main.call("_travel_to_stop", "turkey_hagia_sophia")
+	await _settle()
+	_check("博斯普鲁斯海峡" in (_ui.get("_previous_button") as Button).text, "previous button names destination")
+	_check("老皇宫" in (_ui.get("_next_button") as Button).text, "next button names destination")
+	_check("2 / 30" in (_ui.get("_journey_label") as Label).text, "current position is shown within own book")
+	_check(not (_ui.get("_quest_panel") as Control).visible, "introduction does not duplicate location panel")
+	_check((_ui.get("_quest_button") as Button).is_visible_in_tree(), "compact panel retains introduction action")
+	for key: String in ["_identity", "_previous_button", "_next_button", "_route_button", "_library_button", "_scenery_button"]:
+		_check(_on_screen(_ui.get(key)), "navigation fits viewport: " + key)
+	# A previously browsed book must not change where the direct directory opens.
+	_main.set("_route_index", 2)
+	(_ui.get("_route_button") as Button).pressed.emit()
+	await _layout()
+	_check(_main.get("_route_index") == 9 and "土耳其" in (_ui.get("_modal_title") as Label).text, "direct directory opens current book and region")
+	var scroll := _ui.find_child("RouteStops", true, false) as ScrollContainer
+	var last := _ui.find_child("Stop_turkey_rumeli", true, false) as Button
+	_check(scroll.get_global_rect().encloses(last.get_global_rect()), "all ten Istanbul entries fit without scrolling")
+	_check((_ui.find_child("Stop_turkey_hagia_sophia", true, false) as Button).text.ends_with("观景"), "panorama entry labelled before entering")
+	_check((_ui.find_child("Stop_turkey_istiklal", true, false) as Button).text.ends_with("可漫步"), "walking entry labelled before entering")
+	for route_index in [9, 10, 2]:
+		_main.set("_route_index", route_index)
+		_main.call("_show_routes")
+		await _layout()
+		(_ui.find_child("RouteDetailsToggle", true, false) as Button).pressed.emit()
+		await _layout()
+		_check((_ui.find_child("RouteDetails", true, false) as Control).visible, "route explanation expands: " + str(route_index))
+		_check(_on_screen(_ui.get("_modal_panel")), "expanded explanation stays within viewport: " + str(route_index))
+		(_ui.find_child("RouteDetailsToggle", true, false) as Button).pressed.emit()
+		await _layout()
+		_check(not (_ui.find_child("RouteDetails", true, false) as Control).visible, "route explanation collapses: " + str(route_index))
+	_ui.close_modal()
+	var hide_key := InputEventKey.new()
+	hide_key.keycode = KEY_H
+	hide_key.pressed = true
+	_main.call("_unhandled_input", hide_key)
+	_check(_ui.is_scenery_only() and not (_ui.get("_hud_root") as Control).visible, "H hides browsing interface")
+	_check((_ui.get("_scenery_button") as Button).is_visible_in_tree(), "scenery mode keeps a visible restore button")
+	var escape := InputEventAction.new()
+	escape.action = "pause"
+	escape.pressed = true
+	_main.call("_unhandled_input", escape)
+	_check(not _ui.is_scenery_only() and not _main.get("_paused"), "Escape first restores interface without pausing")
+	(_ui.get("_scenery_button") as Button).pressed.emit()
+	_main.call("_set_paused", true)
+	_check(not _ui.is_scenery_only() and (_ui.get("_pause_panel") as Control).visible, "pause restores hidden interface")
+	_main.call("_set_paused", false)
+	_main.call("_travel_to_stop", "turkey_anatolian_plateau")
+	await _settle()
+	(_ui.get("_previous_button") as Button).pressed.emit()
+	await _settle()
+	_check(_main.get("_scene_id") == "turkey_rumeli", "previous button crosses Turkey region boundary backwards")
+	(_ui.get("_next_button") as Button).pressed.emit()
+	await _settle()
+	_check(_main.get("_scene_id") == "turkey_anatolian_plateau", "forward and backward boundary navigation are reciprocal")
+	_main.call("_travel_to_stop", "turkey_bosphorus")
+	await _settle()
+	_check((_ui.get("_previous_button") as Button).disabled, "book start disables previous instead of jumping countries")
+	_check(Catalog.neighbor_stop("turkey_perge", 1).is_empty(), "book end stays inside Turkey")
+	_main.call("_travel_to_stop", "turkey_hagia_sophia")
+	await _settle()
+	_main.call("_travel_to_stop", "angkor_bayon")
+	await _settle()
+	_main.call("_travel_to_stop", "turkey_hagia_sophia")
+	await _settle()
+	store.call("_load")
+	_check(store.call("get_last_travel_stop") == "turkey_hagia_sophia", "revisiting an existing book bookmark updates global resume on disk")
+	_check(store.call("get_travel_bookmarks").get("angkor") == "angkor_bayon", "global resume preserves independent book bookmarks")
+	_main.queue_free()
+	await _layout()
+	_main = MAIN.instantiate()
+	root.add_child(_main)
+	await _layout()
+	_ui = _main.get("_ui")
+	_check(_main.get("_scene_id") == "turkey_hagia_sophia", "restart prepares most recently visited destination")
+	_check(_ui.has_modal() and _find_button(_ui.get("_modal_actions"), "继续旅程 · 圣索菲亚大教堂") != null, "startup library resumes last real destination")
+	(_find_button(_ui.get("_modal_actions"), "继续旅程 · 圣索菲亚大教堂") as Button).pressed.emit()
+	_check(not _ui.has_modal() and _main.get("_scene_id") == "turkey_hagia_sophia", "one click continues last trip")
 
 func _settle() -> void:
 	for frame in range(180):

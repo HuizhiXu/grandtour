@@ -5,7 +5,7 @@ const Quest := preload("res://scripts/game/postcard_quest.gd")
 
 var _checks := 0
 var _failures: Array[String] = []
-var _original_progress: Dictionary
+var _original_save: Dictionary
 var _capture_dir := ""
 
 
@@ -15,7 +15,8 @@ func _initialize() -> void:
 
 func _run() -> void:
 	var saves := root.get_node("SaveStore")
-	_original_progress = saves.get_postcard_progress()
+	_original_save = saves.get("_data").duplicate(true)
+	saves.get("_data")["last_travel_stop"] = ""
 	saves.set_postcard_progress({})
 	_capture_dir = OS.get_environment("GRANDTOUR_CAPTURE_DIR")
 	if not _capture_dir.is_empty():
@@ -108,7 +109,8 @@ func _run() -> void:
 	await _assert_modal_layout(main.get("_ui") as ExplorationUI)
 	main.queue_free()
 	await process_frame
-	saves.set_postcard_progress(_original_progress)
+	saves.set("_data", _original_save)
+	saves.save()
 	if _failures.is_empty():
 		print("[postcard-tests] PASS: %d movement, layout and quest checks" % _checks)
 		quit(0)
